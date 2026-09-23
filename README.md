@@ -1,4 +1,4 @@
-# Convex Optimization（Stanford EE364a / MIT 6.431）
+# Convex Optimization（Stanford EE364a）
 
 凸优化课程资料整理，教材：Stephen Boyd & Lieven Vandenberghe, *Convex Optimization* (Cambridge University Press, 2004)。
 
@@ -9,7 +9,7 @@
 02-讲义/          SEE 官方讲义、deliver 交付讲义、横版打印稿
 03-作业与解答/    作业与官方解答
 04-补充材料/      补充材料、复习课、CVX 用户指南等
-04-补充习题/      课程补充习题及数据文件
+05-补充习题/      课程补充习题及数据文件
 00-课程计划.pdf   课程大纲与进度
 ```
 
