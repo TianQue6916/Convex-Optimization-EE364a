@@ -10,21 +10,21 @@
 
 考虑标准形式 (4.1) 的优化问题：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)\\
 \text{subject to}\quad & f_i(x)\le0,\quad i=1,\dots,m\\
 & h_i(x)=0,\quad i=1,\dots,p,
 \end{aligned} \tag{5.1}
-$$
+```
 
 变量 $x\in\mathbb{R}^n$。我们假设其定义域 $\mathcal{D}=\bigcap_{i=0}^m\mathbf{dom}\,f_i\cap\bigcap_{i=1}^p\mathbf{dom}\,h_i$ 非空，记 (5.1) 的最优值为 $p^\star$。我们不假设问题 (5.1) 凸。
 
 Lagrangian duality（拉格朗日对偶）的基本想法是：把约束以约束函数的加权和加到目标函数上，从而把 (5.1) 的约束纳入考虑。我们定义与问题 (5.1) 相关联的 Lagrangian（拉格朗日函数）$L:\mathbb{R}^n\times\mathbb{R}^m\times\mathbb{R}^p\to\mathbb{R}$：
 
-$$
+```math
 L(x,\lambda,\nu)=f_0(x)+\sum_{i=1}^m\lambda_if_i(x)+\sum_{i=1}^p\nu_ih_i(x),
-$$
+```
 
 定义域 $\mathbf{dom}\,L=\mathcal{D}\times\mathbb{R}^m\times\mathbb{R}^p$。我们把 $\lambda_i$ 称为与第 $i$ 个不等式约束 $f_i(x)\le0$ 相关联的 Lagrange multiplier（拉格朗日乘子）；类似地 $\nu_i$ 称为与第 $i$ 个等式约束 $h_i(x)=0$ 相关联的拉格朗日乘子。向量 $\lambda$ 与 $\nu$ 称为与问题 (5.1) 相关联的 dual variables（对偶变量）或 Lagrange multiplier vectors（拉格朗日乘子向量）。
 
@@ -34,9 +34,9 @@ $$
 
 我们定义 Lagrange dual function（拉格朗日对偶函数，或简称 dual function，对偶函数）$g:\mathbb{R}^m\times\mathbb{R}^p\to\mathbb{R}$ 为拉格朗日函数关于 $x$ 的最小值：对 $\lambda\in\mathbb{R}^m$、$\nu\in\mathbb{R}^p$，
 
-$$
+```math
 g(\lambda,\nu)=\inf_{x\in\mathcal{D}}L(x,\lambda,\nu)=\inf_{x\in\mathcal{D}}\Bigl(f_0(x)+\sum_{i=1}^m\lambda_if_i(x)+\sum_{i=1}^p\nu_ih_i(x)\Bigr).
-$$
+```
 
 当拉格朗日函数关于 $x$ 无下界时，对偶函数取值 $-\infty$。由于对偶函数是 $(\lambda,\nu)$ 的一族仿射函数的逐点下确界，它是 concave（凹）的——即使问题 (5.1) 不凸。
 
@@ -44,27 +44,27 @@ $$
 
 对偶函数给出问题 (5.1) 最优值 $p^\star$ 的下界：对任何 $\lambda\succeq0$ 与任何 $\nu$，
 
-$$
+```math
 g(\lambda,\nu)\le p^\star. \tag{5.2}
-$$
+```
 
 这个重要性质容易验证。设 $\tilde{x}$ 是问题 (5.1) 的可行点（即 $f_i(\tilde{x})\le0$、$h_i(\tilde{x})=0$），且 $\lambda\succeq0$。则
 
-$$
+```math
 \sum_{i=1}^m\lambda_if_i(\tilde{x})+\sum_{i=1}^p\nu_ih_i(\tilde{x})\le0,
-$$
+```
 
 因为第一个和中每项非正、第二个和中每项为零，于是
 
-$$
+```math
 L(\tilde{x},\lambda,\nu)=f_0(\tilde{x})+\sum_{i=1}^m\lambda_if_i(\tilde{x})+\sum_{i=1}^p\nu_ih_i(\tilde{x})\le f_0(\tilde{x}).
-$$
+```
 
 因此
 
-$$
+```math
 g(\lambda,\nu)=\inf_{x\in\mathcal{D}}L(x,\lambda,\nu)\le L(\tilde{x},\lambda,\nu)\le f_0(\tilde{x}).
-$$
+```
 
 由于 $g(\lambda,\nu)\le f_0(\tilde{x})$ 对每个可行点 $\tilde{x}$ 成立，不等式 (5.2) 得证。
 
@@ -80,23 +80,23 @@ $$
 
 先把原问题 (5.1) 重写为无约束问题：
 
-$$
+```math
 \text{minimize}\quad f_0(x)+\sum_{i=1}^mI_-(f_i(x))+\sum_{i=1}^pI_0(h_i(x)), \tag{5.3}
-$$
+```
 
 其中 $I_-:\mathbb{R}\to\mathbb{R}$ 是非正实数的示性函数：
 
-$$
+```math
 I_-(u)=\begin{cases}0 & u\le0\\ \infty & u>0,\end{cases}
-$$
+```
 
 类似地 $I_0$ 是 $\{0\}$ 的示性函数。在表述 (5.3) 中，函数 $I_-(u)$ 可以解释为表达我们对约束函数值 $u=f_i(x)$ 的 irritation（恼怒）或 displeasure（不快）：$f_i(x)\le0$ 时为零，$f_i(x)>0$ 时为无穷。类似地，$I_0(u)$ 给出我们对等式约束值 $u=h_i(x)$ 的不快。可以把 $I_-$ 想成「brick wall（砖墙）」或「infinitely hard（无限硬）」的不快函数：当 $f_i(x)$ 从非正变为正时，我们的不快从零跳到无穷。
 
 现在在表述 (5.3) 中，把函数 $I_-(u)$ 替换为线性函数 $\lambda_iu$（$\lambda_i\ge0$），把 $I_0(u)$ 替换为 $\nu_iu$。目标变为拉格朗日函数 $L(x,\lambda,\nu)$，而对偶函数值 $g(\lambda,\nu)$ 是问题
 
-$$
+```math
 \text{minimize}\quad L(x,\lambda,\nu)=f_0(x)+\sum_{i=1}^m\lambda_if_i(x)+\sum_{i=1}^p\nu_ih_i(x) \tag{5.4}
-$$
+```
 
 的最优值。在这个表述中，我们用 linear 或「soft（软）」的不快函数代替 $I_-$ 与 $I_0$。对不等式约束，$f_i(x)=0$ 时不快为零，$f_i(x)>0$ 时不快为正（设 $\lambda_i>0$）；约束「违反得越多」不快越大。与原表述（任何非正的 $f_i(x)$ 都可接受）不同，在软表述中，我们从有 margin（裕量）的约束（即 $f_i(x)<0$）中实际上获得 pleasure（快感）。
 
@@ -112,12 +112,12 @@ $$
 
 **线性方程组的最小二乘解。** 考虑问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & x^Tx\\
 \text{subject to}\quad & Ax=b,
 \end{aligned} \tag{5.5}
-$$
+```
 
 其中 $A\in\mathbb{R}^{p\times n}$。此问题没有不等式约束，有 $p$ 个（线性）等式约束。拉格朗日函数为 $L(x,\nu)=x^Tx+\nu^T(Ax-b)$，定义域 $\mathbb{R}^n\times\mathbb{R}^p$。
 
@@ -125,43 +125,43 @@ $$
 
 对偶函数为 $g(\nu)=\inf_xL(x,\nu)$。由于 $L(x,\nu)$ 是 $x$ 的凸二次函数，可以从最优性条件 $\nabla_xL(x,\nu)=2x+A^T\nu=0$ 找到最小化点，得 $x=-(1/2)A^T\nu$。因此对偶函数为
 
-$$
+```math
 g(\nu)=L(-(1/2)A^T\nu,\nu)=-(1/4)\nu^TAA^T\nu-b^T\nu,
-$$
+```
 
 它是凹二次函数，定义域 $\mathbb{R}^p$。下界性质 (5.2) 陈述：对任何 $\nu\in\mathbb{R}^p$，
 
-$$
+```math
 -(1/4)\nu^TAA^T\nu-b^T\nu\le\inf\{x^Tx \mid Ax=b\}.
-$$
+```
 
 **标准形式 LP。** 考虑标准形式的 LP：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & Ax=b\\
 & x\succeq0,
 \end{aligned} \tag{5.6}
-$$
+```
 
 它有不等式约束函数 $f_i(x)=-x_i$（$i=1,\dots,n$）。为构造拉格朗日函数，为 $n$ 个不等式约束引入乘子 $\lambda_i$、为等式约束引入乘子 $\nu_i$，得
 
-$$
+```math
 L(x,\lambda,\nu)=c^Tx-\sum_{i=1}^n\lambda_ix_i+\nu^T(Ax-b)=-b^T\nu+(c+A^T\nu-\lambda)^Tx.
-$$
+```
 
 对偶函数为
 
-$$
+```math
 g(\lambda,\nu)=\inf_xL(x,\lambda,\nu)=-b^T\nu+\inf_x(c+A^T\nu-\lambda)^Tx,
-$$
+```
 
 解析地容易确定，因为线性函数只在恒为零时有下界。于是 $g(\lambda,\nu)=-\infty$，除非 $c+A^T\nu-\lambda=0$，此时为 $-b^T\nu$：
 
-$$
+```math
 g(\lambda,\nu)=\begin{cases}-b^T\nu & A^T\nu-\lambda+c=0\\ -\infty & \text{否则}.\end{cases}
-$$
+```
 
 注意对偶函数 $g$ 只在 $\mathbb{R}^m\times\mathbb{R}^p$ 的一个 proper affine subset（真仿射子集）上有限。我们会看到这很常见。
 
@@ -171,12 +171,12 @@ $$
 
 **双向划分问题。** 考虑（非凸）问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & x^TWx\\
 \text{subject to}\quad & x_i^2=1,\quad i=1,\dots,n,
 \end{aligned} \tag{5.7}
-$$
+```
 
 其中 $W\in\mathbf{S}^n$。约束把 $x_i$ 限制为 $1$ 或 $-1$，所以问题等价于找分量为 $\pm1$ 的向量最小化 $x^TWx$。可行集有限（含 $2^n$ 个点），所以原则上可以通过检查每个可行点的目标值来求解。但可行点数指数增长，这只有小问题（比如 $n\le30$）可行。一般（比如 $n>50$）问题 (5.7) 非常难解。
 
@@ -184,46 +184,46 @@ $$
 
 可以把问题 (5.7) 解释为 $n$ 个元素集合（比如 $\{1,\dots,n\}$）上的 two-way partitioning problem（双向划分问题）：可行 $x$ 对应划分
 
-$$
+```math
 \{1,\dots,n\}=\{i \mid x_i=-1\}\cup\{i \mid x_i=1\}.
-$$
+```
 
 矩阵系数 $W_{ij}$ 可解释为元素 $i$ 与 $j$ 在同一划分的成本，$-W_{ij}$ 是 $i$ 与 $j$ 在不同划分的成本。(5.7) 的目标是所有元素对的总成本，问题 (5.7) 就是找总成本最小的划分。
 
 现在推导此问题的对偶函数。拉格朗日函数为
 
-$$
+```math
 L(x,\nu)=x^TWx+\sum_{i=1}^n\nu_i(x_i^2-1)=x^T(W+\mathbf{diag}(\nu))x-\mathbf{1}^T\nu.
-$$
+```
 
 对 $x$ 最小化得拉格朗日对偶函数：
 
-$$
+```math
 g(\nu)=\inf_x\bigl(x^T(W+\mathbf{diag}(\nu))x-\mathbf{1}^T\nu\bigr)=\begin{cases}-\mathbf{1}^T\nu & W+\mathbf{diag}(\nu)\succeq0\\ -\infty & \text{否则}，\end{cases}
-$$
+```
 
 这里用了「二次型的下确界要么为零（型半正定时）要么为 $-\infty$（型非半正定时）」这一事实。
 
 这个对偶函数给困难问题 (5.7) 的最优值提供下界。例如可取对偶变量的具体值
 
-$$
+```math
 \nu=-\lambda_{\min}(W)\mathbf{1},
-$$
+```
 
 它对偶可行，因为 $W+\mathbf{diag}(\nu)=W-\lambda_{\min}(W)I\succeq0$。这给出最优值 $p^\star$ 的界：
 
-$$
+```math
 p^\star\ge-\mathbf{1}^T\nu=n\lambda_{\min}(W). \tag{5.8}
-$$
+```
 
 <span style="color:#00838f;">**[注 5.1]** 这个 $p^\star$ 的下界也可以不用拉格朗日对偶函数得到。先把约束 $x_1^2=1,\dots,x_n^2=1$ 替换为 $\sum_{i=1}^nx_i^2=n$，得到修改的问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & x^TWx\\
 \text{subject to}\quad & \sum_{i=1}^nx_i^2=n.
 \end{aligned} \tag{5.9}
-$$
+```
 
 原问题 (5.7) 的约束蕴含这里的约束，所以问题 (5.9) 的最优值是 (5.7) 最优值 $p^\star$ 的下界。而修改后的问题 (5.9) 容易作为 eigenvalue problem（特征值问题）求解，最优值为 $n\lambda_{\min}(W)$。
 
@@ -233,50 +233,50 @@ $$
 
 回顾 §3.3：函数 $f:\mathbb{R}^n\to\mathbb{R}$ 的 conjugate（共轭）$f^*$ 为
 
-$$
+```math
 f^*(y)=\sup_{x\in\mathbf{dom}\,f}\bigl(y^Tx-f(x)\bigr).
-$$
+```
 
 共轭函数与拉格朗日对偶函数密切相关。一个简单联系：考虑问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f(x)\\
 \text{subject to}\quad & x=0
 \end{aligned}
-$$
+```
 
 （不太有趣，一眼可解）。此问题的拉格朗日函数为 $L(x,\nu)=f(x)+\nu^Tx$，对偶函数为
 
-$$
+```math
 g(\nu)=\inf_x\bigl(f(x)+\nu^Tx\bigr)=-\sup_x\bigl((-\nu)^Tx-f(x)\bigr)=-f^*(-\nu).
-$$
+```
 
 更一般（也更有用）地，考虑带线性不等式与等式约束的优化问题：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)\\
 \text{subject to}\quad & Ax\preceq b\\
 & Cx=d.
 \end{aligned} \tag{5.10}
-$$
+```
 
 用 $f_0$ 的共轭可以把问题 (5.10) 的对偶函数写为
 
-$$
+```math
 \begin{aligned}
 g(\lambda,\nu)&=\inf_x\bigl(f_0(x)+\lambda^T(Ax-b)+\nu^T(Cx-d)\bigr)\\
 &=-b^T\lambda-d^T\nu+\inf_x\bigl(f_0(x)+(A^T\lambda+C^T\nu)^Tx\bigr)\\
 &=-b^T\lambda-d^T\nu-f_0^*(-A^T\lambda-C^T\nu). \tag{5.11}
 \end{aligned}
-$$
+```
 
 $g$ 的定义域由 $f_0^*$ 的定义域得出：
 
-$$
+```math
 \mathbf{dom}\,g=\{(\lambda,\nu) \mid -A^T\lambda-C^T\nu\in\mathbf{dom}\,f_0^*\}.
-$$
+```
 
 用几个例子说明。
 
@@ -284,59 +284,59 @@ $$
 
 **等式约束的范数最小化。** 考虑问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & \|x\|\\
 \text{subject to}\quad & Ax=b,
 \end{aligned} \tag{5.12}
-$$
+```
 
 其中 $\|\cdot\|$ 是任意范数。回顾（例 3.26，第 93 页）$f_0=\|\cdot\|$ 的共轭为
 
-$$
+```math
 f_0^*(y)=\begin{cases}0 & \|y\|_*\le1\\ \infty & \text{否则}，\end{cases}
-$$
+```
 
 即对偶范数单位球的示性函数。用上面结果 (5.11)，问题 (5.12) 的对偶函数为
 
-$$
+```math
 g(\nu)=-b^T\nu-f_0^*(-A^T\nu)=\begin{cases}-b^T\nu & \|A^T\nu\|_*\le1\\ -\infty & \text{否则}.\end{cases}
-$$
+```
 
 <!-- p.236 -->
 
 **熵最大化。** 考虑 entropy maximization problem（熵最大化问题）
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)=\sum_{i=1}^nx_i\log x_i\\
 \text{subject to}\quad & Ax\preceq b\\
 & \mathbf{1}^Tx=1
 \end{aligned} \tag{5.13}
-$$
+```
 
 （$\mathbf{dom}\,f_0=\mathbb{R}^n_{++}$）。负熵函数 $u\log u$（标量变量 $u$）的共轭是 $e^{v-1}$（见例 3.21，第 91 页）。由于 $f_0$ 是不同变量的负熵函数之和，其共轭为
 
-$$
+```math
 f_0^*(y)=\sum_{i=1}^ne^{y_i-1},
-$$
+```
 
 $\mathbf{dom}\,f_0^*=\mathbb{R}^n$。用结果 (5.11)，(5.13) 的对偶函数为
 
-$$
+```math
 g(\lambda,\nu)=-b^T\lambda-\nu-\sum_{i=1}^ne^{-a_i^T\lambda-\nu-1}=-b^T\lambda-\nu-e^{-\nu-1}\sum_{i=1}^ne^{-a_i^T\lambda},
-$$
+```
 
 其中 $a_i$ 是 $A$ 的第 $i$ 列。
 
 **最小体积覆盖椭球。** 考虑变量 $X\in\mathbf{S}^n$ 的问题：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(X)=\log\det X^{-1}\\
 \text{subject to}\quad & a_i^TXa_i\le1,\quad i=1,\dots,m,
 \end{aligned} \tag{5.14}
-$$
+```
 
 $\mathbf{dom}\,f_0=\mathbf{S}^n_{++}$。问题 (5.14) 有简单的几何解释：给每个 $X\in\mathbf{S}^n_{++}$ 关联以原点为中心的椭球 $\mathcal{E}_X=\{z \mid z^TXz\le1\}$。椭球体积正比于 $(\det X^{-1})^{1/2}$，所以 (5.14) 的目标（除常数与因子 2 外）是 $\mathcal{E}_X$ 体积的对数。
 
@@ -346,23 +346,23 @@ $\mathbf{dom}\,f_0=\mathbf{S}^n_{++}$。问题 (5.14) 有简单的几何解释�
 
 问题 (5.14) 的不等式约束是仿射的；可表达为 $\mathbf{tr}\bigl((a_ia_i^T)X\bigr)\le1$。例 3.23（第 92 页）中已找到 $f_0$ 的共轭：
 
-$$
+```math
 f_0^*(Y)=\log\det(-Y)^{-1}-n,\qquad \mathbf{dom}\,f_0^*=-\mathbf{S}^n_{++}.
-$$
+```
 
 应用结果 (5.11)，问题 (5.14) 的对偶函数为
 
-$$
+```math
 g(\lambda)=\begin{cases}\log\det\bigl(\sum_{i=1}^m\lambda_ia_ia_i^T\bigr)-\mathbf{1}^T\lambda+n & \sum_{i=1}^m\lambda_ia_ia_i^T\succ0\\ -\infty & \text{否则}，\end{cases} \tag{5.15}
-$$
+```
 
 <!-- p.237 -->
 
 于是对任何满足 $\lambda\succeq0$ 且 $\sum_{i=1}^m\lambda_ia_ia_i^T\succ0$ 的 $\lambda$，数
 
-$$
+```math
 \log\det\Bigl(\sum_{i=1}^m\lambda_ia_ia_i^T\Bigr)-\mathbf{1}^T\lambda+n
-$$
+```
 
 是问题 (5.14) 最优值的下界。
 
@@ -370,12 +370,12 @@ $$
 
 对每对满足 $\lambda\succeq0$ 的 $(\lambda,\nu)$，拉格朗日对偶函数给出优化问题 (5.1) 最优值 $p^\star$ 的下界。于是我们有了依赖参数 $\lambda,\nu$ 的下界。一个自然的问题是：从拉格朗日对偶函数能得到的最好下界是什么？这导出优化问题
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & g(\lambda,\nu)\\
 \text{subject to}\quad & \lambda\succeq0.
 \end{aligned} \tag{5.16}
-$$
+```
 
 此问题称为与问题 (5.1) 相关联的 Lagrange dual problem（拉格朗日对偶问题）。在此语境下，原问题 (5.1) 有时称为 primal problem（原始问题/主问题）。描述满足 $\lambda\succeq0$ 且 $g(\lambda,\nu)>-\infty$ 的数对 $(\lambda,\nu)$ 的术语 dual feasible（对偶可行）现在说得通了：正如其名，它意味着 $(\lambda,\nu)$ 对对偶问题 (5.16) 可行。若 $(\lambda^\star,\nu^\star)$ 对问题 (5.16) 最优，我们称它们为 dual optimal（对偶最优）或 optimal Lagrange multipliers（最优拉格朗日乘子）。
 
@@ -387,57 +387,57 @@ $$
 
 上面的例子表明：对偶函数的定义域
 
-$$
+```math
 \mathbf{dom}\,g=\{(\lambda,\nu) \mid g(\lambda,\nu)>-\infty\}
-$$
+```
 
 的维数小于 $m+p$ 并不少见。许多情形我们能识别 $\mathbf{dom}\,g$ 的仿射包，并把它描述为一组线性等式约束。粗略地说，这意味着我们能识别对偶问题 (5.16) 的目标 $g$ 中「隐藏」或「隐式」的等式约束。此时可以构造等价问题，把这些等式约束显式地作为约束给出。下面的例子演示这个想法。
 
 **标准形式 LP 的拉格朗日对偶。** 第 219 页我们找到标准形式 LP
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & Ax=b\\
 & x\succeq0
 \end{aligned} \tag{5.17}
-$$
+```
 
 的拉格朗日对偶函数：
 
-$$
+```math
 g(\lambda,\nu)=\begin{cases}-b^T\nu & A^T\nu-\lambda+c=0\\ -\infty & \text{否则}.\end{cases}
-$$
+```
 
 严格地说，标准形式 LP 的拉格朗日对偶问题是：在 $\lambda\succeq0$ 下最大化这个对偶函数 $g$，即
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & g(\lambda,\nu)=\begin{cases}-b^T\nu & A^T\nu-\lambda+c=0\\ -\infty & \text{否则}\end{cases}\\
 \text{subject to}\quad & \lambda\succeq0.
 \end{aligned} \tag{5.18}
-$$
+```
 
 这里 $g$ 只在 $A^T\nu-\lambda+c=0$ 时有限。可以构造等价问题，把这些等式约束显式化：
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -b^T\nu\\
 \text{subject to}\quad & A^T\nu-\lambda+c=0\\
 & \lambda\succeq0.
 \end{aligned} \tag{5.19}
-$$
+```
 
 <!-- p.238/239 -->
 
 这个问题又可以表达为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -b^T\nu\\
 \text{subject to}\quad & A^T\nu+c\succeq0,
 \end{aligned} \tag{5.20}
-$$
+```
 
 是不等式形式的 LP。
 
@@ -447,42 +447,42 @@ $$
 
 **不等式形式 LP 的拉格朗日对偶。** 类似地可以找不等式形式线性规划
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & Ax\preceq b
 \end{aligned} \tag{5.21}
-$$
+```
 
 的拉格朗日对偶问题。拉格朗日函数为
 
-$$
+```math
 L(x,\lambda)=c^Tx+\lambda^T(Ax-b)=-b^T\lambda+(A^T\lambda+c)^Tx,
-$$
+```
 
 所以对偶函数为
 
-$$
+```math
 g(\lambda)=\inf_xL(x,\lambda)=-b^T\lambda+\inf_x(A^T\lambda+c)^Tx.
-$$
+```
 
 线性函数的下确界为 $-\infty$，除非它恒为零，所以对偶函数为
 
-$$
+```math
 g(\lambda)=\begin{cases}-b^T\lambda & A^T\lambda+c=0\\ -\infty & \text{否则}.\end{cases}
-$$
+```
 
 对偶变量 $\lambda$ 对偶可行，若 $\lambda\succeq0$ 且 $A^T\lambda+c=0$。
 
 LP (5.21) 的拉格朗日对偶是在所有 $\lambda\succeq0$ 上最大化 $g$。同样可以通过显式包含对偶可行性条件重新表述：
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -b^T\lambda\\
 \text{subject to}\quad & A^T\lambda+c=0\\
 & \lambda\succeq0,
 \end{aligned} \tag{5.22}
-$$
+```
 
 它是标准形式的 LP。
 
@@ -494,9 +494,9 @@ $$
 
 拉格朗日对偶问题的最优值记作 $d^\star$，按定义它是从拉格朗日对偶函数能得到的 $p^\star$ 的最好下界。特别地，有简单而重要的不等式
 
-$$
+```math
 d^\star\le p^\star, \tag{5.23}
-$$
+```
 
 即使原问题不凸也成立。这个性质称为 weak duality（弱对偶性）。
 
@@ -508,12 +508,12 @@ $$
 
 界 (5.23) 有时可用于给难解问题的最优值找下界，因为对偶问题总是凸的，许多情形能高效求解得到 $d^\star$。例如考虑第 219 页描述的双向划分问题 (5.7)。其对偶问题是 SDP：
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -\mathbf{1}^T\nu\\
 \text{subject to}\quad & W+\mathbf{diag}(\nu)\succeq0,
 \end{aligned}
-$$
+```
 
 变量 $\nu\in\mathbb{R}^n$。这个问题即使 $n$ 相当大（如 $n=1000$）也能高效求解。其最优值是双向划分问题最优值的下界，且总不差于基于 $\lambda_{\min}(W)$ 的下界 (5.8)。
 
@@ -521,38 +521,38 @@ $$
 
 若等式
 
-$$
+```math
 d^\star=p^\star \tag{5.24}
-$$
+```
 
 成立（即最优对偶间隙为零），则称 strong duality（强对偶性）成立。这意味着从拉格朗日对偶函数能得到的最好界是 tight（紧的）。
 
 强对偶性一般不成立。但若原始问题 (5.1) 凸，即形如
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)\\
 \text{subject to}\quad & f_i(x)\le0,\quad i=1,\dots,m,\\
 & Ax=b
 \end{aligned} \tag{5.25}
-$$
+```
 
 （$f_0,\dots,f_m$ 凸），我们通常（但非总是）有强对偶性。有许多结果确立凸性之外、使强对偶性成立的条件。这些条件称为 constraint qualifications（约束规格）。一个简单的约束规格是 Slater's condition（Slater 条件）：存在 $x\in\mathbf{relint}\,\mathcal{D}$ 使
 
-$$
+```math
 f_i(x)<0,\quad i=1,\dots,m,\qquad Ax=b. \tag{5.26}
-$$
+```
 
 这样的点有时称为 strictly feasible（严格可行）的，因为不等式约束以严格不等号成立。Slater's theorem（Slater 定理）陈述：若 Slater 条件成立（且问题凸），则强对偶性成立。
 
 当某些不等式约束函数 $f_i$ 是仿射时，Slater 条件可以精化。若前 $k$ 个约束函数 $f_1,\dots,f_k$ 仿射，则只要下面较弱的条件成立强对偶性就成立：存在 $x\in\mathbf{relint}\,\mathcal{D}$ 使
 
-$$
+```math
 \begin{aligned}
 f_i(x)\le0,&\quad i=1,\dots,k,\\
 f_i(x)<0,&\quad i=k+1,\dots,m,\\
 Ax=b.&\end{aligned} \tag{5.27}
-$$
+```
 
 <!-- p.240/241 -->
 
@@ -566,9 +566,9 @@ Slater 条件（及精化 (5.27)）不仅蕴含凸问题的强对偶性，还蕴
 
 **线性方程组的最小二乘解。** 回顾问题 (5.5)：$\min x^Tx\ \text{s.t.}\ Ax=b$。相应的对偶问题是
 
-$$
+```math
 \text{maximize}\quad -(1/4)\nu^TAA^T\nu-b^T\nu,
-$$
+```
 
 是无约束的凹二次最大化问题。Slater 条件就是原始问题可行，所以只要 $b\in\mathcal{R}(A)$（即 $p^\star<\infty$）就有 $p^\star=d^\star$。事实上这个问题总有强对偶性，即使 $p^\star=\infty$：那是 $b\notin\mathcal{R}(A)$ 的情形，此时存在 $z$ 使 $A^Tz=0$、$b^Tz\neq0$，于是对偶函数沿直线 $\{tz \mid t\in\mathbb{R}\}$ 无上界，故 $d^\star=\infty$。
 
@@ -578,69 +578,69 @@ $$
 
 **QCQP 的拉格朗日对偶。** 考虑 QCQP
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & (1/2)x^TP_0x+q_0^Tx+r_0\\
 \text{subject to}\quad & (1/2)x^TP_ix+q_i^Tx+r_i\le0,\quad i=1,\dots,m,
 \end{aligned} \tag{5.28}
-$$
+```
 
 $P_0\in\mathbf{S}^n_{++}$，$P_i\in\mathbf{S}^n_+$（$i=1,\dots,m$）。拉格朗日函数为
 
-$$
+```math
 L(x,\lambda)=(1/2)x^TP(\lambda)x+q(\lambda)^Tx+r(\lambda),
-$$
+```
 
 其中
 
-$$
+```math
 P(\lambda)=P_0+\sum_{i=1}^m\lambda_iP_i,\qquad q(\lambda)=q_0+\sum_{i=1}^m\lambda_iq_i,\qquad r(\lambda)=r_0+\sum_{i=1}^m\lambda_ir_i.
-$$
+```
 
 <!-- p.242 -->
 
 对一般的 $\lambda$ 可以推导 $g(\lambda)$ 的表达式，但相当复杂。不过若 $\lambda\succeq0$，则 $P(\lambda)\succ0$，且
 
-$$
+```math
 g(\lambda)=\inf_xL(x,\lambda)=-(1/2)q(\lambda)^TP(\lambda)^{-1}q(\lambda)+r(\lambda).
-$$
+```
 
 因此可以把对偶问题表达为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -(1/2)q(\lambda)^TP(\lambda)^{-1}q(\lambda)+r(\lambda)\\
 \text{subject to}\quad & \lambda\succeq0.
 \end{aligned} \tag{5.29}
-$$
+```
 
 Slater 条件说：若二次不等式约束严格可行，即存在 $x$ 使 $(1/2)x^TP_ix+q_i^Tx+r_i<0$（$i=1,\dots,m$），则 (5.29) 与 (5.28) 之间强对偶性成立。
 
 **熵最大化。** 下一个例子是熵最大化问题 (5.13)：$\min\sum_{i=1}^nx_i\log x_i\ \text{s.t.}\ Ax\preceq b,\ \mathbf{1}^Tx=1$，定义域 $\mathcal{D}=\mathbb{R}^n_+$。拉格朗日对偶函数已在第 222 页推导；对偶问题为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -b^T\lambda-\nu-e^{-\nu-1}\sum_{i=1}^ne^{-a_i^T\lambda}\\
 \text{subject to}\quad & \lambda\succeq0,
 \end{aligned} \tag{5.30}
-$$
+```
 
 变量 $\lambda\in\mathbb{R}^m$、$\nu\in\mathbb{R}$。(5.13) 的（较弱）Slater 条件告诉我们：若存在 $x\succ0$ 满足 $Ax\preceq b$ 与 $\mathbf{1}^Tx=1$，则最优对偶间隙为零。
 
 可以对偶变量 $\nu$ 解析地最大化来简化对偶问题 (5.30)。固定 $\lambda$，目标函数在关于 $\nu$ 的导数为零时最大：
 
-$$
+```math
 \nu=\log\sum_{i=1}^ne^{-a_i^T\lambda}-1.
-$$
+```
 
 把这个 $\nu$ 的最优值代入对偶问题得
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -b^T\lambda-\log\Bigl(\sum_{i=1}^ne^{-a_i^T\lambda}\Bigr)\\
 \text{subject to}\quad & \lambda\succeq0,
 \end{aligned}
-$$
+```
 
 这是带非负性约束的 geometric program（几何规划，凸形式）。
 
@@ -648,12 +648,12 @@ $$
 
 **最小体积覆盖椭球。** 考虑问题 (5.14)：$\min\log\det X^{-1}\ \text{s.t.}\ a_i^TXa_i\le1$（$i=1,\dots,m$），定义域 $\mathcal{D}=\mathbf{S}^n_{++}$。拉格朗日对偶函数由 (5.15) 给出，所以对偶问题可表达为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & \log\det\Bigl(\sum_{i=1}^m\lambda_ia_ia_i^T\Bigr)-\mathbf{1}^T\lambda+n\\
 \text{subject to}\quad & \lambda\succeq0
 \end{aligned} \tag{5.31}
-$$
+```
 
 <!-- p.243 -->
 
@@ -661,44 +661,44 @@ $$
 
 **有强对偶性的非凸二次问题。** 在罕见情形下非凸问题也有强对偶性。一个重要例子：在单位球上最小化非凸二次函数：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & x^TAx+2b^Tx\\
 \text{subject to}\quad & x^Tx\le1,
 \end{aligned} \tag{5.32}
-$$
+```
 
 $A\in\mathbf{S}^n$、$A\not\succeq0$、$b\in\mathbb{R}^n$。由于 $A\not\succeq0$，这不是凸问题。这个问题有时称为 trust region problem（信赖域问题），出现在「在单位球上（假设近似在该区域内大致有效）最小化函数的二阶近似」中。
 
 拉格朗日函数为
 
-$$
+```math
 L(x,\lambda)=x^TAx+2b^Tx+\lambda(x^Tx-1)=x^T(A+\lambda I)x+2b^Tx-\lambda,
-$$
+```
 
 所以对偶函数为
 
-$$
+```math
 g(\lambda)=\begin{cases}-b^T(A+\lambda I)^\dagger b-\lambda & A+\lambda I\succeq0,\ b\in\mathcal{R}(A+\lambda I)\\ -\infty & \text{otherwise},\end{cases}
-$$
+```
 
 其中 $(A+\lambda I)^\dagger$ 是 $A+\lambda I$ 的伪逆。因此拉格朗日对偶问题为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -b^T(A+\lambda I)^\dagger b-\lambda\\
 \text{subject to}\quad & A+\lambda I\succeq0,\quad b\in\mathcal{R}(A+\lambda I),
 \end{aligned} \tag{5.33}
-$$
+```
 
 变量 $\lambda\in\mathbb{R}$。虽然从这个表达式看不出来，这是一个凸优化问题。事实上它容易求解，因为可表达为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -\sum_{i=1}^n(q_i^Tb)^2/(\lambda_i+\lambda)-\lambda\\
 \text{subject to}\quad & \lambda\ge-\lambda_{\min}(A),
 \end{aligned}
-$$
+```
 
 其中 $\lambda_i$ 与 $q_i$ 是 $A$ 的特征值与相应（正交归一）特征向量，且当 $q_i^Tb=0$ 时 $(q_i^Tb)^2/0$ 解释为 0，否则为 $\infty$。
 
@@ -714,32 +714,32 @@ $$
 
 玩家使用 randomized 或 mixed strategies（随机化或混合策略）：每个玩家按概率分布随机、独立地选择：
 
-$$
+```math
 \mathrm{prob}(k=i)=u_i,\ i=1,\dots,n;\qquad \mathrm{prob}(l=i)=v_i,\ i=1,\dots,m.
-$$
+```
 
 这里 $u$ 与 $v$ 给出两个玩家选择的概率分布，即其相应的 strategies（策略）。玩家 1 向玩家 2 的 expected payoff（期望支付）为
 
-$$
+```math
 \sum_{k=1}^n\sum_{l=1}^mu_kv_lP_{kl}=u^TPv.
-$$
+```
 
 玩家 1 想选 $u$ 最小化 $u^TPv$，玩家 2 想选 $v$ 最大化 $u^TPv$。
 
 先从玩家 1 的角度分析博弈，假设她的策略 $u$ 被玩家 2 知道（显然给玩家 2 优势）。玩家 2 会选 $v$ 最大化 $u^TPv$，产生期望支付
 
-$$
+```math
 \sup\{u^TPv \mid v\succeq0,\ \mathbf{1}^Tv=1\}=\max_{i=1,\dots,m}(P^Tu)_i.
-$$
+```
 
 玩家 1 能做的最好是选 $u$ 最小化这个最坏情况支付，即选策略 $u$ 求解问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & \max_{i=1,\dots,m}(P^Tu)_i\\
 \text{subject to}\quad & u\succeq0,\quad \mathbf{1}^Tu=1,
 \end{aligned} \tag{5.34}
-$$
+```
 
 它是分段线性凸优化问题。记其最优值为 $p_1^\star$。这是玩家 1 能安排的最小期望支付——假设玩家 2 知道玩家 1 的策略并按自己最大优势行动。
 
@@ -747,18 +747,18 @@ $$
 
 类似地可以考虑玩家 2 的策略 $v$ 被玩家 1 知道的情形（给玩家 1 优势）。此时玩家 1 选 $u$ 最小化 $u^TPv$，产生期望支付
 
-$$
+```math
 \inf\{u^TPv \mid u\succeq0,\ \mathbf{1}^Tu=1\}=\min_{i=1,\dots,n}(Pv)_i.
-$$
+```
 
 玩家 2 选 $v$ 最大化它，即选策略 $v$ 求解问题
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & \min_{i=1,\dots,n}(Pv)_i\\
 \text{subject to}\quad & v\succeq0,\quad \mathbf{1}^Tv=1,
 \end{aligned} \tag{5.35}
-$$
+```
 
 <!-- p.245 -->
 
@@ -770,45 +770,45 @@ $$
 
 先把 (5.34) 表述为 LP：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & t\\
 \text{subject to}\quad & u\succeq0,\quad \mathbf{1}^Tu=1\\
 & P^Tu\preceq t\mathbf{1},
 \end{aligned}
-$$
+```
 
 额外变量 $t\in\mathbb{R}$。为 $P^Tu\preceq t\mathbf{1}$ 引入乘子 $\lambda$、为 $u\succeq0$ 引入 $\mu$、为 $\mathbf{1}^Tu=1$ 引入 $\nu$，拉格朗日函数为
 
-$$
+```math
 t+\lambda^T(P^Tu-t\mathbf{1})-\mu^Tu+\nu(1-\mathbf{1}^Tu)=\nu+(1-\mathbf{1}^T\lambda)t+(P\lambda-\nu\mathbf{1}-\mu)^Tu,
-$$
+```
 
 所以对偶函数为
 
-$$
+```math
 g(\lambda,\mu,\nu)=\begin{cases}\nu & \mathbf{1}^T\lambda=1,\ P\lambda-\nu\mathbf{1}=\mu\\ -\infty & \text{否则}.\end{cases}
-$$
+```
 
 对偶问题为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & \nu\\
 \text{subject to}\quad & \lambda\succeq0,\ \mathbf{1}^T\lambda=1,\ \mu\succeq0\\
 & P\lambda-\nu\mathbf{1}=\mu.
 \end{aligned}
-$$
+```
 
 消去 $\mu$ 得 (5.34) 的拉格朗日对偶：
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & \nu\\
 \text{subject to}\quad & \lambda\succeq0,\ \mathbf{1}^T\lambda=1\\
 & P\lambda\succeq\nu\mathbf{1},
 \end{aligned}
-$$
+```
 
 变量 $\lambda,\nu$。但显然它等价于 (5.35)。由于 LP 可行，强对偶性成立：问题 (5.34) 与 (5.35) 的最优值相等。
 
@@ -822,33 +822,33 @@ $$
 
 可以用集合
 
-$$
+```math
 \mathcal{G}=\{(f_1(x),\dots,f_m(x),\,h_1(x),\dots,h_p(x),\,f_0(x))\in\mathbb{R}^m\times\mathbb{R}^p\times\mathbb{R} \mid x\in\mathcal{D}\} \tag{5.36}
-$$
+```
 
 （约束与目标函数取值的集合）给出对偶函数的简单几何解释。(5.1) 的最优值 $p^\star$ 用 $\mathcal{G}$ 容易表达为
 
-$$
+```math
 p^\star=\inf\{t \mid (u,v,t)\in\mathcal{G},\ u\preceq0,\ v=0\}.
-$$
+```
 
 求对偶函数在 $(\lambda,\nu)$ 处的值，就是在 $(u,v,t)\in\mathcal{G}$ 上最小化仿射函数
 
-$$
+```math
 (\lambda,\nu,1)^T(u,v,t)=\sum_{i=1}^m\lambda_iu_i+\sum_{i=1}^p\nu_iv_i+t,
-$$
+```
 
 即
 
-$$
+```math
 g(\lambda,\nu)=\inf\{(\lambda,\nu,1)^T(u,v,t) \mid (u,v,t)\in\mathcal{G}\}.
-$$
+```
 
 特别地，若下确界有限，则不等式
 
-$$
+```math
 (\lambda,\nu,1)^T(u,v,t)\ge g(\lambda,\nu)
-$$
+```
 
 定义 $\mathcal{G}$ 的一个支撑超平面。这有时称为 nonvertical supporting hyperplane（非竖直支撑超平面），因为法向量的最后一个分量非零。
 
@@ -856,14 +856,14 @@ $$
 
 现在设 $\lambda\succeq0$。则显然：若 $u\preceq0$、$v=0$，有 $t\ge(\lambda,\nu,1)^T(u,v,t)$。因此
 
-$$
+```math
 \begin{aligned}
 p^\star&=\inf\{t \mid (u,v,t)\in\mathcal{G},\ u\preceq0,\ v=0\}\\
 &\ge \inf\{(\lambda,\nu,1)^T(u,v,t) \mid (u,v,t)\in\mathcal{G},\ u\preceq0,\ v=0\}\\
 &\ge \inf\{(\lambda,\nu,1)^T(u,v,t) \mid (u,v,t)\in\mathcal{G}\}\\
 &= g(\lambda,\nu),
 \end{aligned}
-$$
+```
 
 即得到弱对偶性。这个解释见图 5.3 与 5.4（单不等式约束的简单问题）。
 
@@ -871,15 +871,15 @@ $$
 
 **上图变体。** 本节描述基于 $\mathcal{G}$ 的对偶几何解释的一个变体，它解释了为什么（大多数）凸问题有强对偶性。定义集合 $\mathcal{A}\subseteq\mathbb{R}^m\times\mathbb{R}^p\times\mathbb{R}$：
 
-$$
+```math
 \mathcal{A}=\mathcal{G}+\bigl(\mathbb{R}^m_+\times\{0\}\times\mathbb{R}_+\bigr), \tag{5.37}
-$$
+```
 
 更显式地：
 
-$$
+```math
 \mathcal{A}=\{(u,v,t) \mid \exists x\in\mathcal{D},\ f_i(x)\le u_i,\ i=1,\dots,m,\ h_i(x)=v_i,\ i=1,\dots,p,\ f_0(x)\le t\}.
-$$
+```
 
 <!-- p.248 -->
 
@@ -887,27 +887,27 @@ $$
 
 用 $\mathcal{A}$ 可以把最优值表达为
 
-$$
+```math
 p^\star=\inf\{t \mid (0,0,t)\in\mathcal{A}\}.
-$$
+```
 
 在点 $(\lambda,\nu)$（$\lambda\succeq0$）处求对偶函数，可以在 $\mathcal{A}$ 上最小化仿射函数 $(\lambda,\nu,1)^T(u,v,t)$：若 $\lambda\succeq0$，则
 
-$$
+```math
 g(\lambda,\nu)=\inf\{(\lambda,\nu,1)^T(u,v,t) \mid (u,v,t)\in\mathcal{A}\}.
-$$
+```
 
 若下确界有限，则
 
-$$
+```math
 (\lambda,\nu,1)^T(u,v,t)\ge g(\lambda,\nu)
-$$
+```
 
 定义 $\mathcal{A}$ 的一个非竖直支撑超平面。特别地，由于 $(0,0,p^\star)\in\mathbf{bd}\,\mathcal{A}$，有
 
-$$
+```math
 p^\star=(\lambda,\nu,1)^T(0,0,p^\star)\ge g(\lambda,\nu), \tag{5.38}
-$$
+```
 
 即弱对偶下界。强对偶性成立当且仅当 (5.38) 对某个对偶可行的 $(\lambda,\nu)$ 取等，即 $\mathcal{A}$ 在其边界点 $(0,0,p^\star)$ 处存在非竖直支撑超平面。
 
@@ -923,39 +923,39 @@ $$
 
 集合 $\mathcal{A}$（由 (5.37) 定义）在底层问题凸时容易证明是凸的。定义第二个凸集
 
-$$
+```math
 \mathcal{B}=\{(0,0,s)\in\mathbb{R}^m\times\mathbb{R}^p\times\mathbb{R} \mid s<p^\star\}.
-$$
+```
 
-集合 $\mathcal{A}$ 与 $\mathcal{B}$ 不相交。为看出这一点，设 $(u,v,t)\in\mathcal{A}\cap\mathcal{B}$。由 $(u,v,t)\in\mathcal{B}$ 得 $u=0$、$v=0$、$t<p^\star$。由 $(u,v,t)\in\mathcal{A}$，存在 $x$ 满足 $f_i(x)\le0$（$i=1,\dots,m$）、$Ax-b=0$、$f_0(x)\le t<p^\star$，这与 $p^\star$ 是原始问题最优值矛盾。
+集合 $\mathcal{A}$ 与 $\mathcal{B}$ 不相交。为看出这一点，设 $(u,v,t)\in\mathcal{A}\cap\mathcal{B}$。由 $(u,v,t)\in\mathcal{B}$ 得 $u=0$、$v=0$、$t\lt p^\star$。由 $(u,v,t)\in\mathcal{A}$，存在 $x$ 满足 $f_i(x)\le0$（$i=1,\dots,m$）、$Ax-b=0$、$f_0(x)\le t\lt p^\star$，这与 $p^\star$ 是原始问题最优值矛盾。
 
 由 §2.5.1 的分离超平面定理，存在 $(\tilde{\lambda},\tilde{\nu},\mu)\neq0$ 与 $\alpha$ 使
 
-$$
+```math
 (u,v,t)\in\mathcal{A} \implies \tilde{\lambda}^Tu+\tilde{\nu}^Tv+\mu t\ge\alpha, \tag{5.39}
-$$
+```
 
-$$
+```math
 (u,v,t)\in\mathcal{B} \implies \tilde{\lambda}^Tu+\tilde{\nu}^Tv+\mu t\le\alpha. \tag{5.40}
-$$
+```
 
-由 (5.39) 得 $\tilde{\lambda}\succeq0$ 且 $\mu\ge0$（否则 $\tilde{\lambda}^Tu+\mu t$ 在 $\mathcal{A}$ 上无下界，与 (5.39) 矛盾）。条件 (5.40) 只意味着 $\mu t\le\alpha$ 对所有 $t<p^\star$，故 $\mu p^\star\le\alpha$。结合 (5.39)，对任何 $x\in\mathcal{D}$：
+由 (5.39) 得 $\tilde{\lambda}\succeq0$ 且 $\mu\ge0$（否则 $\tilde{\lambda}^Tu+\mu t$ 在 $\mathcal{A}$ 上无下界，与 (5.39) 矛盾）。条件 (5.40) 只意味着 $\mu t\le\alpha$ 对所有 $t\lt p^\star$，故 $\mu p^\star\le\alpha$。结合 (5.39)，对任何 $x\in\mathcal{D}$：
 
-$$
+```math
 \sum_{i=1}^m\tilde{\lambda}_if_i(x)+\tilde{\nu}^T(Ax-b)+\mu f_0(x)\ge\alpha\ge\mu p^\star. \tag{5.41}
-$$
+```
 
 设 $\mu>0$。此时可把 (5.41) 除以 $\mu$ 得
 
-$$
+```math
 L(x,\tilde{\lambda}/\mu,\tilde{\nu}/\mu)\ge p^\star
-$$
+```
 
 对所有 $x\in\mathcal{D}$，由此对 $x$ 最小化得 $g(\lambda,\nu)\ge p^\star$，其中定义
 
-$$
+```math
 \lambda=\tilde{\lambda}/\mu,\qquad \nu=\tilde{\nu}/\mu.
-$$
+```
 
 由弱对偶性 $g(\lambda,\nu)\le p^\star$，所以事实上 $g(\lambda,\nu)=p^\star$。这表明强对偶性成立且对偶最优达到——至少在 $\mu>0$ 的情形。
 
@@ -963,15 +963,15 @@ $$
 
 现在考虑 $\mu=0$ 的情形。由 (5.41)，对所有 $x\in\mathcal{D}$：
 
-$$
+```math
 \sum_{i=1}^m\tilde{\lambda}_if_i(x)+\tilde{\nu}^T(Ax-b)\ge0. \tag{5.42}
-$$
+```
 
 把它应用于满足 Slater 条件的点 $\tilde{x}$，得
 
-$$
+```math
 \sum_{i=1}^m\tilde{\lambda}_if_i(\tilde{x})\ge0.
-$$
+```
 
 <!-- p.250/251 -->
 
@@ -987,32 +987,32 @@ $$
 
 没有等式约束的问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)\\
 \text{subject to}\quad & f_i(x)\le0,\quad i=1,\dots,m
 \end{aligned} \tag{5.43}
-$$
+```
 
 的拉格朗日对偶，与（无约束）多准则问题
 
-$$
+```math
 \text{minimize (w.r.t. }\mathbb{R}^{m+1}_+)\quad F(x)=(f_1(x),\dots,f_m(x),f_0(x)) \tag{5.44}
-$$
+```
 
 的标量化方法（见 §4.7.4）之间有自然的联系。在标量化中，选正向量 $\tilde{\lambda}$ 并最小化标量函数 $\tilde{\lambda}^TF(x)$；任何最小化点保证 Pareto 最优。由于可以用正常数缩放 $\tilde{\lambda}$ 而不影响最小化点，不失一般性取 $\tilde{\lambda}=(\lambda,1)$。于是标量化中最小化的函数是
 
-$$
+```math
 \tilde{\lambda}^TF(x)=f_0(x)+\sum_{i=1}^m\lambda_if_i(x),
-$$
+```
 
 它正是问题 (5.43) 的拉格朗日函数。
 
 为确立「凸多准则问题的每个 Pareto 最优点都对某个非负权重向量 $\tilde{\lambda}$ 最小化 $\tilde{\lambda}^TF(x)$」，我们考虑集合 $\mathcal{A}$（由 (4.62) 定义）：
 
-$$
+```math
 \mathcal{A}=\{t\in\mathbb{R}^{m+1} \mid \exists x\in\mathcal{D},\ f_i(x)\le t_i,\ i=0,\dots,m\},
-$$
+```
 
 它与拉格朗日对偶中出现的集合 $\mathcal{A}$（(5.37) 定义）完全相同。这里也是把所需的权重向量为构造为集合在任意 Pareto 最优点处的支撑超平面。在多准则优化中，我们把权重向量的分量解释为目标函数之间的相对权重。当我们把权重向量与 $f_0$ 相关联的最后一个分量固定为 1 时，其他权重的解释是相对 $f_0$ 的成本，即相对目标的成本。
 
@@ -1026,49 +1026,49 @@ $$
 
 可以把原始与对偶优化问题表达为更对称的形式。为简化讨论假设没有等式约束；结果容易扩展。先注意
 
-$$
+```math
 \sup_{\lambda\succeq0}L(x,\lambda)=\sup_{\lambda\succeq0}\Bigl(f_0(x)+\sum_{i=1}^m\lambda_if_i(x)\Bigr)=\begin{cases}f_0(x) & f_i(x)\le0,\ i=1,\dots,m\\ \infty & \text{otherwise}.\end{cases}
-$$
+```
 
 <!-- p.252 -->
 
 事实上，设 $x$ 不可行且某 $i$ 有 $f_i(x)>0$，则取 $\lambda_j=0$（$j\neq i$）且 $\lambda_i\to\infty$ 可见 $\sup_{\lambda\succeq0}L(x,\lambda)=\infty$。另一方面若 $f_i(x)\le0$（$i=1,\dots,m$），则 $\lambda$ 的最优选择是 $\lambda=0$，$\sup_{\lambda\succeq0}L(x,\lambda)=f_0(x)$。这意味着可以把原始问题的最优值表达为
 
-$$
+```math
 p^\star=\inf_x\sup_{\lambda\succeq0}L(x,\lambda).
-$$
+```
 
 由对偶函数的定义，也有
 
-$$
+```math
 d^\star=\sup_{\lambda\succeq0}\inf_xL(x,\lambda).
-$$
+```
 
 于是弱对偶性可表达为不等式
 
-$$
+```math
 \sup_{\lambda\succeq0}\inf_xL(x,\lambda)\le\inf_x\sup_{\lambda\succeq0}L(x,\lambda), \tag{5.45}
-$$
+```
 
 强对偶性表达为等式
 
-$$
+```math
 \sup_{\lambda\succeq0}\inf_xL(x,\lambda)=\inf_x\sup_{\lambda\succeq0}L(x,\lambda).
-$$
+```
 
 强对偶性意味着关于 $x$ 的最小化与关于 $\lambda\succeq0$ 的最大化可以交换次序而不影响结果。
 
 事实上，不等式 (5.45) 不依赖 $L$ 的任何性质：对任何 $f:\mathbb{R}^n\times\mathbb{R}^m\to\mathbb{R}$（及任何 $W\subseteq\mathbb{R}^n$、$Z\subseteq\mathbb{R}^m$），有
 
-$$
+```math
 \sup_{z\in Z}\inf_{w\in W}f(w,z)\le\inf_{w\in W}\sup_{z\in Z}f(w,z). \tag{5.46}
-$$
+```
 
 这个一般不等式称为 max-min inequality（max-min 不等式）。当等号成立时，即
 
-$$
+```math
 \sup_{z\in Z}\inf_{w\in W}f(w,z)=\inf_{w\in W}\sup_{z\in Z}f(w,z), \tag{5.47}
-$$
+```
 
 我们说 $f$（与 $W$、$Z$）满足 strong max-min property（强 max-min 性质）或 saddle-point property（鞍点性质）。当然强 max-min 性质只在特殊情形成立，例如当 $f:\mathbb{R}^n\times\mathbb{R}^m\to\mathbb{R}$ 是强对偶性成立的问题的拉格朗日函数、$W=\mathbb{R}^n$、$Z=\mathbb{R}^m_+$。
 
@@ -1078,15 +1078,15 @@ $$
 
 我们称数对 $\tilde{w}\in W$、$\tilde{z}\in Z$ 是 $f$（与 $W$、$Z$）的 saddle-point（鞍点），如果
 
-$$
+```math
 f(\tilde{w},z)\le f(\tilde{w},\tilde{z})\le f(w,\tilde{z})
-$$
+```
 
 对所有 $w\in W$、$z\in Z$。换言之，$\tilde{w}$ 最小化 $f(w,\tilde{z})$（在 $w\in W$ 上），$\tilde{z}$ 最大化 $f(\tilde{w},z)$（在 $z\in Z$ 上）：
 
-$$
+```math
 f(\tilde{w},\tilde{z})=\inf_{w\in W}f(w,\tilde{z}),\qquad f(\tilde{w},\tilde{z})=\sup_{z\in Z}f(\tilde{w},z).
-$$
+```
 
 <!-- p.253 -->
 
@@ -1100,21 +1100,21 @@ $$
 
 设玩家 1 先选，然后玩家 2 在得知玩家 1 的选择后选。玩家 2 想最大化支付 $f(w,z)$，所以会选 $z\in Z$ 最大化 $f(w,z)$。所得支付为 $\sup_{z\in Z}f(w,z)$，依赖第一个玩家的选择 $w$。（这里假设上确界达到；若不然最优支付可任意接近 $\sup_{z\in Z}f(w,z)$。）玩家 1 知道（或假设）玩家 2 会遵循这一策略，所以会选 $w\in W$ 使这个给玩家 2 的最坏情况支付尽量小。于是玩家 1 选
 
-$$
+```math
 \operatorname*{argmin}_{w\in W}\sup_{z\in Z}f(w,z),
-$$
+```
 
 产生玩家 1 向玩家 2 的支付
 
-$$
+```math
 \inf_{w\in W}\sup_{z\in Z}f(w,z).
-$$
+```
 
 现在设出牌次序颠倒：玩家 2 必须先选 $z\in Z$，然后玩家 1（知道 $z$）选 $w\in W$。按类似论证，若玩家遵循最优策略，玩家 2 应选 $z\in Z$ 最大化 $\inf_{w\in W}f(w,z)$，产生支付
 
-$$
+```math
 \sup_{z\in Z}\inf_{w\in W}f(w,z).
-$$
+```
 
 max-min 不等式 (5.46) 陈述（直觉上显然的）事实：后手更好，或更准确地说，玩家在选择前知道对手的选择更好。换言之，若玩家 1 必须先选，玩家 2 的支付更大。当鞍点性质 (5.47) 成立时，后手没有优势。
 
@@ -1132,12 +1132,12 @@ max-min 不等式 (5.46) 陈述（直觉上显然的）事实：后手更好，�
 
 拉格朗日对偶有一个有趣的经济解释。设变量 $x$ 表示企业如何运营，$f_0(x)$ 表示在 $x$ 运营的成本，即 $-f_0(x)$ 是在运营条件 $x$ 的 profit（利润，比如以美元计）。每个约束 $f_i(x)\le0$ 表示某种 limit（限制），如资源限制（仓库空间、劳动力）或监管限制（环境）。在尊重限制下最大化利润的运营条件可以通过求解问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)\\
 \text{subject to}\quad & f_i(x)\le0,\quad i=1,\dots,m
 \end{aligned}
-$$
+```
 
 找到。最优利润为 $-p^\star$。
 

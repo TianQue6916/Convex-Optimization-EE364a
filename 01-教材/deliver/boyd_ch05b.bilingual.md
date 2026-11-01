@@ -14,23 +14,23 @@
 
 对偶可行点使我们能在不知道 $p^\star$ 精确值的情况下，界定给定可行点的次优程度。事实上若 $x$ 原始可行、$(\lambda,\nu)$ 对偶可行，则
 
-$$
+```math
 f_0(x)-p^\star\le f_0(x)-g(\lambda,\nu).
-$$
+```
 
 特别地，这确立 $x$ 是 $\epsilon$-次优的，$\epsilon=f_0(x)-g(\lambda,\nu)$。（也确立 $(\lambda,\nu)$ 对对偶问题 $\epsilon$-次优。）
 
 我们把原始与对偶目标之间的 gap（间隙）
 
-$$
+```math
 f_0(x)-g(\lambda,\nu)
-$$
+```
 
 称为与原始可行点 $x$、对偶可行点 $(\lambda,\nu)$ 相关联的 duality gap（对偶间隙）。原始-对偶可行对 $x,(\lambda,\nu)$ 把原始（与对偶）问题的最优值限定在一个区间内：
 
-$$
+```math
 p^\star\in[g(\lambda,\nu),f_0(x)],\qquad d^\star\in[g(\lambda,\nu),f_0(x)],
-$$
+```
 
 区间宽度就是对偶间隙。
 
@@ -40,9 +40,9 @@ $$
 
 这些观察可用于优化算法以提供 nonheuristic stopping criteria（非启发式停止准则）。设算法产生原始可行的 $x^{(k)}$ 与对偶可行的 $(\lambda^{(k)},\nu^{(k)})$ 序列（$k=1,2,\dots$），$\epsilon_{\mathrm{abs}}>0$ 是给定的要求绝对精度。则停止准则（即算法终止条件）
 
-$$
+```math
 f_0(x^{(k)})-g(\lambda^{(k)},\nu^{(k)})\le\epsilon_{\mathrm{abs}}
-$$
+```
 
 <!-- p.256 -->
 
@@ -50,15 +50,15 @@ $$
 
 类似的条件可用于保证给定的相对精度 $\epsilon_{\mathrm{rel}}>0$。若
 
-$$
+```math
 g(\lambda^{(k)},\nu^{(k)})>0,\qquad \frac{f_0(x^{(k)})-g(\lambda^{(k)},\nu^{(k)})}{g(\lambda^{(k)},\nu^{(k)})}\le\epsilon_{\mathrm{rel}}
-$$
+```
 
 成立，或
 
-$$
+```math
 f_0(x^{(k)})<0,\qquad \frac{f_0(x^{(k)})-g(\lambda^{(k)},\nu^{(k)})}{-f_0(x^{(k)})}\le\epsilon_{\mathrm{rel}}
-$$
+```
 
 成立，则 $p^\star\neq0$ 且相对误差 $\dfrac{f_0(x^{(k)})-p^\star}{|p^\star|}$ 保证小于等于 $\epsilon_{\mathrm{rel}}$。
 
@@ -68,14 +68,14 @@ $$
 
 设原始与对偶最优值被达到且相等（特别地，强对偶性成立）。设 $x^\star$ 是原始最优、$(\lambda^\star,\nu^\star)$ 是对偶最优点。这意味着
 
-$$
+```math
 \begin{aligned}
 f_0(x^\star)&=g(\lambda^\star,\nu^\star)\\
 &=\inf_x\Bigl(f_0(x)+\sum_{i=1}^m\lambda_i^\star f_i(x)+\sum_{i=1}^p\nu_i^\star h_i(x)\Bigr)\\
 &\le f_0(x^\star)+\sum_{i=1}^m\lambda_i^\star f_i(x^\star)+\sum_{i=1}^p\nu_i^\star h_i(x^\star)\\
 &\le f_0(x^\star).
 \end{aligned}
-$$
+```
 
 第一行陈述最优对偶间隙为零，第二行是对偶函数的定义。第三行成立因为拉格朗日函数关于 $x$ 的下确界小于等于其在 $x=x^\star$ 处的值。最后一个不等式由 $\lambda_i^\star\ge0$、$f_i(x^\star)\le0$（$i=1,\dots,m$）与 $h_i(x^\star)=0$（$i=1,\dots,p$）得出。我们得出：这个链中的两个不等式都取等号。
 
@@ -85,27 +85,27 @@ $$
 
 另一个重要结论是
 
-$$
+```math
 \sum_{i=1}^m\lambda_i^\star f_i(x^\star)=0.
-$$
+```
 
 由于和中每项非正，得出
 
-$$
+```math
 \lambda_i^\star f_i(x^\star)=0,\qquad i=1,\dots,m. \tag{5.48}
-$$
+```
 
 这个条件称为 complementary slackness（互补松弛性）；它对任何原始最优 $x^\star$ 与任何对偶最优 $(\lambda^\star,\nu^\star)$ 成立（强对偶性成立时）。可以把互补松弛条件表达为
 
-$$
+```math
 \lambda_i^\star>0 \implies f_i(x^\star)=0,
-$$
+```
 
 或等价地
 
-$$
+```math
 f_i(x^\star)<0 \implies \lambda_i^\star=0.
-$$
+```
 
 粗略地说：第 $i$ 个最优拉格朗日乘子为零，除非第 $i$ 个约束在最优点处起作用。
 
@@ -117,13 +117,13 @@ $$
 
 **非凸问题的 KKT 条件。** 如上，设 $x^\star$ 与 $(\lambda^\star,\nu^\star)$ 是任何对偶间隙为零的原始与对偶最优点。由于 $x^\star$ 在 $x$ 上最小化 $L(x,\lambda^\star,\nu^\star)$，其梯度在 $x^\star$ 必为零：
 
-$$
+```math
 \nabla f_0(x^\star)+\sum_{i=1}^m\lambda_i^\star\nabla f_i(x^\star)+\sum_{i=1}^p\nu_i^\star\nabla h_i(x^\star)=0.
-$$
+```
 
 于是有
 
-$$
+```math
 \begin{aligned}
 f_i(x^\star)&\le0,&& i=1,\dots,m\\
 h_i(x^\star)&=0,&& i=1,\dots,p\\
@@ -131,7 +131,7 @@ h_i(x^\star)&=0,&& i=1,\dots,p\\
 \lambda_i^\star f_i(x^\star)&=0,&& i=1,\dots,m\\
 \nabla f_0(x^\star)+\sum_{i=1}^m\lambda_i^\star\nabla f_i(x^\star)+\sum_{i=1}^p\nu_i^\star\nabla h_i(x^\star)&=0,
 \end{aligned} \tag{5.49}
-$$
+```
 
 称为 Karush-Kuhn-Tucker (KKT) conditions（KKT 条件）。总结：对任何目标与约束函数可微、且强对偶性成立的优化问题，任何原始与对偶最优点对必须满足 KKT 条件 (5.49)。
 
@@ -139,7 +139,7 @@ $$
 
 **凸问题的 KKT 条件。** 当原始问题凸时，KKT 条件对「点是原始与对偶最优」也是 sufficient（充分）的。换言之，若 $f_i$ 凸、$h_i$ 仿射，且 $\tilde{x},\tilde{\lambda},\tilde{\nu}$ 是满足 KKT 条件
 
-$$
+```math
 \begin{aligned}
 f_i(\tilde{x})&\le0,&& i=1,\dots,m\\
 h_i(\tilde{x})&=0,&& i=1,\dots,p\\
@@ -147,15 +147,15 @@ h_i(\tilde{x})&=0,&& i=1,\dots,p\\
 \tilde{\lambda}_if_i(\tilde{x})&=0,&& i=1,\dots,m\\
 \nabla f_0(\tilde{x})+\sum_{i=1}^m\tilde{\lambda}_i\nabla f_i(\tilde{x})+\sum_{i=1}^p\tilde{\nu}_i\nabla h_i(\tilde{x})&=0
 \end{aligned}
-$$
+```
 
 的任何点，则 $\tilde{x}$ 与 $(\tilde{\lambda},\tilde{\nu})$ 原始与对偶最优，对偶间隙为零。
 
 为看出这一点，注意前两个条件说明 $\tilde{x}$ 原始可行。由于 $\tilde{\lambda}_i\ge0$，$L(x,\tilde{\lambda},\tilde{\nu})$ 关于 $x$ 凸；最后一个 KKT 条件说明其关于 $x$ 的梯度在 $x=\tilde{x}$ 为零，故 $\tilde{x}$ 在 $x$ 上最小化 $L(x,\tilde{\lambda},\tilde{\nu})$。由此得
 
-$$
+```math
 g(\tilde{\lambda},\tilde{\nu})=L(\tilde{x},\tilde{\lambda},\tilde{\nu})=f_0(\tilde{x})+\sum_{i=1}^m\tilde{\lambda}_if_i(\tilde{x})+\sum_{i=1}^p\tilde{\nu}_ih_i(\tilde{x})=f_0(\tilde{x}),
-$$
+```
 
 最后一行用 $h_i(\tilde{x})=0$ 与 $\tilde{\lambda}_if_i(\tilde{x})=0$。这表明 $\tilde{x}$ 与 $(\tilde{\lambda},\tilde{\nu})$ 对偶间隙为零，因此原始与对偶最优。总结：对任何目标与约束函数可微的凸优化问题，满足 KKT 条件的任何点都原始与对偶最优、对偶间隙为零。
 
@@ -165,24 +165,24 @@ KKT 条件在优化中扮演重要角色。少数特殊情形可以解析地求�
 
 <span style="color:#00838f;">**[例 5.1]** **等式约束的凸二次最小化。** 考虑问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & (1/2)x^TPx+q^Tx+r\\
 \text{subject to}\quad & Ax=b,
 \end{aligned} \tag{5.50}
-$$
+```
 
 $P\in\mathbf{S}^n_+$。此问题的 KKT 条件为
 
-$$
+```math
 Ax^\star=b,\qquad Px^\star+q+A^T\nu^\star=0,
-$$
+```
 
 可以写成
 
-$$
+```math
 \begin{bmatrix}P&A^T\\A&0\end{bmatrix}\begin{bmatrix}x^\star\\\nu^\star\end{bmatrix}=\begin{bmatrix}-q\\b\end{bmatrix}.
-$$
+```
 
 <!-- p.259 -->
 
@@ -190,48 +190,48 @@ $$
 
 <span style="color:#00838f;">**[例 5.2]** **注水（water-filling）。** 考虑凸优化问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & -\sum_{i=1}^n\log(\alpha_i+x_i)\\
 \text{subject to}\quad & x\succeq0,\quad \mathbf{1}^Tx=1,
 \end{aligned}
-$$
+```
 
 $\alpha_i>0$。此问题出现在 information theory（信息论）中：给 $n$ 个通信信道分配功率。变量 $x_i$ 表示分配给第 $i$ 个信道的发射功率，$\log(\alpha_i+x_i)$ 给出信道的 capacity（容量）或通信速率，所以问题是把总功率 1 分配给各信道以最大化总通信速率。
 
 为不等式约束 $x^\star\succeq0$ 引入拉格朗日乘子 $\lambda^\star\in\mathbb{R}^n$、为等式约束 $\mathbf{1}^Tx=1$ 引入乘子 $\nu^\star\in\mathbb{R}$，得 KKT 条件：
 
-$$
+```math
 \begin{aligned}
 &x^\star\succeq0,\qquad \mathbf{1}^Tx^\star=1,\\
 &\lambda^\star\succeq0,\qquad \lambda_i^\star x_i^\star=0,\quad i=1,\dots,n,\\
 &-1/(\alpha_i+x_i^\star)-\lambda_i^\star+\nu^\star=0,\quad i=1,\dots,n.
 \end{aligned}
-$$
+```
 
 我们可以直接解这些方程求 $x^\star,\lambda^\star,\nu^\star$。先注意 $\lambda^\star$ 在最后一个方程中充当 slack variable（松弛变量），可以消去，留下
 
-$$
+```math
 \begin{aligned}
 &x^\star\succeq0,\qquad \mathbf{1}^Tx^\star=1,\\
 &x_i^\star(\nu^\star-1/(\alpha_i+x_i^\star))=0,\quad i=1,\dots,n,\\
 &\nu^\star\ge1/(\alpha_i+x_i^\star),\quad i=1,\dots,n.
 \end{aligned}
-$$
+```
 
 若 $\nu^\star<1/\alpha_i$，最后这个条件只有 $x_i^\star>0$ 才能成立，而这由第三个条件蕴含 $\nu^\star=1/(\alpha_i+x_i^\star)$。解 $x_i^\star$ 得：$\nu^\star<1/\alpha_i$ 时 $x_i^\star=1/\nu^\star-\alpha_i$。若 $\nu^\star\ge1/\alpha_i$，则 $x_i^\star>0$ 不可能，因为它会蕴含 $\nu^\star\ge1/\alpha_i>1/(\alpha_i+x_i^\star)$，违反互补松弛条件。因此 $\nu^\star\ge1/\alpha_i$ 时 $x_i^\star=0$。于是
 
-$$
+```math
 x_i^\star=\begin{cases}1/\nu^\star-\alpha_i & \nu^\star<1/\alpha_i\\ 0 & \nu^\star\ge1/\alpha_i,\end{cases}
-$$
+```
 
 <!-- p.259/260 -->
 
 更简单地：$x_i^\star=\max\{0,\ 1/\nu^\star-\alpha_i\}$。把这个 $x_i^\star$ 表达式代入条件 $\mathbf{1}^Tx^\star=1$ 得
 
-$$
+```math
 \sum_{i=1}^n\max\{0,\ 1/\nu^\star-\alpha_i\}=1.
-$$
+```
 
 左边是 $1/\nu^\star$ 的分段线性递增函数，breakpoints（断点）在 $\alpha_i$，所以方程有唯一解，容易确定。
 
@@ -251,15 +251,15 @@ KKT 条件在力学中有漂亮的解释（这确实是拉格朗日的主要动�
 
 弹簧的势能作为块位置的函数为
 
-$$
+```math
 f_0(x_1,x_2)=\frac{1}{2}k_1x_1^2+\frac{1}{2}k_2(x_2-x_1)^2+\frac{1}{2}k_3(l-x_2)^2,
-$$
+```
 
 其中 $k_i>0$ 是三个弹簧的 stiffness constants（刚度常数）。平衡位置 $x^\star$ 是在不等式约束
 
-$$
+```math
 w/2-x_1\le0,\qquad w+x_1-x_2\le0,\qquad w/2-l+x_2\le0 \tag{5.51}
-$$
+```
 
 下最小化势能的位置。这些约束称为 kinematic constraints（运动学约束），表达块有宽度 $w>0$、不能彼此穿透也不能穿墙的事实。
 
@@ -267,28 +267,28 @@ $$
 
 平衡位置因此由优化问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & (1/2)\bigl(k_1x_1^2+k_2(x_2-x_1)^2+k_3(l-x_2)^2\bigr)\\
 \text{subject to}\quad & w/2-x_1\le0\\
 & w+x_1-x_2\le0\\
 & w/2-l+x_2\le0
 \end{aligned} \tag{5.52}
-$$
+```
 
 的解给出，它是一个 QP。
 
 以 $\lambda_1,\lambda_2,\lambda_3$ 为拉格朗日乘子，此问题的 KKT 条件由运动学约束 (5.51)、非负性约束 $\lambda_i\ge0$、互补松弛条件
 
-$$
+```math
 \lambda_1(w/2-x_1)=0,\qquad \lambda_2(w-x_2+x_1)=0,\qquad \lambda_3(w/2-l+x_2)=0, \tag{5.53}
-$$
+```
 
 以及零梯度条件
 
-$$
+```math
 \begin{bmatrix}k_1x_1-k_2(x_2-x_1)\\ k_2(x_2-x_1)-k_3(l-x_2)\end{bmatrix}+\lambda_1\begin{bmatrix}-1\\0\end{bmatrix}+\lambda_2\begin{bmatrix}1\\-1\end{bmatrix}+\lambda_3\begin{bmatrix}0\\1\end{bmatrix}=0 \tag{5.54}
-$$
+```
 
 <!-- p.262 -->
 
@@ -304,29 +304,29 @@ $$
 
 更精确地：设我们有强对偶性且已知最优的 $(\lambda^\star,\nu^\star)$。设 $L(x,\lambda^\star,\nu^\star)$ 的最小化点（即问题
 
-$$
+```math
 \text{minimize}\quad f_0(x)+\sum_{i=1}^m\lambda_i^\star f_i(x)+\sum_{i=1}^p\nu_i^\star h_i(x), \tag{5.55}
-$$
+```
 
 的解）是唯一的。（对凸问题，例如当 $L(x,\lambda^\star,\nu^\star)$ 关于 $x$ 严格凸时会发生。）那么若 (5.55) 的解原始可行，它必是原始最优的；若它不原始可行，则不可能存在原始最优点，即可以断定原始最优未被达到。当对偶问题比原始问题更容易求解时（例如可解析求解，或有可利用的特殊结构），这个观察很有意思。
 
 <span style="color:#00838f;">**[例 5.3]** **熵最大化。** 考虑熵最大化问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)=\sum_{i=1}^nx_i\log x_i\\
 \text{subject to}\quad & Ax\preceq b,\quad \mathbf{1}^Tx=1
 \end{aligned}
-$$
+```
 
 （$\mathbb{R}^n_{++}$ 上）及其对偶问题
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -b^T\lambda-\nu-e^{-\nu-1}\sum_{i=1}^ne^{-a_i^T\lambda}\\
 \text{subject to}\quad & \lambda\succeq0
 \end{aligned}
-$$
+```
 
 （$a_i$ 是 $A$ 的列；见第 222、228 页）。设（弱形式的）Slater 条件成立，即存在 $x\succ0$ 满足 $Ax\preceq b$ 与 $\mathbf{1}^Tx=1$，故强对偶性成立且存在最优解 $(\lambda^\star,\nu^\star)$。
 
@@ -334,50 +334,50 @@ $$
 
 设我们已解出对偶问题。$(\lambda^\star,\nu^\star)$ 处的拉格朗日函数为
 
-$$
+```math
 L(x,\lambda^\star,\nu^\star)=\sum_{i=1}^nx_i\log x_i+\lambda^{\star T}(Ax-b)+\nu^\star(\mathbf{1}^Tx-1),
-$$
+```
 
 它在 $\mathcal{D}$ 上严格凸且有下界，所以有唯一解 $x^\star$：
 
-$$
+```math
 x_i^\star=1/\exp(a_i^T\lambda^\star+\nu^\star+1),\qquad i=1,\dots,n.
-$$
+```
 
 若 $x^\star$ 原始可行，它必是原始问题 (5.13) 的最优解。若 $x^\star$ 不原始可行，则可断定原始最优未被达到。
 
 <span style="color:#00838f;">**[例 5.4]** **等式约束下最小化可分函数。** 考虑问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)=\sum_{i=1}^nf_i(x_i)\\
 \text{subject to}\quad & a^Tx=b,
 \end{aligned}
-$$
+```
 
 $a\in\mathbb{R}^n$、$b\in\mathbb{R}$、$f_i:\mathbb{R}\to\mathbb{R}$ 可微且严格凸。目标函数称为 separable（可分）的，因为它是单个变量 $x_1,\dots,x_n$ 的函数之和。设 $f_0$ 的定义域与约束集相交，即存在 $x_0\in\mathbf{dom}\,f_0$ 满足 $a^Tx_0=b$。这蕴含问题有唯一最优点 $x^\star$。
 
 拉格朗日函数为
 
-$$
+```math
 L(x,\nu)=\sum_{i=1}^nf_i(x_i)+\nu(a^Tx-b)=-b\nu+\sum_{i=1}^n(f_i(x_i)+\nu a_ix_i),
-$$
+```
 
 也可分，所以对偶函数为
 
-$$
+```math
 \begin{aligned}
 g(\nu)&=-b\nu+\inf_x\Bigl(\sum_{i=1}^n(f_i(x_i)+\nu a_ix_i)\Bigr)\\
 &=-b\nu+\sum_{i=1}^n\inf_{x_i}(f_i(x_i)+\nu a_ix_i)\\
 &=-b\nu-\sum_{i=1}^nf_i^*(-\nu a_i).
 \end{aligned}
-$$
+```
 
 对偶问题为
 
-$$
+```math
 \text{maximize}\quad -b\nu-\sum_{i=1}^nf_i^*(-\nu a_i),
-$$
+```
 
 （标量）变量 $\nu\in\mathbb{R}$。
 
@@ -393,13 +393,13 @@ $$
 
 考虑原优化问题 (5.1) 的如下 perturbed（扰动）版本：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)\\
 \text{subject to}\quad & f_i(x)\le u_i,\quad i=1,\dots,m\\
 & h_i(x)=v_i,\quad i=1,\dots,p,
 \end{aligned} \tag{5.56}
-$$
+```
 
 <!-- p.264 -->
 
@@ -407,9 +407,9 @@ $$
 
 我们定义 $p^\star(u,v)$ 为扰动问题 (5.56) 的最优值：
 
-$$
+```math
 p^\star(u,v)=\inf\{f_0(x) \mid \exists x\in\mathcal{D},\ f_i(x)\le u_i,\ i=1,\dots,m,\ h_i(x)=v_i,\ i=1,\dots,p\}.
-$$
+```
 
 可能有 $p^\star(u,v)=\infty$，对应导致不可行的约束扰动。注意 $p^\star(0,0)=p^\star$（未扰动问题 (5.1) 的最优值）。（希望这点轻微的记号滥用不会引起混淆。）粗略地说，函数 $p^\star:\mathbb{R}^m\times\mathbb{R}^p\to\mathbb{R}$ 给出问题最优值作为约束右端扰动的函数。
 
@@ -421,24 +421,24 @@ $$
 
 现在设强对偶性成立且对偶最优达到。（原问题凸且满足 Slater 条件时即如此。）设 $(\lambda^\star,\nu^\star)$ 对未扰动问题的对偶 (5.16) 最优。则对所有 $u,v$：
 
-$$
+```math
 p^\star(u,v)\ge p^\star(0,0)-\lambda^{\star T}u-\nu^{\star T}v. \tag{5.57}
-$$
+```
 
 为确立此不等式，设 $x$ 是扰动问题的任何可行点（即 $f_i(x)\le u_i$（$i=1,\dots,m$）、$h_i(x)=v_i$（$i=1,\dots,p$））。则由强对偶性：
 
-$$
+```math
 \begin{aligned}
 p^\star(0,0)=g(\lambda^\star,\nu^\star)&\le f_0(x)+\sum_{i=1}^m\lambda_i^\star f_i(x)+\sum_{i=1}^p\nu_i^\star h_i(x)\\
 &\le f_0(x)+\lambda^{\star T}u+\nu^{\star T}v.
 \end{aligned}
-$$
+```
 
 （第一个不等式由 $g(\lambda^\star,\nu^\star)$ 的定义；第二个由 $\lambda^\star\succeq0$。）我们得出：对扰动问题的任何可行 $x$，
 
-$$
+```math
 f_0(x)\ge p^\star(0,0)-\lambda^{\star T}u-\nu^{\star T}v,
-$$
+```
 
 由得 (5.57)。
 
@@ -463,9 +463,9 @@ $$
 
 现在设 $p^\star(u,v)$ 在 $u=0,v=0$ 处可微。则只要强对偶性成立，最优对偶变量 $\lambda^\star,\nu^\star$ 与 $p^\star$ 在 $u=0,v=0$ 处的梯度相关：
 
-$$
+```math
 \lambda_i^\star=-\frac{\partial p^\star(0,0)}{\partial u_i},\qquad \nu_i^\star=-\frac{\partial p^\star(0,0)}{\partial v_i}. \tag{5.58}
-$$
+```
 
 这个性质可以从图 5.10 的例子看出：$-\lambda^\star$ 是 $p^\star$ 在 $u=0$ 附近的斜率。
 
@@ -473,27 +473,27 @@ $$
 
 为证 (5.58)，设 $p^\star(u,v)$ 可微且强对偶性成立。对扰动 $u=te_i$、$v=0$（$e_i$ 是第 $i$ 个单位向量）：
 
-$$
+```math
 \lim_{t\to0}\frac{p^\star(te_i,0)-p^\star}{t}=\frac{\partial p^\star(0,0)}{\partial u_i}.
-$$
+```
 
 不等式 (5.57) 陈述：对 $t>0$，
 
-$$
+```math
 \frac{p^\star(te_i,0)-p^\star}{t}\ge-\lambda_i^\star,
-$$
+```
 
 而对 $t<0$ 有相反的不等式。取 $t\to0^+$ 极限得
 
-$$
+```math
 \frac{\partial p^\star(0,0)}{\partial u_i}\ge-\lambda_i^\star,
-$$
+```
 
 取 $t<0$ 极限得相反不等式，于是
 
-$$
+```math
 \frac{\partial p^\star(0,0)}{\partial u_i}=-\lambda_i^\star.
-$$
+```
 
 同样的方法可以确立 $\dfrac{\partial p^\star(0,0)}{\partial v_i}=-\nu_i^\star$。
 
@@ -505,9 +505,9 @@ $$
 
 **影子价格解释。** 结果 (5.58) 也可以在经济学框架下给出简单几何解释。（为简单）考虑没有等式约束、满足 Slater 条件的凸问题。变量 $x\in\mathbb{R}^m$ 决定 firm（企业）如何运营，目标 $f_0$ 是成本，即 $-f_0$ 是利润。每个约束 $f_i(x)\le0$ 表示对某种 resource（资源）（如劳动力、钢材、仓库空间）的限制。（负的）扰动最优成本函数 $-p^\star(u)$ 告诉我们：如果每种资源对企业的供给增加或减少，利润能多赚或少赚多少。若它在 $u=0$ 附近可微，则
 
-$$
+```math
 \lambda_i^\star=-\frac{\partial p^\star(0)}{\partial u_i}.
-$$
+```
 
 换言之，$\lambda_i^\star$ 告诉我们：资源 $i$ 的可得性少量增加，企业大约能多赚多少利润。
 
@@ -527,9 +527,9 @@ $$
 
 考虑形如
 
-$$
+```math
 \text{minimize}\quad f_0(Ax+b) \tag{5.59}
-$$
+```
 
 的无约束问题。其拉格朗日对偶函数是常数 $p^\star$。所以虽然强对偶性成立（$p^\star=d^\star$），拉格朗日对偶既无用也不有趣。
 
@@ -537,67 +537,67 @@ $$
 
 现在把问题 (5.59) 重新表述为
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(y)\\
 \text{subject to}\quad & Ax+b=y. \tag{5.60}
 \end{aligned}
-$$
+```
 
 这里引入了新变量 $y$ 以及新等式约束 $Ax+b=y$。问题 (5.59) 与 (5.60) 显然等价。重新表述的问题的拉格朗日函数为
 
-$$
+```math
 L(x,y,\nu)=f_0(y)+\nu^T(Ax+b-y).
-$$
+```
 
 为找对偶函数，对 $x$ 与 $y$ 最小化 $L$。对 $x$ 最小化发现：除非 $A^T\nu=0$，$g(\nu)=-\infty$；此时留下
 
-$$
+```math
 g(\nu)=b^T\nu+\inf_y(f_0(y)-\nu^Ty)=b^T\nu-f_0^*(\nu),
-$$
+```
 
 其中 $f_0^*$ 是 $f_0$ 的共轭。(5.60) 的对偶问题因此可表达为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & b^T\nu-f_0^*(\nu)\\
 \text{subject to}\quad & A^T\nu=0. \tag{5.61}
 \end{aligned}
-$$
+```
 
 于是重新表述的问题 (5.60) 的对偶远比原问题 (5.59) 的对偶有用。
 
 <span style="color:#00838f;">**[例 5.5]** **无约束几何规划。** 考虑无约束几何规划
 
-$$
+```math
 \text{minimize}\quad \log\Bigl(\sum_{i=1}^m\exp(a_i^Tx+b_i)\Bigr).
-$$
+```
 
 先通过引入新变量与等式约束重新表述：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(y)=\log\Bigl(\sum_{i=1}^m\exp y_i\Bigr)\\
 \text{subject to}\quad & Ax+b=y,
 \end{aligned}
-$$
+```
 
 $a_i^T$ 是 $A$ 的行。log-sum-exp 函数的共轭是
 
-$$
+```math
 f_0^*(\nu)=\begin{cases}\sum_{i=1}^m\nu_i\log\nu_i & \nu\succeq0,\ \mathbf{1}^T\nu=1\\ \infty & \text{otherwise}\end{cases}
-$$
+```
 
 （例 3.25，第 93 页），所以重新表述的问题的对偶可表达为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & b^T\nu-\sum_{i=1}^m\nu_i\log\nu_i\\
 \text{subject to}\quad & \mathbf{1}^T\nu=1\\
 & A^T\nu=0\\
 & \nu\succeq0,
 \end{aligned} \tag{5.62}
-$$
+```
 
 它是一个熵最大化问题。
 
@@ -605,9 +605,9 @@ $$
 
 <span style="color:#00838f;">**[例 5.6]** **范数逼近问题。** 考虑无约束范数逼近问题
 
-$$
+```math
 \text{minimize}\quad \|Ax-b\|, \tag{5.63}
-$$
+```
 
 $\|\cdot\|$ 是任意范数。这里拉格朗日对偶函数同样是常数（等于 (5.63) 的最优值），因此无用。
 
@@ -615,95 +615,95 @@ $\|\cdot\|$ 是任意范数。这里拉格朗日对偶函数同样是常数（�
 
 再次重新表述问题为
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & \|y\|\\
 \text{subject to}\quad & Ax-b=y.
 \end{aligned}
-$$
+```
 
 按 (5.61)，拉格朗日对偶问题为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & b^T\nu\\
 \text{subject to}\quad & \|\nu\|_*\le1,\quad A^T\nu=0, \tag{5.64}
 \end{aligned}
-$$
+```
 
 这里用了「范数的共轭是对偶范数单位球的示性函数」（例 3.26，第 93 页）。
 
 引入新等式约束的想法也可以应用于约束函数。例如考虑问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(A_0x+b_0)\\
 \text{subject to}\quad & f_i(A_ix+b_i)\le0,\quad i=1,\dots,m,
 \end{aligned} \tag{5.65}
-$$
+```
 
 $A_i\in\mathbb{R}^{k_i\times n}$、$f_i:\mathbb{R}^{k_i}\to\mathbb{R}$ 凸。（为简单这里不含等式约束。）引入新变量 $y_i\in\mathbb{R}^{k_i}$（$i=0,\dots,m$），把问题重新表述为
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(y_0)\\
 \text{subject to}\quad & f_i(y_i)\le0,\quad i=1,\dots,m\\
 & A_ix+b_i=y_i,\quad i=0,\dots,m.
 \end{aligned} \tag{5.66}
-$$
+```
 
 此问题的拉格朗日函数为
 
-$$
+```math
 L(x,y_0,\dots,y_m,\lambda,\nu_0,\dots,\nu_m)=f_0(y_0)+\sum_{i=1}^m\lambda_if_i(y_i)+\sum_{i=0}^m\nu_i^T(A_ix+b_i-y_i).
-$$
+```
 
 为找对偶函数，对 $x$ 与 $y_i$ 最小化。对 $x$ 的最小值为 $-\infty$，除非
 
-$$
+```math
 \sum_{i=0}^mA_i^T\nu_i=0,
-$$
+```
 
 <!-- p.270 -->
 
 此时对 $\lambda\succ0$ 有
 
-$$
+```math
 \begin{aligned}
 g(\lambda,\nu_0,\dots,\nu_m)&=\sum_{i=0}^m\nu_i^Tb_i+\inf_{y_0,\dots,y_m}\Bigl(f_0(y_0)+\sum_{i=1}^m\lambda_if_i(y_i)-\sum_{i=0}^m\nu_i^Ty_i\Bigr)\\
 &=\sum_{i=0}^m\nu_i^Tb_i+\inf_{y_0}\bigl(f_0(y_0)-\nu_0^Ty_0\bigr)+\sum_{i=1}^m\lambda_i\inf_{y_i}\bigl(f_i(y_i)-(\nu_i/\lambda_i)^Ty_i\bigr)\\
 &=\sum_{i=0}^m\nu_i^Tb_i-f_0^*(\nu_0)-\sum_{i=1}^m\lambda_if_i^*(\nu_i/\lambda_i).
 \end{aligned}
-$$
+```
 
 最后的表达式涉及共轭函数的 perspective（透视），因此关于对偶变量凹。最后处理 $\lambda\succeq0$ 但某些 $\lambda_i$ 为零时会发生什么：若 $\lambda_i=0$ 且 $\nu_i\neq0$，则对偶函数为 $-\infty$；若 $\lambda_i=0$ 且 $\nu_i=0$，则涉及 $y_i,\nu_i,\lambda_i$ 的项全为零。因此只要约定 $\lambda_i=0,\nu_i=0$ 时取 $\lambda_if_i^*(\nu_i/\lambda_i)=0$、$\lambda_i=0,\nu_i\neq0$ 时取 $\infty$，上面的 $g$ 表达式对一切 $\lambda\succeq0$ 有效。于是可以把问题 (5.66) 的对偶表达为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & \sum_{i=0}^m\nu_i^Tb_i-f_0^*(\nu_0)-\sum_{i=1}^m\lambda_if_i^*(\nu_i/\lambda_i)\\
 \text{subject to}\quad & \lambda\succeq0\\
 & \sum_{i=0}^mA_i^T\nu_i=0. \tag{5.67}
 \end{aligned}
-$$
+```
 
 <span style="color:#00838f;">**[例 5.7]** **不等式约束的几何规划。** 不等式约束的几何规划
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & \log\Bigl(\sum_{k=1}^{K_0}e^{a_{0k}^Tx+b_{0k}}\Bigr)\\
 \text{subject to}\quad & \log\Bigl(\sum_{k=1}^{K_i}e^{a_{ik}^Tx+b_{ik}}\Bigr)\le0,\quad i=1,\dots,m
 \end{aligned}
-$$
+```
 
 具有 (5.65) 的形式，$f_i:\mathbb{R}^{K_i}\to\mathbb{R}$ 由 $f_i(y)=\log\bigl(\sum_{k=1}^{K_i}e^{y_k}\bigr)$ 给出。此函数的共轭为
 
-$$
+```math
 f_i^*(\nu)=\begin{cases}\sum_{k=1}^{K_i}\nu_k\log\nu_k & \nu\succeq0,\ \mathbf{1}^T\nu=1\\ \infty & \text{otherwise}.\end{cases}
-$$
+```
 
 用 (5.67) 可以立即写出对偶问题：
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & b_0^T\nu_0-\sum_{k=1}^{K_0}\nu_{0k}\log\nu_{0k}+\sum_{i=1}^m\Bigl(b_i^T\nu_i-\sum_{k=1}^{K_i}\nu_{ik}\log(\nu_{ik}/\lambda_i)\Bigr)\\
 \text{subject to}\quad & \nu_0\succeq0,\ \mathbf{1}^T\nu_0=1\\
@@ -711,18 +711,18 @@ $$
 & \lambda_i\ge0,\quad i=1,\dots,m\\
 & \sum_{i=0}^mA_i^T\nu_i=0,
 \end{aligned}
-$$
+```
 
 进一步化简为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & b_0^T\nu_0-\sum_{k=1}^{K_0}\nu_{0k}\log\nu_{0k}+\sum_{i=1}^m\Bigl(b_i^T\nu_i-\sum_{k=1}^{K_i}\nu_{ik}\log(\nu_{ik}/\mathbf{1}^T\nu_i)\Bigr)\\
 \text{subject to}\quad & \nu_i\succeq0,\quad i=0,\dots,m\\
 & \mathbf{1}^T\nu_0=1\\
 & \sum_{i=0}^mA_i^T\nu_i=0.
 \end{aligned}
-$$
+```
 
 <!-- p.271 -->
 
@@ -732,27 +732,27 @@ $$
 
 <span style="color:#00838f;">**[例 5.8]** 再次考虑最小范数问题
 
-$$
+```math
 \text{minimize}\quad \|Ax-b\|,
-$$
+```
 
 $\|\cdot\|$ 是某范数。重新表述为
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & (1/2)\|y\|_2^2\\
 \text{subject to}\quad & Ax-b=y.
 \end{aligned}
-$$
+```
 
 这里引入了新变量，并把目标替换为其平方的一半。显然与原问题等价。重新表述的问题的对偶为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -(1/2)\|\nu\|_*^2+b^T\nu\\
 \text{subject to}\quad & A^T\nu=0,
 \end{aligned}
-$$
+```
 
 用了事实「$(1/2)\|\cdot\|_2^2$ 的共轭是 $(1/2)\|\cdot\|_*^2$」（例 3.27，第 93 页）。注意这个对偶问题与前面推导的对偶问题 (5.64) 不同。
 
@@ -764,40 +764,40 @@ $$
 
 <span style="color:#00838f;">**[例 5.9]** **带箱约束的线性规划。** 考虑线性规划
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & Ax=b\\
 & l\preceq x\preceq u
 \end{aligned} \tag{5.68}
-$$
+```
 
 $A\in\mathbb{R}^{p\times n}$、$l\prec u$。约束 $l\preceq x\preceq u$ 有时称为 box constraints（箱约束）或 variable bounds（变量界）。
 
 当然可以直接推导此线性规划的对偶。对偶将有与等式约束相关联的拉格朗日乘子 $\nu$、与不等式约束 $x\preceq u$ 相关联的 $\lambda_1$、与不等式约束 $l\preceq x$ 相关联的 $\lambda_2$。对偶为
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & -b^T\nu-\lambda_1^Tu+\lambda_2^Tl\\
 \text{subject to}\quad & A^T\nu+\lambda_1-\lambda_2+c=0\\
 & \lambda_1\succeq0,\quad \lambda_2\succeq0.
 \end{aligned} \tag{5.69}
-$$
+```
 
 另一种做法：先把问题 (5.68) 重新表述为
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)\\
 \text{subject to}\quad & Ax=b, \tag{5.70}
 \end{aligned}
-$$
+```
 
 其中定义
 
-$$
+```math
 f_0(x)=\begin{cases}c^Tx & l\preceq x\preceq u\\ \infty & \text{否则}.\end{cases}
-$$
+```
 
 <!-- p.272 -->
 
@@ -805,15 +805,15 @@ $$
 
 问题 (5.70) 的对偶函数为
 
-$$
+```math
 g(\nu)=\inf_{l\preceq x\preceq u}\bigl(c^Tx+\nu^T(Ax-b)\bigr)=-b^T\nu-u^T(A^T\nu+c)^-+l^T(A^T\nu+c)^+,
-$$
+```
 
 其中 $(y^+)_i=\max\{y_i,0\}$、$(y^-)_i=\max\{-y_i,0\}$。所以这里我们能推导出 $g$ 的解析公式——一个凹的分段线性函数。对偶问题是无约束问题
 
-$$
+```math
 \text{maximize}\quad -b^T\nu-u^T(A^T\nu+c)^-+l^T(A^T\nu+c)^+,\tag{5.71}
-$$
+```
 
 它与原问题的对偶形式相当不同。（问题 (5.69) 与 (5.71) 密切相关，事实上等价；见习题 5.8。）
 

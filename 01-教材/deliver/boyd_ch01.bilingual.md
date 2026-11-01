@@ -10,17 +10,17 @@
 
 一个 mathematical optimization problem（数学优化问题，或简称 optimization problem，优化问题）具有如下形式：
 
-$$
+```math
 \text{minimize}\quad f_0(x) \qquad \text{subject to}\quad f_i(x) \le b_i,\; i = 1,\dots,m. \tag{1.1}
-$$
+```
 
 这里向量 $x = (x_1,\dots,x_n)$ 是问题的 optimization variable（优化变量），函数 $f_0:\mathbb{R}^n \to \mathbb{R}$ 是 objective function（目标函数），函数 $f_i:\mathbb{R}^n\to\mathbb{R},\; i=1,\dots,m$ 是（不等式）constraint functions（约束函数），常数 $b_1,\dots,b_m$ 是约束的 limits（限制）或 bounds（界）。如果一个向量 $x^\star$ 在所有满足约束的向量中具有最小的目标值，就称它为 optimal（最优的），或问题 (1.1) 的 solution（解）：即对任意满足 $f_1(z)\le b_1,\dots,f_m(z)\le b_m$ 的 $z$，都有 $f_0(z)\ge f_0(x^\star)$。
 
 我们通常研究的是以目标函数和约束函数的特定形式为特征的一族或一类优化问题。一个重要的例子：若 (1.1) 中目标函数与约束函数 $f_0,\dots,f_m$ 都是 linear（线性的），即满足
 
-$$
+```math
 f_i(\alpha x + \beta y) = \alpha f_i(x) + \beta f_i(y) \tag{1.2}
-$$
+```
 
 对所有 $x, y\in\mathbb{R}^n$ 与所有 $\alpha,\beta\in\mathbb{R}$ 成立，则该优化问题称为 linear program（线性规划）。若优化问题不是线性的，则称为 nonlinear program（非线性规划）。
 
@@ -28,9 +28,9 @@ $$
 
 本书讨论的是一类称为 convex optimization problems（凸优化问题）的优化问题。凸优化问题是指目标函数与约束函数都是 convex（凸）的问题，也就是说它们满足不等式
 
-$$
+```math
 f_i(\alpha x + \beta y) \le \alpha f_i(x) + \beta f_i(y)
-$$
+```
 
 对所有 $x, y\in\mathbb{R}^n$ 以及满足 $\alpha+\beta=1,\;\alpha\ge 0,\;\beta\ge 0$ 的 $\alpha,\beta\in\mathbb{R}$ 成立。比较 (1.3) 与 (1.2) 可以看到：convexity（凸性）比 linearity（线性）更一般——不等式取代了限制更强的等式，而且不等式只须对特定的 $\alpha,\beta$ 取值成立。既然任何 linear program 都是凸优化问题，我们可以把 convex optimization（凸优化）看作 linear programming（线性规划）的推广。
 
@@ -78,17 +78,17 @@ $$
 
 least-squares problem（最小二乘问题）是一个无约束（即 $m=0$）的优化问题，其目标是形如 $a_i^Tx-b_i$ 的各term（项）的平方和：
 
-$$
+```math
 \text{minimize}\quad f_0(x) = \|Ax-b\|_2^2 = \sum_{i=1}^k (a_i^T x - b_i)^2. \tag{1.4}
-$$
+```
 
 这里 $A\in\mathbb{R}^{k\times n}$（$k\ge n$），$a_i^T$ 是 $A$ 的各行，向量 $x\in\mathbb{R}^n$ 是优化变量。
 
 **求解最小二乘问题。** 最小二乘问题 (1.4) 的求解可以归结为解一组线性方程
 
-$$
+```math
 (A^TA)x = A^Tb,
-$$
+```
 
 于是有解析解 $x = (A^TA)^{-1}A^Tb$。对最小二乘问题，我们有能把问题解到高精度、可靠性非常高的好算法（和软件实现）。求解时间近似正比于 $n^2k$，且比例常数已知。当前的台式计算机可以在几秒内求解数百个变量、数千个项的最小二乘问题；更强大的计算机当然能更快地求解更大的问题或同样规模的问题。（而且按 Moore's law（摩尔定律），这些求解时间在未来会呈指数下降。）最小二乘的算法与软件已经可靠到可以用于嵌入式优化。
 
@@ -104,9 +104,9 @@ $$
 
 虽然基本最小二乘问题有简单固定的形式，但应用中有若干标准技术可以增加其灵活性。在 weighted least-squares（加权最小二乘）中，最小化的是加权代价
 
-$$
+```math
 \sum_{i=1}^k w_i (a_i^T x - b_i)^2,
-$$
+```
 
 其中 $w_1,\dots,w_k$ 为正数。（这个问题很容易转化并作为标准最小二乘问题求解。）权重 $w_i$ 的选取用来反映对各项 $a_i^Tx-b_i$ 大小的不同关注程度，或者仅仅是为了影响解。在统计背景下，当线性测量的误差具有不相等的 variances（方差）时，加权最小二乘自然出现。
 
@@ -114,9 +114,9 @@ $$
 
 最小二乘的另一项技术是 regularization（正则化），即在代价函数中加入额外的项。最简单的情形是把变量的平方和乘以一个正常数后加入代价函数：
 
-$$
+```math
 \sum_{i=1}^k (a_i^T x - b_i)^2 + \rho \sum_{i=1}^n x_i^2,
-$$
+```
 
 其中 $\rho > 0$。（这个问题同样可以表述为标准最小二乘问题。）额外的项惩罚 $x$ 的过大取值，使得在只最小化第一个和会得到不合理结果的情形下，仍能得到 sensible solution（合乎情理的解）。参数 $\rho$ 由使用者选择，以便在「让原目标函数 $\sum_{i=1}^k(a_i^Tx-b_i)^2$ 小」与「让 $\sum_{i=1}^n x_i^2$ 不至于太大」之间取得正确的 trade-off（权衡）。当被估计的向量 $x$ 具有先验分布时，正则化就会在统计估计中出现。
 
@@ -130,9 +130,9 @@ $$
 
 另一类重要的优化问题是 linear programming（线性规划），其目标函数与所有约束函数都是线性的：
 
-$$
+```math
 \text{minimize}\quad c^T x \qquad \text{subject to}\quad a_i^T x \le b_i,\; i=1,\dots,m. \tag{1.5}
-$$
+```
 
 这里向量 $c, a_1,\dots,a_m\in\mathbb{R}^n$ 与标量 $b_1,\dots,b_m\in\mathbb{R}$ 是规定目标函数与约束函数的 problem parameters（问题参数）。
 
@@ -146,9 +146,9 @@ $$
 
 举一个简单例子：Chebyshev approximation problem（切比雪夫逼近问题）：
 
-$$
+```math
 \text{minimize}\quad \max_{i=1,\dots,k} |a_i^T x - b_i|. \tag{1.6}
-$$
+```
 
 这里 $x\in\mathbb{R}^n$ 是变量，$a_1,\dots,a_k\in\mathbb{R}^n$、$b_1,\dots,b_k\in\mathbb{R}$ 是规定问题实例的参数。注意它与最小二乘问题 (1.4) 的相似之处：两个问题的目标都是度量 $a_i^Tx-b_i$ 这些项的大小。最小二乘用各项的平方和作目标，而切比雪夫逼近用绝对值的 maximum（最大值）。
 
@@ -156,14 +156,14 @@ $$
 
 切比雪夫逼近问题 (1.6) 可以通过求解线性规划
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & t\\
 \text{subject to}\quad & a_i^T x - t \le b_i, && i = 1,\dots,k\\
 & -a_i^T x - t \le -b_i, && i = 1,\dots,k,
 \end{aligned}
 \tag{1.7}
-$$
+```
 
 来求解，其中变量为 $x\in\mathbb{R}^n$ 与 $t\in\mathbb{R}$。（细节将在第 6 章给出。）由于线性规划很容易求解，切比雪夫逼近问题也就容易求解了。
 
@@ -177,15 +177,15 @@ $$
 
 convex optimization problem（凸优化问题）是如下形式的问题：
 
-$$
+```math
 \text{minimize}\quad f_0(x) \qquad \text{subject to}\quad f_i(x)\le b_i,\; i=1,\dots,m, \tag{1.8}
-$$
+```
 
 其中函数 $f_0,\dots,f_m:\mathbb{R}^n\to\mathbb{R}$ 都是 convex（凸）的，即满足
 
-$$
+```math
 f_i(\alpha x + \beta y) \le \alpha f_i(x) + \beta f_i(y)
-$$
+```
 
 对所有 $x,y\in\mathbb{R}^n$ 与满足 $\alpha+\beta=1,\;\alpha\ge0,\;\beta\ge0$ 的 $\alpha,\beta\in\mathbb{R}$ 成立。最小二乘问题 (1.4) 与线性规划问题 (1.5) 都是一般凸优化问题 (1.8) 的特例。
 
@@ -197,9 +197,9 @@ $$
 
 我们将会看到，内点法求解问题 (1.8) 所需的步数或 iteration（迭代）次数几乎总在 10 到 100 之间。若忽略问题中的任何结构（如稀疏性），每一步需要
 
-$$
+```math
 \max\{n^3,\; n^2 m,\; F\}
-$$
+```
 
 阶的运算，其中 $F$ 是计算目标与约束函数 $f_0,\dots,f_m$ 的一阶与二阶导数的代价。
 
@@ -343,9 +343,9 @@ Nonlinear optimization（非线性优化，或 nonlinear programming，非线性
 
 我们用 $\mathbb{R}$ 表示 real numbers（实数）集合，$\mathbb{R}_+$ 表示 nonnegative real numbers（非负实数）集合，$\mathbb{R}_{++}$ 表示 positive real numbers（正实数）集合。$n$ 维实向量的集合记作 $\mathbb{R}^n$，$m\times n$ 实矩阵的集合记作 $\mathbb{R}^{m\times n}$。我们用方括号定界向量与矩阵，分量之间用空格分隔；用圆括号从逗号分隔的列表构造 column vectors（列向量）。例如，若 $a,b,c\in\mathbb{R}$，则
 
-$$
+```math
 (a,b,c) = \begin{bmatrix} a\\ b\\ c\end{bmatrix} = \left[\,a\;\;b\;\;c\,\right]^T,
-$$
+```
 
 它是 $\mathbb{R}^3$ 的元素。符号 $\mathbf{1}$ 表示所有分量均为 1 的向量（维度由上下文确定）。记号 $x_i$ 可以指向量 $x$ 的第 $i$ 个 component（分量），也可以指向量序列 $x_1,x_2,\dots$ 中第 $i$ 个元素。上下文或正文会明确所指。
 

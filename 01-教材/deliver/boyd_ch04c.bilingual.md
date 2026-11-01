@@ -8,13 +8,13 @@
 
 标准形式凸优化问题 (4.15) 的一个非常有用的推广：允许不等式约束函数取向量值，并在约束中使用广义不等式：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & f_0(x)\\
 \text{subject to}\quad & f_i(x)\preceq_{K_i}0,\quad i=1,\dots,m\\
 & Ax=b,
 \end{aligned} \tag{4.48}
-$$
+```
 
 其中 $f_0:\mathbb{R}^n\to\mathbb{R}$，$K_i\subseteq\mathbb{R}^{k_i}$ 是真锥，$f_i:\mathbb{R}^n\to\mathbb{R}^{k_i}$ 是 $K_i$-凸的。我们称此问题为带 generalized inequality constraints（广义不等式约束）的（标准形式）凸优化问题。问题 (4.15) 是 $K_i=\mathbb{R}_+$（$i=1,\dots,m$）的特例。
 
@@ -32,32 +32,32 @@ $$
 
 带广义不等式的最简单的凸优化问题之一是 conic form problems（锥形式问题，或 cone programs，锥规划），它有线性目标和一个不等式约束函数——仿射的（因此 $K$-凸）：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & Fx+g\preceq_K0\\
 & Ax=b.
 \end{aligned} \tag{4.49}
-$$
+```
 
 当 $K$ 是非负卦限时，锥形式问题退化为线性规划。可以把锥形式问题看作线性规划的推广：逐分量不等式被替换为广义线性不等式。延续与线性规划的类比，我们称锥形式问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & x\succeq_K0\\
 & Ax=b
 \end{aligned}
-$$
+```
 
 为 standard form（标准形式）的锥形式问题；类似地，问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & Fx+g\preceq_K0
 \end{aligned}
-$$
+```
 
 称为 inequality form（不等式形式）的锥形式问题。
 
@@ -65,13 +65,13 @@ $$
 
 当 $K$ 是 $\mathbf{S}^k_+$（$k\times k$ 半正定矩阵锥）时，相应的锥形式问题称为 semidefinite program（半定规划，SDP），形如
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & x_1F_1+\cdots+x_nF_n+G\preceq0\\
 & Ax=b,
 \end{aligned} \tag{4.50}
-$$
+```
 
 其中 $G,F_1,\dots,F_n\in\mathbf{S}^k$，$A\in\mathbb{R}^{p\times n}$。这里的不等式是一个 linear matrix inequality（线性矩阵不等式，见例 2.10）。
 
@@ -81,13 +81,13 @@ $$
 
 **标准形式与不等式形式的半定规划。** 沿用与 LP 的类比：standard form SDP（标准形式 SDP）有线性等式约束以及变量 $X\in\mathbf{S}^n$ 的（矩阵）非负性约束：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & \mathbf{tr}(CX)\\
 \text{subject to}\quad & \mathbf{tr}(A_iX)=b_i,\quad i=1,\dots,p\\
 & X\succeq0,
 \end{aligned} \tag{4.51}
-$$
+```
 
 其中 $C,A_1,\dots,A_p\in\mathbf{S}^n$。（回忆 $\mathbf{tr}(CX)=\sum_{i,j=1}^nC_{ij}X_{ij}$ 是 $\mathbf{S}^n$ 上一般实值线性函数的形式。）这一形式应与标准形式线性规划 (4.28) 比较：LP 与 SDP 的标准形式都是最小化变量的线性函数，受变量的 $p$ 个线性等式约束与变量的非负性约束。
 
@@ -95,52 +95,52 @@ $$
 
 与不等式形式 LP (4.29) 类似的 inequality form SDP（不等式形式 SDP）没有等式约束、只有一个 LMI：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & x_1A_1+\cdots+x_nA_n\preceq B,
 \end{aligned}
-$$
+```
 
 变量 $x\in\mathbb{R}^n$，参数 $B,A_1,\dots,A_n\in\mathbf{S}^k$，$c\in\mathbb{R}^n$。
 
 **多个 LMI 与线性不等式。** 人们也常把带线性目标、线性等式与不等式约束、以及若干 LMI 约束的问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & F^{(i)}(x)=x_1F_1^{(i)}+\cdots+x_nF_n^{(i)}+G^{(i)}\preceq0,\quad i=1,\dots,K\\
 & Gx\preceq h,\quad Ax=b
 \end{aligned}
-$$
+```
 
 也称为 SDP。通过把各个 LMI 与线性不等式组成一个大的块对角 LMI，这类问题很容易变换为 SDP：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & \mathbf{diag}(Gx-h,\ F^{(1)}(x),\dots,F^{(K)}(x))\preceq0\\
 & Ax=b.
 \end{aligned}
-$$
+```
 
 ### <span style="color:#2471a3;">**[section]**</span> <span style="color:#c0392b;">4.6.3 Examples（例子）</span>
 
 **二阶锥规划。** SOCP (4.36) 可以表示为锥形式问题：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & c^Tx\\
 \text{subject to}\quad & -(A_ix+b_i,\ c_i^Tx+d_i)\preceq_{K_i}0,\quad i=1,\dots,m\\
 & Fx=g,
 \end{aligned}
-$$
+```
 
 其中
 
-$$
+```math
 K_i=\{(y,t)\in\mathbb{R}^{n_i+1} \mid \|y\|_2\le t\},
-$$
+```
 
 即 $\mathbb{R}^{n_i+1}$ 中的二阶锥。这解释了优化问题 (4.36) 名为 second-order cone program（二阶锥规划）的原因。
 
@@ -148,43 +148,43 @@ $$
 
 **矩阵范数最小化。** 设 $A(x)=A_0+x_1A_1+\cdots+x_nA_n$（$A_i\in\mathbb{R}^{p\times q}$）。考虑无约束问题
 
-$$
+```math
 \text{minimize}\quad \|A(x)\|_2,
-$$
+```
 
 其中 $\|\cdot\|_2$ 表示谱范数（最大奇异值），$x\in\mathbb{R}^n$ 是变量。这是凸问题，因为 $\|A(x)\|_2$ 是 $x$ 的凸函数。利用事实「$\|A\|_2\le s$ 当且仅当 $A^TA\preceq s^2I$（且 $s\ge0$）」，可以把问题表达为
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & s\\
 \text{subject to}\quad & A(x)^TA(x)\preceq sI,
 \end{aligned}
-$$
+```
 
 变量 $x$ 与 $s$。由于函数 $A(x)^TA(x)-sI$ 关于 $(x,s)$ 矩阵凸，这是一个带单个 $q\times q$ 矩阵不等式约束的凸优化问题。
 
 我们也可以用单个 $(p+q)\times(p+q)$ 的线性矩阵不等式来表述该问题，利用事实
 
-$$
+```math
 A^TA\preceq t^2I\ (\text{且 } t\ge0) \iff \begin{bmatrix}tI&A\\A^T&tI\end{bmatrix}\succeq0
-$$
+```
 
 <!-- p.184 -->
 
 （见 §A.5.5）。这得到 SDP：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & t\\
 \text{subject to}\quad & \begin{bmatrix}tI&A(x)\\A(x)^T&tI\end{bmatrix}\succeq0
 \end{aligned}
-$$
+```
 
 变量 $x,t$。
 
 **矩问题（Moment problems）。** 设 $t$ 是 $\mathbb{R}$ 上的随机变量。期望 $\mathbb{E}\,t^k$（若存在）称为 $t$ 分布的（power）moments（（幂）矩）。以下经典结果给出矩序列的刻画：若 $\mathbb{R}$ 上存在概率分布使 $x_k=\mathbb{E}\,t^k$（$k=0,\dots,2n$），则 $x_0=1$ 且
 
-$$
+```math
 H(x_0,\dots,x_{2n})=
 \begin{bmatrix}
 x_0&x_1&x_2&\dots&x_{n-1}&x_n\\
@@ -194,13 +194,13 @@ x_2&x_3&x_4&\dots&x_{n+1}&x_{n+2}\\
 x_{n-1}&x_n&x_{n+1}&\dots&x_{2n-2}&x_{2n-1}\\
 x_n&x_{n+1}&x_{n+2}&\dots&x_{2n-1}&x_{2n}
 \end{bmatrix}\succeq0. \tag{4.52}
-$$
+```
 
 （矩阵 $H$ 称为与 $x_0,\dots,x_{2n}$ 相关联的 Hankel matrix（Hankel 矩阵）。）这很容易看出：设 $x_i=\mathbb{E}\,t^i$（$i=0,\dots,2n$）是某分布的矩，$y=(y_0,y_1,\dots,y_n)\in\mathbb{R}^{n+1}$，则
 
-$$
+```math
 y^TH(x_0,\dots,x_{2n})y=\sum_{i,j=0}^ny_iy_j\,\mathbb{E}\,t^{i+j}=\mathbb{E}(y_0+y_1t+\cdots+y_nt^n)^2\ge0.
-$$
+```
 
 <!-- p.184/185 -->
 
@@ -210,25 +210,25 @@ $$
 
 设 $t$ 是 $\mathbb{R}$ 上的随机变量。我们不知道其分布，但知道一些矩的界：
 
-$$
+```math
 \underline{\mu}_k\le\mathbb{E}\,t^k\le\overline{\mu}_k,\qquad k=1,\dots,2n
-$$
+```
 
 （这包括知道某些矩的精确值作为特例）。设 $p(t)=c_0+c_1t+\cdots+c_{2n}t^{2n}$ 是给定的多项式。$p(t)$ 的期望关于矩 $\mathbb{E}\,t^i$ 是线性的：
 
-$$
+```math
 \mathbb{E}\,p(t)=\sum_{i=0}^{2n}c_i\,\mathbb{E}\,t^i=\sum_{i=0}^{2n}c_ix_i.
-$$
+```
 
 我们可以计算 $\mathbb{E}\,p(t)$ 的上下界——在所有满足给定矩界的概率分布上——通过求解 SDP：
 
-$$
+```math
 \begin{aligned}
 \text{minimize (maximize)}\quad & c_1x_1+\cdots+c_{2n}x_{2n}\\
 \text{subject to}\quad & \underline{\mu}_k\le x_k\le\overline{\mu}_k,\quad k=1,\dots,2n\\
 & H(1,x_1,\dots,x_{2n})\succeq0,
 \end{aligned}
-$$
+```
 
 变量 $x_1,\dots,x_{2n}$。这给出在所有满足已知矩约束的分布上 $\mathbb{E}\,p(t)$ 的界。这些界是 sharp（尖锐）的：存在一列分布（其矩满足给定矩界），使 $\mathbb{E}\,p(t)$ 收敛到这些 SDP 找到的上下界。
 
@@ -236,9 +236,9 @@ $$
 
 **用不完整的协方差信息为组合风险定界。** 再次考虑经典 Markowitz 组合问题的设定（见第 155 页）：$n$ 种资产或股票的组合，$x_i$ 表示某投资期持有资产 $i$ 的数量，$p_i$ 表示资产 $i$ 在该期的相对价格变化。组合总价值的变化为 $p^Tx$。价格变化向量 $p$ 建模为随机向量，均值与协方差为
 
-$$
+```math
 \bar{p}=\mathbb{E}\,p,\qquad \Sigma=\mathbb{E}(p-\bar{p})(p-\bar{p})^T.
-$$
+```
 
 组合价值变化因此是随机变量，均值 $\bar{p}^Tx$，标准差 $\sigma=(x^T\Sigma x)^{1/2}$。大损失的风险（即组合价值大幅低于期望值的变化）与标准差 $\sigma$ 直接相关并随其增大。因此标准差 $\sigma$（或方差 $\sigma^2$）用作组合风险的度量。
 
@@ -246,25 +246,25 @@ $$
 
 经典组合优化问题中，组合 $x$ 是优化变量，我们在最小平均回报等约束下最小化风险。价格变化统计量 $\bar{p}$ 与 $\Sigma$ 是已知的问题参数。在本文考虑的 risk bounding problem（风险定界问题）中，我们把问题反过来：假设组合 $x$ 已知，但关于协方差矩阵 $\Sigma$ 只有部分信息。例如可能有每个元素的上下界：
 
-$$
+```math
 L_{ij}\le\Sigma_{ij}\le U_{ij},\qquad i,j=1,\dots,n,
-$$
+```
 
 其中 $L,U$ 给定。现在提出问题：在所有与给定界一致的协方差矩阵上，组合的最大风险是多少？我们定义组合的 worst-case variance（最坏情况方差）为
 
-$$
+```math
 \sigma_{\mathrm{wc}}^2=\sup\{x^T\Sigma x \mid L_{ij}\le\Sigma_{ij}\le U_{ij},\ i,j=1,\dots,n,\ \Sigma\succeq0\}.
-$$
+```
 
 我们加上了 $\Sigma\succeq0$（协方差矩阵当然必须满足）。可以通过求解 SDP 找 $\sigma_{\mathrm{wc}}$：
 
-$$
+```math
 \begin{aligned}
 \text{maximize}\quad & x^T\Sigma x\\
 \text{subject to}\quad & L_{ij}\le\Sigma_{ij}\le U_{ij},\quad i,j=1,\dots,n\\
 & \Sigma\succeq0
 \end{aligned}
-$$
+```
 
 变量 $\Sigma\in\mathbf{S}^n$（问题参数 $x,L,U$）。最优 $\Sigma$ 是与给定元素界一致的最坏协方差矩阵——「最坏」指对（给定的）组合 $x$ 风险最大。可以从 SDP 的最优 $\Sigma$ 容易地构造一个与给定界一致、达到最坏情况方差的 $p$ 的分布：例如取 $p=\bar{p}+\Sigma^{1/2}v$，$v$ 是任何满足 $\mathbb{E}\,v=0$、$\mathbb{E}\,vv^T=I$ 的随机向量。
 
@@ -274,30 +274,30 @@ $$
 
 - **某些组合的方差已知。** 可能有等式约束如
 
-$$
+```math
 u_k^T\Sigma u_k=\sigma_k^2,
-$$
+```
 
 其中 $u_k$ 与 $\sigma_k$ 给定。这对应先验知识：某些已知组合（由 $u_k$ 给出）具有已知（或估计得非常精确）的方差。
 - **包含估计误差的影响。** 若协方差 $\Sigma$ 由经验数据估计，估计方法会给出估计值 $\hat{\Sigma}$ 以及关于估计可靠性的某些信息，如一个 confidence ellipsoid（置信椭球）。这可表达为
 
-$$
+```math
 C(\Sigma-\hat{\Sigma})\le\alpha,
-$$
+```
 
 其中 $C$ 是 $\mathbf{S}^n$ 上的正定二次型，常数 $\alpha$ 决定置信水平。
 - **因子模型。** 协方差可能形如
 
-$$
+```math
 \Sigma=F\Sigma_{\mathrm{factor}}F^T+D,
-$$
+```
 
 其中 $F\in\mathbb{R}^{n\times k}$，$\Sigma_{\mathrm{factor}}\in\mathbf{S}^k$，$D$ 对角。这对应形如 $p=Fz+d$ 的价格变化模型，其中 $z$ 是随机变量（影响价格变化的底层 factors（因子）），$d_i$ 独立（每种资产价格的额外波动）。假设因子已知。由于 $\Sigma$ 与 $\Sigma_{\mathrm{factor}}$、$D$ 线性相关，我们可以对它们施加任何（表示先验信息的）凸约束，仍然能用凸优化计算 $\sigma_{\mathrm{wc}}$。
 - **相关系数的信息。** 最简单的情形：$\Sigma$ 的对角元（即每种资产价格的 volatilities（波动率））已知，且价格变化间相关系数的界已知：
 
-$$
+```math
 l_{ij}\le\rho_{ij}=\frac{\Sigma_{ij}}{\Sigma_{ii}^{1/2}\Sigma_{jj}^{1/2}}\le u_{ij},\qquad i,j=1,\dots,n.
-$$
+```
 
 由于 $\Sigma_{ii}$ 已知而 $\Sigma_{ij}$（$i\neq j$）未知，这些是线性不等式。
 
@@ -309,29 +309,29 @@ $$
 
 马尔可夫链的 transition probability matrix（转移概率矩阵）为
 
-$$
+```math
 P_{ij}=\mathrm{prob}(X(t+1)=i \mid X(t)=j),\qquad i,j=1,\dots,n.
-$$
+```
 
 此矩阵必须满足
 
-$$
+```math
 P_{ij}\ge0,\ i,j=1,\dots,n;\qquad \mathbf{1}^TP=\mathbf{1}^T,\qquad P=P^T, \tag{4.53}
-$$
+```
 
 且
 
-$$
+```math
 P_{ij}=0 \text{ 对 } (i,j)\notin\mathcal{E}. \tag{4.54}
-$$
+```
 
 <!-- p.188 -->
 
 由于 $P$ 对称且 $\mathbf{1}^TP=\mathbf{1}^T$，得 $P\mathbf{1}=\mathbf{1}$，所以均匀分布 $(1/n)\mathbf{1}$ 是马尔可夫链的一个 equilibrium distribution（平衡分布）。$X(t)$ 的分布向 $(1/n)\mathbf{1}$ 的收敛由 $P$ 的（按模）第二大特征值决定，即由 $r=\max\{\lambda_2,-\lambda_n\}$ 决定，其中
 
-$$
+```math
 1=\lambda_1\ge\lambda_2\ge\cdots\ge\lambda_n
-$$
+```
 
 是 $P$ 的特征值。我们称 $r$ 为马尔可夫链的 mixing rate（混合速率）。若 $r=1$，$X(t)$ 的分布未必收敛到 $(1/n)\mathbf{1}$（即马尔可夫链不混合）。当 $r<1$，$X(t)$ 的分布当 $t\to\infty$ 时按 $r^t$ 渐近趋近 $(1/n)\mathbf{1}$。因此 $r$ 越小，马尔可夫链混合越快。
 
@@ -339,24 +339,24 @@ fastest mixing Markov chain problem（最快混合马尔可夫链问题）是找
 
 由于特征值 $\lambda_1=1$ 对应特征向量 $\mathbf{1}$，可以把混合速率表示为 $P$ 限制在子空间 $\mathbf{1}^\perp$ 上的范数：$r=\|QPQ\|_2$，其中 $Q=I-(1/n)\mathbf{1}\mathbf{1}^T$ 是向 $\mathbf{1}^\perp$ 正交投影的矩阵。利用 $P\mathbf{1}=\mathbf{1}$：
 
-$$
+```math
 r=\|QPQ\|_2=\|(I-(1/n)\mathbf{1}\mathbf{1}^T)P(I-(1/n)\mathbf{1}\mathbf{1}^T)\|_2=\|P-(1/n)\mathbf{1}\mathbf{1}^T\|_2.
-$$
+```
 
 这表明混合速率 $r$ 是 $P$ 的凸函数，所以最快混合马尔可夫链问题可以表述为凸优化问题：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & \|P-(1/n)\mathbf{1}\mathbf{1}^T\|_2\\
 \text{subject to}\quad & P\mathbf{1}=\mathbf{1}\\
 & P_{ij}\ge0,\quad i,j=1,\dots,n\\
 & P_{ij}=0 \text{ 对 } (i,j)\notin\mathcal{E},
 \end{aligned}
-$$
+```
 
 变量 $P\in\mathbf{S}^n$。通过引入标量变量 $t$ 约束 $P-(1/n)\mathbf{1}\mathbf{1}^T$ 的范数，可以把问题表达为 SDP：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & t\\
 \text{subject to}\quad & -tI\preceq P-(1/n)\mathbf{1}\mathbf{1}^T\preceq tI\\
@@ -364,7 +364,7 @@ $$
 & P_{ij}\ge0,\quad i,j=1,\dots,n\\
 & P_{ij}=0 \text{ 对 } (i,j)\notin\mathcal{E}. \tag{4.55}
 \end{aligned}
-$$
+```
 
 > <span style="color:#2471a3;">**[译者注｜跨课程连接]** 最快混合马尔可夫链与随机算法（CLRS 第 5 章的随机化思想、Metropolis 算法）相接：链混合得越快，采样越接近独立。这个 SDP 是「把谱隙（spectral gap）最大化」的凸化范例。</span>
 
@@ -376,13 +376,13 @@ $$
 
 §4.6 中我们把标准形式问题 (4.1) 扩展到向量值的约束函数。本节研究向量值目标函数的含义。我们把一般的 vector optimization problem（向量优化问题）记为
 
-$$
+```math
 \begin{aligned}
 \text{minimize (with respect to } K)\quad & f_0(x)\\
 \text{subject to}\quad & f_i(x)\le0,\quad i=1,\dots,m\\
 & h_i(x)=0,\quad i=1,\dots,p.
 \end{aligned} \tag{4.56}
-$$
+```
 
 这里 $x\in\mathbb{R}^n$ 是优化变量，$K\subseteq\mathbb{R}^q$ 是真锥，$f_0:\mathbb{R}^n\to\mathbb{R}^q$ 是 objective function（目标函数），$f_i:\mathbb{R}^n\to\mathbb{R}$ 是不等式约束函数，$h_i:\mathbb{R}^n\to\mathbb{R}$ 是等式约束函数。此问题与标准优化问题 (4.1) 的唯一差别是：这里目标函数取值于 $\mathbb{R}^q$，且问题规定包含一个真锥 $K$，用于比较目标值。在向量优化语境下，标准优化问题 (4.1) 有时称为 scalar optimization problem（标量优化问题）。
 
@@ -396,9 +396,9 @@ $$
 
 先考虑一个特殊情形，此时向量优化问题的含义是清楚的。考虑可行点的目标值集合
 
-$$
+```math
 \mathcal{O}=\{f_0(x) \mid \exists x\in\mathcal{D},\ f_i(x)\le0,\ i=1,\dots,m,\ h_i(x)=0,\ i=1,\dots,p\}\subseteq\mathbb{R}^q,
-$$
+```
 
 称为 set of achievable objective values（可达目标值集合）。若这个集合有 minimum element（最小元）（见 §2.4.2），即存在可行 $x$ 使 $f_0(x)\preceq_K f_0(y)$ 对所有可行 $y$，则称 $x$ 对问题 (4.56) 是 optimal（最优）的，并称 $f_0(x)$ 为问题的 optimal value（最优值）。（当向量优化问题有最优值时，它是唯一的。）若 $x^\star$ 是最优点，则 $f_0(x^\star)$ 可以与每个其他可行点的目标比较，且不劣于它们。粗略地说，$x^\star$ 无疑是可行点中 $x$ 的最佳选择。
 
@@ -406,9 +406,9 @@ $$
 
 点 $x^\star$ 最优当且仅当它可行且
 
-$$
+```math
 \mathcal{O}\subseteq f_0(x^\star)+K. \tag{4.57}
-$$
+```
 
 <!-- p.190 -->
 
@@ -418,15 +418,15 @@ $$
 
 $x$ 的线性估计器形如 $\hat{x}=Fy$。估计器称为 unbiased（无偏）的，如果对所有 $x$ 有 $\mathbb{E}\,\hat{x}=x$，即 $FA=I$。无偏估计器的 error covariance（误差协方差）为
 
-$$
+```math
 \mathbb{E}(\hat{x}-x)(\hat{x}-x)^T=\mathbb{E}\,Fvv^TF^T=FF^T.
-$$
+```
 
 我们的目标是找误差协方差矩阵「小」的无偏估计器。我们可以用 matrix inequality（矩阵不等式，即关于 $\mathbf{S}^n_+$）比较误差协方差。其解释：设 $\hat{x}_1=F_1y$、$\hat{x}_2=F_2y$ 是两个无偏估计器，则第一个估计器不劣于第二个（$F_1F_1^T\preceq F_2F_2^T$）当且仅当对所有 $c$，
 
-$$
+```math
 \mathbb{E}(c^T\hat{x}_1-c^Tx)^2\le\mathbb{E}(c^T\hat{x}_2-c^Tx)^2.
-$$
+```
 
 换言之，对 $x$ 的任何线性函数，估计器 $F_1$ 给出不劣于 $F_2$ 的估计。
 
@@ -434,26 +434,26 @@ $$
 
 我们可以把「找 $x$ 的无偏估计器」表达为向量优化问题：
 
-$$
+```math
 \begin{aligned}
 \text{minimize (w.r.t. }\mathbf{S}^n_+)\quad & FF^T\\
 \text{subject to}\quad & FA=I,
 \end{aligned} \tag{4.58}
-$$
+```
 
 变量 $F\in\mathbb{R}^{n\times m}$。目标 $FF^T$ 关于 $\mathbf{S}^n_+$ 凸，所以问题 (4.58) 是凸向量优化问题。一种容易的验证：$v^TFF^Tv=\|F^Tv\|_2^2$ 对任何固定的 $v$ 是 $F$ 的凸函数。
 
 一个著名结果是：问题 (4.58) 有最优解——least-squares estimator（最小二乘估计器）或 pseudo-inverse（伪逆）
 
-$$
+```math
 F^\star=A^\dagger=(A^TA)^{-1}A^T.
-$$
+```
 
 对任何满足 $FA=I$ 的 $F$，有 $FF^T\succeq F^\star F^{\star T}$。矩阵
 
-$$
+```math
 F^\star F^{\star T}=A^\dagger A^{\dagger T}=(A^TA)^{-1}
-$$
+```
 
 是问题 (4.58) 的最优值。
 
@@ -465,9 +465,9 @@ $$
 
 点 $x$ 是 Pareto 最优的当且仅当它可行且
 
-$$
+```math
 (f_0(x)-K)\cap\mathcal{O}=\{f_0(x)\}. \tag{4.59}
-$$
+```
 
 <!-- p.191/192 -->
 
@@ -475,9 +475,9 @@ $$
 
 一个向量优化问题可以有许多 Pareto 最优值（与点）。Pareto 最优值的集合记为 $\mathcal{P}$，满足
 
-$$
+```math
 \mathcal{P}\subseteq\mathcal{O}\cap\mathbf{bd}\,\mathcal{O},
-$$
+```
 
 即每个 Pareto 最优值都是位于可达目标值集合边界上的可达目标值（见习题 4.52）。
 
@@ -487,13 +487,13 @@ $$
 
 Scalarization（标量化）是找向量优化问题的 Pareto 最优（或最优）点的标准技术，基于 §2.6.3 通过对偶广义不等式对最小元与极小元的刻画。选任何 $\lambda\succ_{K^*}0$（即在对偶广义不等式下为正的向量）。考虑标量优化问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & \lambda^Tf_0(x)\\
 \text{subject to}\quad & f_i(x)\le0,\quad i=1,\dots,m\\
 & h_i(x)=0,\quad i=1,\dots,p,
 \end{aligned} \tag{4.60}
-$$
+```
 
 设 $x$ 是其最优点。则 $x$ 对向量优化问题 (4.56) 是 Pareto 最优的。这由 §2.6.3 的极小元对偶不等式刻画得出，也可直接证明：若 $x$ 不是 Pareto 最优，则存在可行 $y$ 满足 $f_0(y)\preceq_K f_0(x)$ 且 $f_0(x)\neq f_0(y)$。由于 $f_0(x)-f_0(y)\succeq_K0$ 且非零，有 $\lambda^T(f_0(x)-f_0(y))>0$，即 $\lambda^Tf_0(x)>\lambda^Tf_0(y)$，与「$x$ 对标量问题 (4.60) 最优」矛盾。
 
@@ -505,9 +505,9 @@ $$
 
 标量化方法可以几何化解释。点 $x$ 对标量化问题最优（即在可行集上最小化 $\lambda^Tf_0$）当且仅当 $\lambda^T(f_0(y)-f_0(x))\ge0$ 对所有可行 $y$。但这等于说：$\{u \mid -\lambda^T(u-f_0(x))=0\}$ 是可达目标值集合 $\mathcal{O}$ 在点 $f_0(x)$ 处的支撑超平面；特别地
 
-$$
+```math
 \{u \mid \lambda^T(u-f_0(x))<0\}\cap\mathcal{O}=\varnothing. \tag{4.61}
-$$
+```
 
 （见图 4.9。）因此，当我们找到标量化问题的最优点时，不仅找到了原向量优化问题的一个 Pareto 最优点，还找到了 $\mathbb{R}^q$ 中由 (4.61) 给出的整个半空间——其中的目标值不可达。
 
@@ -523,20 +523,20 @@ $$
 
 为确立这个部分逆命题，考虑集合
 
-$$
+```math
 \mathcal{A}=\mathcal{O}+K=\{t\in\mathbb{R}^q \mid f_0(x)\preceq_K t \text{ 对某个可行 } x\}, \tag{4.62}
-$$
+```
 
 它由所有「（关于 $\preceq_K$）劣于或等于某个可达目标值」的值组成。可达目标值集合 $\mathcal{O}$ 未必凸，但当问题凸时集合 $\mathcal{A}$ 凸。而且 $\mathcal{A}$ 的极小元恰好与可达值集合 $\mathcal{O}$ 的极小元相同，即就是 Pareto 最优值。（见习题 4.53。）现在用 §2.6.3 的结果得出：$\mathcal{A}$ 的任何极小元对某个非零 $\lambda\succeq_{K^*}0$ 最小化 $\lambda^Tz$（$z\in\mathcal{A}$）。这意味着向量优化问题的每个 Pareto 最优点对某个非零权重 $\lambda\succeq_{K^*}0$ 是标量化问题的最优解。
 
 <span style="color:#00838f;">**[例 4.10]** **矩阵集合的最小上界。** 考虑（关于半正定锥的）（凸）向量优化问题：
 
-$$
+```math
 \begin{aligned}
 \text{minimize (w.r.t. }\mathbf{S}^n_+)\quad & X\\
 \text{subject to}\quad & X\succeq A_i,\quad i=1,\dots,m,
 \end{aligned} \tag{4.63}
-$$
+```
 
 其中 $A_i\in\mathbf{S}^n$（$i=1,\dots,m$）给定。约束意味着 $X$ 是给定矩阵 $A_1,\dots,A_m$ 的 upper bound（上界）；(4.63) 的 Pareto 最优解是这些矩阵的 minimal upper bound（最小上界）。
 
@@ -544,12 +544,12 @@ $$
 
 为找 Pareto 最优点，应用标量化：选任何 $W\in\mathbf{S}^n_{++}$，构造问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & \mathbf{tr}(WX)\\
 \text{subject to}\quad & X\succeq A_i,\quad i=1,\dots,m,
 \end{aligned} \tag{4.64}
-$$
+```
 
 这是一个 SDP。不同的 $W$ 选择一般给出不同的极小解。部分逆命题告诉我们：若 $X$ 对向量问题 (4.63) Pareto 最优，则它对某个非零权重矩阵 $W\succeq0$ 是 SDP (4.64) 的最优解。（不过此情形并非 (4.64) 的每个解都对向量优化问题 Pareto 最优。）
 
@@ -557,9 +557,9 @@ $$
 
 这个问题可以给出简单的几何解释。给每个 $A\in\mathbf{S}^n_{++}$ 关联以原点为中心的椭球
 
-$$
+```math
 \mathcal{E}_A=\{u \mid u^TA^{-1}u\le1\},
-$$
+```
 
 于是 $A\preceq B$ 当且仅当 $\mathcal{E}_A\subseteq\mathcal{E}_B$。问题 (4.63) 的 Pareto 最优点 $X$ 对应包含与 $A_1,\dots,A_m$ 相关联的椭球的 minimal ellipsoid（最小椭球）。例子见图 4.10。
 
@@ -569,27 +569,27 @@ $$
 
 当向量优化问题涉及锥 $K=\mathbb{R}^q_+$ 时，称为 multicriterion（多准则）或 multi-objective（多目标）优化问题。$f_0$ 的分量（记 $F_1,\dots,F_q$）可解释为 $q$ 个不同的标量目标，每个都想最小化。我们称 $F_i$ 为问题的第 $i$ 个 objective（目标）。multicriterion optimization problem（多准则优化问题）是凸的，如果 $f_1,\dots,f_m$ 凸、$h_1,\dots,h_p$ 仿射、且各目标 $F_1,\dots,F_q$ 凸。
 
-由于多准则问题是向量优化问题，§4.7.1–4.7.4 的所有材料都适用。不过对多准则问题可以把解释说得更具体。若 $x$ 可行，可以把 $F_i(x)$ 看作它按第 $i$ 个目标的 score（得分）或 value（价值）。若 $x,y$ 都可行，$F_i(x)\le F_i(y)$ 意味着按第 $i$ 个目标 $x$ 不劣于 $y$；$F_i(x)<F_i(y)$ 意味着按第 $i$ 个目标 $x$ 好于 $y$（$x$ beats $y$，胜过 $y$）。若 $x,y$ 都可行，我们说 $x$ 好于 $y$，或 $x$ dominates $y$（支配 $y$），如果 $F_i(x)\le F_i(y)$（$i=1,\dots,q$）且至少对某个 $j$ 有 $F_j(x)<F_j(y)$。粗略地说：$x$ 好于 $y$，指 $x$ 在所有目标上持平或胜过 $y$，且至少在一个目标上胜过它。
+由于多准则问题是向量优化问题，§4.7.1–4.7.4 的所有材料都适用。不过对多准则问题可以把解释说得更具体。若 $x$ 可行，可以把 $F_i(x)$ 看作它按第 $i$ 个目标的 score（得分）或 value（价值）。若 $x,y$ 都可行，$F_i(x)\le F_i(y)$ 意味着按第 $i$ 个目标 $x$ 不劣于 $y$；$F_i(x)\lt F_i(y)$ 意味着按第 $i$ 个目标 $x$ 好于 $y$（$x$ beats $y$，胜过 $y$）。若 $x,y$ 都可行，我们说 $x$ 好于 $y$，或 $x$ dominates $y$（支配 $y$），如果 $F_i(x)\le F_i(y)$（$i=1,\dots,q$）且至少对某个 $j$ 有 $F_j(x)\lt F_j(y)$。粗略地说：$x$ 好于 $y$，指 $x$ 在所有目标上持平或胜过 $y$，且至少在一个目标上胜过它。
 
 <!-- p.195/196 -->
 
 在多准则问题中，最优点 $x^\star$ 满足
 
-$$
+```math
 F_i(x^\star)\le F_i(y),\quad i=1,\dots,q
-$$
+```
 
 <!-- p.196 -->
 
 对每个可行 $y$。换言之，$x^\star$ 同时对每个标量问题
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & F_j(x)\\
 \text{subject to}\quad & f_i(x)\le0,\quad i=1,\dots,m\\
 & h_i(x)=0,\quad i=1,\dots,p
 \end{aligned}
-$$
+```
 
 （$j=1,\dots,q$）最优。当存在最优点时，我们说各目标是 noncompeting（不竞争）的：目标之间无需妥协，每个目标都达到即使忽略其他目标也能达到的最小值。
 
@@ -597,13 +597,13 @@ Pareto 最优点 $x_{\mathrm{po}}$ 满足：若 $y$ 可行且 $F_i(y)\le F_i(x_{
 
 **权衡分析（Trade-off analysis）。** 设 $x,y$ 是 Pareto 最优点，且
 
-$$
+```math
 \begin{aligned}
 F_i(x)&<F_i(y),&& i\in\mathcal{A}\\
 F_i(x)&=F_i(y),&& i\in\mathcal{B}\\
 F_i(x)&>F_i(y),&& i\in\mathcal{C},
 \end{aligned}
-$$
+```
 
 $\mathcal{A}\cup\mathcal{B}\cup\mathcal{C}=\{1,\dots,q\}$。换言之，$\mathcal{A}$ 是 $x$ 胜过 $y$ 的目标（下标）集，$\mathcal{B}$ 是 $x,y$ 打平的目标集，$\mathcal{C}$ 是 $y$ 胜过 $x$ 的目标集。若 $\mathcal{A}$ 与 $\mathcal{C}$ 皆空，则两点目标值完全相同。否则 $\mathcal{A}$ 与 $\mathcal{C}$ 必都非空。换言之：比较两个 Pareto 最优点时，要么表现完全相同（所有目标相等），要么各在至少一个目标上胜过对方。
 
@@ -634,9 +634,9 @@ $\mathcal{A}\cup\mathcal{B}\cup\mathcal{C}=\{1,\dots,q\}$。换言之，$\mathca
 
 **多准则问题的标量化。** 用加权和目标
 
-$$
+```math
 \lambda^Tf_0(x)=\sum_{i=1}^q\lambda_iF_i(x)
-$$
+```
 
 <!-- p.198 -->
 
@@ -644,9 +644,9 @@ $$
 
 这些解释给出探索最优权衡面时如何设置或改变权重的一些直觉。例如设权重向量 $\lambda\succ0$ 给出 Pareto 最优点 $x_{\mathrm{po}}$（目标值 $F_1(x_{\mathrm{po}}),\dots,F_q(x_{\mathrm{po}})$）。要找（可能）新的 Pareto 最优点——用更好的第 $k$ 个目标值换取（可能）更差的其他目标值——构造新权重向量 $\tilde{\lambda}$：
 
-$$
+```math
 \tilde{\lambda}_k>\lambda_k,\qquad \tilde{\lambda}_j=\lambda_j,\ j\neq k,\ j=1,\dots,q,
-$$
+```
 
 即增加第 $k$ 个目标的权重。这产生新的 Pareto 最优点 $\tilde{x}_{\mathrm{po}}$，满足 $F_k(\tilde{x}_{\mathrm{po}})\le F_k(x_{\mathrm{po}})$（通常严格小于），即第 $k$ 个目标改进的新 Pareto 最优点。
 
@@ -665,23 +665,23 @@ $$
 
 我们的目标是找拟合好（$F_1$ 小）且不大（$F_2$ 小）的 $x$。可以把它表述为关于锥 $\mathbb{R}^2_+$ 的向量优化问题，即 bi-criterion problem（双准则问题，无约束）：
 
-$$
+```math
 \text{minimize (w.r.t. }\mathbb{R}^2_+)\quad f_0(x)=(F_1(x),F_2(x)).
-$$
+```
 
 <!-- p.198/199 -->
 
 取 $\lambda_1>0$、$\lambda_2>0$ 并最小化标量加权和目标
 
-$$
+```math
 \lambda^Tf_0(x)=\lambda_1F_1(x)+\lambda_2F_2(x)=x^T(\lambda_1A^TA+\lambda_2I)x-2\lambda_1b^TAx+\lambda_1b^Tb
-$$
+```
 
 进行标量化，得
 
-$$
+```math
 x(\mu)=(\lambda_1A^TA+\lambda_2I)^{-1}\lambda_1A^Tb=(A^TA+\mu I)^{-1}A^Tb,
-$$
+```
 
 其中 $\mu=\lambda_2/\lambda_1$。对任何 $\mu>0$，该点是双准则问题的 Pareto 最优点。可以把 $\mu=\lambda_2/\lambda_1$ 解释为给 $F_2$ 相对 $F_1$ 的相对权重。
 
@@ -693,21 +693,21 @@ $$
 
 **组合优化中的风险-回报权衡。** 第 155 页描述的经典 Markowitz 组合优化问题自然地表述为双准则问题：目标是负平均回报（因为想最大化平均回报）与回报方差：
 
-$$
+```math
 \begin{aligned}
 \text{minimize (w.r.t. }\mathbb{R}^2_+)\quad & (F_1(x),F_2(x))=(-\bar{p}^Tx,\ x^T\Sigma x)\\
 \text{subject to}\quad & \mathbf{1}^Tx=1,\quad x\succeq0.
 \end{aligned}
-$$
+```
 
 构造相应的标量化问题时，可以（不失一般性）取 $\lambda_1=1$、$\lambda_2=\mu>0$：
 
-$$
+```math
 \begin{aligned}
 \text{minimize}\quad & -\bar{p}^Tx+\mu x^T\Sigma x\\
 \text{subject to}\quad & \mathbf{1}^Tx=1,\quad x\succeq0,
 \end{aligned}
-$$
+```
 
 这是一个 QP。这个例子同样得到除 $\mu\to0$ 与 $\mu\to\infty$ 两个极限情形外的所有 Pareto 最优组合。粗略地说：前一情形得到不考虑回报方差的最大平均回报；后一情形得到不考虑平均回报的最小方差回报。设 $\bar{p}_k>\bar{p}_i$（$i\neq k$），即资产 $k$ 是唯一有最大平均回报的资产，则组合配置 $x=e_k$ 是对应 $\mu\to0$ 的唯一解（即把组合全部集中于平均回报最大的资产）。许多组合问题中资产 $n$ 对应 risk-free investment（无风险投资），回报（确定性）为 $r_{\mathrm{rf}}$。假设 $\Sigma$（去掉全零的最后一行与最后一列）满秩，则另一极端的 Pareto 最优组合是 $x=e_n$，即组合全部集中于无风险资产。
 

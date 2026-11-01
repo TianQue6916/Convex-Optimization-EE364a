@@ -12,51 +12,51 @@
 
 **分离超平面定理的证明。** 这里考虑一个特殊情形，把证明推广到一般情形留作习题（习题 2.22）。我们假设 $C$ 与 $D$ 之间的（欧氏）distance（距离）
 
-$$
+```math
 \mathbf{dist}(C,D) = \inf\{\|u-v\|_2 \mid u\in C,\; v\in D\}
-$$
+```
 
 <!-- p.61 -->
 
 为正，且存在点 $c\in C$ 与 $d\in D$ 达到最小距离，即 $\|c-d\|_2=\mathbf{dist}(C,D)$。（例如当 $C$ 与 $D$ 是闭的、且其中一个是有界的时候，这些条件满足。）定义
 
-$$
+```math
 a = d-c,\qquad b = \frac{\|d\|_2^2-\|c\|_2^2}{2}.
-$$
+```
 
 我们将证明仿射函数
 
-$$
+```math
 f(x) = a^Tx-b = (d-c)^T\bigl(x-(1/2)(d+c)\bigr)
-$$
+```
 
 在 $C$ 上非正、在 $D$ 上非负，即超平面 $\{x\mid a^Tx=b\}$ 分离 $C$ 与 $D$。这个超平面垂直于 $c$ 与 $d$ 之间的线段并穿过其中点（见图 2.20）。
 
 先证 $f$ 在 $D$ 上非负（$f$ 在 $C$ 上非正的证明类似，或通过交换 $C$ 与 $D$ 并考虑 $-f$ 得到）。反设存在点 $u\in D$ 使
 
-$$
+```math
 f(u) = (d-c)^T\bigl(u-(1/2)(d+c)\bigr) < 0. \tag{2.16}
-$$
+```
 
 <!-- p.62 -->
 
 把 $f(u)$ 写成
 
-$$
+```math
 f(u) = (d-c)^T\bigl(u-d+(1/2)(d-c)\bigr) = (d-c)^T(u-d) + (1/2)\|d-c\|_2^2,
-$$
+```
 
 可见 (2.16) 蕴含 $(d-c)^T(u-d)<0$。现在注意
 
-$$
+```math
 \left.\frac{d}{dt}\|d+t(u-d)-c\|_2^2\right|_{t=0} = 2(d-c)^T(u-d) < 0,
-$$
+```
 
 所以对某个小的 $t>0$（$t\le1$），有
 
-$$
+```math
 \|d+t(u-d)-c\|_2 < \|d-c\|_2,
-$$
+```
 
 即点 $d+t(u-d)$ 比 $d$ 更靠近 $c$。但 $D$ 是凸的且包含 $d$ 与 $u$，故 $d+t(u-d)\in D$。这与「$d$ 是 $D$ 中离 $C$ 最近的点」的假设矛盾。
 
@@ -64,13 +64,13 @@ $$
 
 <!-- p.63 -->
 
-**严格分离（Strict separation）。** 我们构造的分离超平面满足更强的条件：$a^Tx<b$ 对所有 $x\in C$，且 $a^Tx>b$ 对所有 $x\in D$。这称为 $C$ 与 $D$ 的 strict separation（严格分离）。简单的例子表明：一般而言，不相交的凸集未必能被超平面严格分离（即使两个集合都是闭的；见习题 2.23）。但在许多特殊情形下可以建立严格分离。
+**严格分离（Strict separation）。** 我们构造的分离超平面满足更强的条件：$a^Tx\lt b$ 对所有 $x\in C$，且 $a^Tx>b$ 对所有 $x\in D$。这称为 $C$ 与 $D$ 的 strict separation（严格分离）。简单的例子表明：一般而言，不相交的凸集未必能被超平面严格分离（即使两个集合都是闭的；见习题 2.23）。但在许多特殊情形下可以建立严格分离。
 
 <span style="color:#00838f;">**[例 2.20]** **一个点与一个闭凸集的严格分离。** 设 $C$ 是闭凸集，$x_0\notin C$。则存在严格分离 $x_0$ 与 $C$ 的超平面。为看出这一点，注意对某个 $\epsilon>0$，集合 $C$ 与 $B(x_0,\epsilon)$ 不相交。由分离超平面定理，存在 $a\neq0$ 与 $b$ 使 $a^Tx\le b$（$x\in C$）、$a^Tx\ge b$（$x\in B(x_0,\epsilon)$）。利用 $B(x_0,\epsilon)=\{x_0+u \mid \|u\|_2\le\epsilon\}$，第二个条件可写成 $a^T(x_0+u)\ge b$ 对所有 $\|u\|_2\le\epsilon$ 成立。使左边最小的 $u$ 是 $u=-\epsilon a/\|a\|_2$；代入得 $a^Tx_0-\epsilon\|a\|_2\ge b$。因此仿射函数
 
-$$
+```math
 f(x) = a^Tx-b-\epsilon\|a\|_2/2
-$$
+```
 
 在 $C$ 上为负，在 $x_0$ 处为正。
 
@@ -84,15 +84,15 @@ $$
 
 <span style="color:#00838f;">**[例 2.21]** **严格线性不等式的择一定理（theorem of alternatives）。** 我们推导严格线性不等式组
 
-$$
+```math
 Ax \prec b \tag{2.17}
-$$
+```
 
 可解的充要条件。这组不等式 infeasible（不可行）当且仅当（凸）集合
 
-$$
+```math
 C = \{b-Ax \mid x\in\mathbb{R}^n\},\qquad D = \mathbb{R}^m_{++} = \{y\in\mathbb{R}^m \mid y\succ0\}
-$$
+```
 
 不相交。集合 $D$ 是开的；$C$ 是仿射集。于是由上面的结果，$C$ 与 $D$ 不相交当且仅当存在分离超平面，即非零 $\lambda\in\mathbb{R}^m$ 与 $\mu\in\mathbb{R}$ 使 $\lambda^Ty\le\mu$ 在 $C$ 上、$\lambda^Ty\ge\mu$ 在 $D$ 上成立。
 
@@ -104,9 +104,9 @@ $$
 
 合起来：严格不等式组 (2.17) 不可行，当且仅当存在 $\lambda\in\mathbb{R}^m$ 使
 
-$$
+```math
 \lambda\neq0,\qquad \lambda\succeq0,\qquad A^T\lambda=0,\qquad \lambda^Tb\le0. \tag{2.18}
-$$
+```
 
 这也是关于变量 $\lambda\in\mathbb{R}^m$ 的一组线性不等式与线性方程。我们说 (2.17) 与 (2.18) 构成一对 alternatives（择一）：对任意数据 $A$ 与 $b$，两者中恰好一个可解。
 
@@ -118,9 +118,9 @@ $$
 
 设 $C\subseteq\mathbb{R}^n$，$x_0$ 是其边界 $\mathbf{bd}\,C$ 上的点，即
 
-$$
+```math
 x_0\in\mathbf{bd}\,C = \mathbf{cl}\,C \setminus \mathbf{int}\,C.
-$$
+```
 
 若 $a\neq0$ 满足 $a^Tx\le a^Tx_0$ 对所有 $x\in C$，则超平面 $\{x \mid a^Tx=a^Tx_0\}$ 称为 $C$ 在点 $x_0$ 处的 supporting hyperplane（支撑超平面）。这等价于说：点 $x_0$ 与集合 $C$ 被超平面 $\{x\mid a^Tx=a^Tx_0\}$ 分离。几何解释是：超平面 $\{x\mid a^Tx=a^Tx_0\}$ 在 $x_0$ 处与 $C$ 相切（tangent），且半空间 $\{x\mid a^Tx\le a^Tx_0\}$ 包含 $C$。（见图 2.21。）
 
@@ -136,9 +136,9 @@ $$
 
 设 $K$ 是锥。集合
 
-$$
+```math
 K^* = \{y \mid x^Ty\ge0 \text{ 对所有 } x\in K\} \tag{2.19}
-$$
+```
 
 称为 $K$ 的 dual cone（对偶锥）。顾名思义，$K^*$ 是锥，且总是凸的——即使原来的锥 $K$ 不是（见习题 2.31）。
 
@@ -148,37 +148,37 @@ $$
 
 <span style="color:#00838f;">**[例 2.23]** **非负卦限。** 锥 $\mathbb{R}^n_+$ 是它自己的对偶：
 
-$$
+```math
 x^Ty\ge0 \text{ 对所有 } x\succeq0 \iff y\succeq0.
-$$
+```
 
 这样的锥称为 self-dual（自对偶）的。
 
 <span style="color:#00838f;">**[例 2.24]** **半正定锥。** 在对称 $n\times n$ 矩阵集合 $\mathbf{S}^n$ 上使用标准内积 $\mathbf{tr}(XY)=\sum_{i,j=1}^n X_{ij}Y_{ij}$（见 §A.1.1），半正定锥 $\mathbf{S}^n_+$ 是自对偶的，即对 $X,Y\in\mathbf{S}^n$：
 
-$$
+```math
 \mathbf{tr}(XY)\ge0 \text{ 对所有 } X\succeq0 \iff Y\succeq0.
-$$
+```
 
 我们来确立这个事实。设 $Y\notin\mathbf{S}^n_+$，则存在 $q\in\mathbb{R}^n$ 使
 
-$$
+```math
 q^TYq = \mathbf{tr}(qq^TY) < 0.
-$$
+```
 
 于是半正定矩阵 $X=qq^T$ 满足 $\mathbf{tr}(XY)<0$；故 $Y\notin(\mathbf{S}^n_+)^*$。反之设 $X,Y\in\mathbf{S}^n_+$。把 $X$ 按特征值分解写成 $X=\sum_{i=1}^n\lambda_iq_iq_i^T$（特征值 $\lambda_i\ge0$，$i=1,\dots,n$），则
 
-$$
+```math
 \mathbf{tr}(YX) = \mathbf{tr}\Bigl(Y\sum_{i=1}^n\lambda_iq_iq_i^T\Bigr) = \sum_{i=1}^n\lambda_iq_i^TYq_i\ge0.
-$$
+```
 
 这表明 $Y\in(\mathbf{S}^n_+)^*$。
 
 <span style="color:#00838f;">**[例 2.25]** **范数锥的对偶。** 设 $\|\cdot\|$ 是 $\mathbb{R}^n$ 上的范数。相应锥 $K=\{(x,t)\in\mathbb{R}^{n+1} \mid \|x\|\le t\}$ 的对偶是由 dual norm（对偶范数）定义的锥：
 
-$$
+```math
 K^* = \{(u,v)\in\mathbb{R}^{n+1} \mid \|u\|_*\le v\},
-$$
+```
 
 <!-- p.67 -->
 
@@ -186,21 +186,21 @@ $$
 
 为证明该结果，须证
 
-$$
+```math
 x^Tu+tv\ge0 \text{ 只要 } \|x\|\le t \iff \|u\|_*\le v. \tag{2.20}
-$$
+```
 
 先证右边的条件蕴含左边的条件。设 $\|u\|_*\le v$，且对某个 $t>0$ 有 $\|x\|\le t$（若 $t=0$，则 $x$ 必为零，显然 $u^Tx+vt\ge0$）。应用对偶范数的定义与 $\|-x/t\|\le1$，得
 
-$$
+```math
 u^T(-x/t)\le\|u\|_*\le v,
-$$
+```
 
 因此 $u^Tx+vt\ge0$。再证左边的条件蕴含右边的条件：设 $\|u\|_*>v$（即右边条件不成立），则由对偶范数的定义，存在 $x$ 满足 $\|x\|\le1$ 且 $x^Tu>v$。取 $t=1$，得
 
-$$
+```math
 u^T(-x)+v<0,
-$$
+```
 
 与 (2.20) 左边的条件矛盾。
 
@@ -231,17 +231,17 @@ $$
 
 <span style="color:#00838f;">**[例 2.26]** **线性严格广义不等式的择一定理。** 设 $K\subseteq\mathbb{R}^m$ 是真锥。考虑严格广义不等式
 
-$$
+```math
 Ax\prec_K b, \tag{2.21}
-$$
+```
 
 其中 $x\in\mathbb{R}^n$。我们来推导这个不等式的择一定理。设它不可行，即仿射集 $\{b-Ax \mid x\in\mathbb{R}^n\}$ 与开凸集 $\mathbf{int}\,K$ 不相交。则存在分离超平面：非零 $\lambda\in\mathbb{R}^m$ 与 $\mu\in\mathbb{R}$ 使 $\lambda^T(b-Ax)\le\mu$（对所有 $x$）、$\lambda^Ty\ge\mu$（对所有 $y\in\mathbf{int}\,K$）。第一个条件蕴含 $A^T\lambda=0$ 与 $\lambda^Tb\le\mu$；第二个条件蕴含 $\lambda^Ty\ge\mu$ 对所有 $y\in K$ 成立，这只在 $\lambda\in K^*$ 且 $\mu\le0$ 时可能。
 
 合起来：若 (2.21) 不可行，则存在 $\lambda$ 使
 
-$$
+```math
 \lambda\neq0,\qquad \lambda\succeq_{K^*}0,\qquad A^T\lambda=0,\qquad \lambda^Tb\le0. \tag{2.22}
-$$
+```
 
 <!-- p.68/69 -->
 
@@ -257,9 +257,9 @@ $$
 
 **最小元的对偶刻画（Dual characterization of minimum element）。** 先考虑最小元的刻画：$x$ 是 $S$ 的最小元（关于 $\preceq_K$），当且仅当对所有 $\lambda\succ_{K^*}0$，$x$ 是 $\lambda^Tz$ 在 $z\in S$ 上的 unique minimizer（唯一最小化点）。几何上这意味着：对任何 $\lambda\succ_{K^*}0$，超平面
 
-$$
+```math
 \{z \mid \lambda^T(z-x)=0\}
-$$
+```
 
 是 $S$ 在 $x$ 处的 strict supporting hyperplane（严格支撑超平面）。（严格支撑超平面指该超平面与 $S$ 只交于点 $x$。）注意不需要集合 $S$ 的凸性。（见图 2.23。）
 
@@ -287,13 +287,13 @@ $$
 
 <!-- p.71/72 -->
 
-Pareto 最优有一个简单解释。我们说一种生产方式（资源向量 $x$）比另一种（资源向量 $y$）better（更好），如果 $x_i\le y_i$ 对所有 $i$，且对某个 $i$ 有 $x_i<y_i$。换言之，一种生产方式比另一种好，是指它每种资源用量都不多于对方，且至少一种资源确实用得更少。这正对应 $x\preceq y$、$x\neq y$。于是可以说：一种生产方式是 Pareto 最优的（有效率的），当且仅当没有比它更好的生产方式。
+Pareto 最优有一个简单解释。我们说一种生产方式（资源向量 $x$）比另一种（资源向量 $y$）better（更好），如果 $x_i\le y_i$ 对所有 $i$，且对某个 $i$ 有 $x_i\lt y_i$。换言之，一种生产方式比另一种好，是指它每种资源用量都不多于对方，且至少一种资源确实用得更少。这正对应 $x\preceq y$、$x\neq y$。于是可以说：一种生产方式是 Pareto 最优的（有效率的），当且仅当没有比它更好的生产方式。
 
 我们可以通过在 $P$ 上最小化
 
-$$
+```math
 \lambda^Tx = \lambda_1x_1+\cdots+\lambda_nx_n
-$$
+```
 
 来寻找 Pareto 最优的生产方式（即极小资源向量），其中 $\lambda\succ0$ 任意。这里向量 $\lambda$ 有一个简单解释：$\lambda_i$ 是第 $i$ 种资源的 price（价格）。在 $P$ 上最小化 $\lambda^Tx$，就是在找（按价格 $\lambda_i$ 计的）总成本最低的生产方式。只要价格全为正，得到的生产方式就保证是有效率的。这些想法见图 2.27。
 
