@@ -3,33 +3,21 @@
 > 说明：本文为 Stanford EE364a 凸优化课程 2008 年期末考试（Final exam）**解答**的中文双语译注，覆盖全部 32 页（Problem 1–7）。中文为主体，英文术语以 `English（中文）` 形式首次行内嵌入，之后仅保留英文；公式使用 `$...$` 行内与独立 ```math 围栏，不使用美元双符号 display math，不使用 Unicode 上下标。题目层级严格保留（Problem / (a) / (b)），题号照原文。
 
 ## 考试说明（Cover page，第 1 页）
-
-**EE364a Convex Optimization I（凸优化 I）**，授课教师 Prof. S. Boyd，考试时间为 2008 年 3 月 14–15 日或 3 月 15–16 日，此为**期末考试解答（final exam solutions）**。
-
+**EE364a Convex Optimization I（凸优化 I）**，授课教师 Prof. S. Boyd（斯蒂芬·博伊德教授），考试时间为 2008 年 3 月 14–15 日或 3 月 15–16 日（两段时段自选其一），此为**期末考试解答（final exam solutions）**。
 你可以使用任何书籍、笔记或计算机程序（例如 Matlab、cvx），但在 3 月 18 日所有人都考完之前，不得与任何人讨论本考试。唯一的例外是你可以通过课程邮箱向助教提问澄清。我们已经尽力让考试无歧义、表述清晰，所以大概率不会多说什么。
-
 请在上交前复印一份自己的试卷。
-
 请把**封面页（cover page）**附在试卷最前面。按题号顺序装订你的解答（problem 1、problem 2、problem 3、……），每道题另起一页。把每道题相关的一切内容（例如文字、代码、图）放在一起；不要把代码或图附在试卷末尾。
-
 对于冗长而毫无必要复杂的解答，即使答案正确，我们也会扣分。我们的解答并不长，所以如果你发现某道题的解答写了很多页还停不下来，就应该设法找出更简单的做法。我们期望每个人的试卷都整洁、字迹清晰，包括那些以 Cr/N（credit/no-credit，及格/不及格）方式修课的同学。
-
 当一道题涉及计算时，你必须给出以下全部内容：对你究竟做了什么给出清晰的讨论与论证（justification）、产生该结果的 Matlab（或其他）源代码，以及最终的数值结果或图。
-
 要下载含题目数据的 Matlab 文件，你必须把题目里给出的完整 URL 输入浏览器；课程网页上没有指向这些文件的链接。例如，要获取名为 `filename.m` 的文件，你需要在浏览器中检索
-
 ```
 http://www.stanford.edu/class/ee364a/final-data/filename.m
 ```
-
-请遵守荣誉准则（honor code）。虽然我们允许你们以小组形式完成作业，但你不得与任何人讨论期末考试，至少在所有人都考完之前不行。
-
-所有题目权重相同。有些题目比乍看之下更简单。
-
+请遵守学术诚信规范（honor code）。
+虽然我们允许你们以小组形式完成作业，但你不得与任何人讨论期末考试，至少在所有人都考完之前不行。
+所有题目权重（weight，即每题的分值占比）相同。有些题目比乍看之下更简单。
 请下载最新版本的 cvx。
-
 考试期间请经常检查邮件，以防我们需要发布重要通知。
-
 ---
 
 ## Problem 1（第 1 题，第 2–3 页）
@@ -37,6 +25,8 @@ http://www.stanford.edu/class/ee364a/final-data/filename.m
 **Optimal investment to fund an expense stream（为融资一笔支出流而进行的最优投资）。** 一个组织（例如市政当局）已知自己未来 $T$ 个周期（periods）内的运营支出（operating expenses），记为 $E_1,\dots,E_T$。（通常这些值是正的；但也可以有负的 $E_t$，负值对应收入。）这些支出将由两部分资金共同覆盖：一部分是投资收入（investment income），来自在 $t=0$ 时刻购买的一篮子债券（bonds）；另一部分是一个现金账户（cash account）。
 
 债券产生投资收入，记为 $I_1,\dots,I_T$。现金余额（cash balance）记为 $B_0,\dots,B_T$，其中 $B_0\ge 0$ 是存入现金账户的初始存款（initial deposit）金额。对于 $t=1,\dots,T$，我们可以有 $B_t<0$，这代表借款（borrowing）。
+
+> **术语 · cash balance（现金余额）**：这里 $B_t$ 是**在周期 $t$ 刚开始、尚未支付本期支出 $E_t$、也尚未收到本期投资收入 $I_t$ 之前**账户里的现金存量。也就是说，$B_t$ 是“付支出前、收收入前”的余额，而非“付完支出后”的余额。有了这个定位，下面“$B_t-E_t+I_t$”为什么是“支付支出并收到收入之后的现金”就清楚了。
 
 在周期 $t$，用投资收入和现金支付完支出后，我们手头剩下 $B_t-E_t+I_t$ 的现金。如果这个金额为正，它就按利率 $r^{+}>0$ 赚取利息；如果为负，我们就必须按利率 $r^{-}$ 支付利息，其中 $r^{-}\ge r^{+}$。因此，支出、投资收入和现金余额之间的递推关系如下：
 
@@ -49,7 +39,11 @@ B_{t+1}=
 \qquad t=1,\dots,T-1.
 ```
 
+> **为什么递推式里是 $B_t-E_t+I_t$ 而不是 $B_t-E_t$**：周期 $t$ 的完整资金变动有两笔——先付支出 $E_t$（余额减少），再收到债券带来的投资收入 $I_t$（余额增加）。所以“付完支出、收到收入之后”的现金是 $B_t-E_t+I_t$。这笔钱经过一个周期的计息（正余额按 $r^{+}$ 赚息、负余额按 $r^{-}$ 付息），就得到下一周期的期初余额 $B_{t+1}$。$I_t$ 不是“额外多算了一次”，而是本来就该加进来的本期收入。
+
 我们取 $B_1=(1+r^{+})B_0$，并且要求 $B_T-E_T+I_T=0$，这意味着最终的现金余额加上收入，恰好覆盖最终的支出。
+
+> **为什么 $B_1=(1+r^{+})B_0$，而不是套递推式**：递推式只对 $t=1,\dots,T-1$ 定义，它描述的是“每个周期末按余额正负计息”，而 $t=0$ 并不是一个会发生“支出 $E_0$、收入 $I_0$”的周期——初始时刻没有任何支出，也没有来自债券的投资收入，唯一的资金变动就是初始存款 $B_0$ 从 $t=0$ 存到 $t=1$ 这一期产生的利息。由于 $B_0\ge 0$（初始存款非负），余额为正，只能按正利率 $r^{+}$ 赚息，故 $B_1=(1+r^{+})B_0$。这不是凭空“取”，而是 $t=0\to 1$ 这一段的特殊情形：$E_0=0$、$I_0=0$，代入“余额 $B_0-0+0=B_0\ge 0$ 按 $r^{+}$ 计息”即可得到，与递推式的正余额那一支完全一致。
 
 初始投资将是一篮子债券，编号为 $1,\dots,n$。债券 $i$ 有价格 $P_i>0$、票息支付（coupon payment）$C_i>0$、到期日（maturity）$M_i\in\{1,\dots,T\}$。债券 $i$ 产生的收入流为
 
@@ -68,6 +62,8 @@ C_i+1, & t=M_i,\\
 ```math
 I_t=x_1 a^{(1)}_t+\cdots+x_n a^{(n)}_t,\qquad t=1,\dots,T.
 ```
+
+> **术语 · cash flow（现金流）与 investment income（投资收入）**：在本文里二者指的是**同一个量** $I_t$。“投资收入”是它在经济学上的叫法，“现金流”是它在现金流表/定价语境下的叫法——这里之所以用“现金流”，是因为 $I_t$ 既可能是正（债券付给你的票息与本金）也可能是负或零（例如某期没有到期的债券、且 $x_i\ge 0$ 时通常非负，但模型允许 $a^{(i)}_t$ 的取值组合出任意符号）。不必纠结换名，它始终是“$t$ 时刻这一篮子债券产生的现金净流入 $I_t$”。
 
 我们要求 $x_i\ge 0$。（$x_i$ 可以是分数，不必是整数。）
 
@@ -103,6 +99,8 @@ B_{t+1}=\min\Big\{(1+r^{+})(B_t-E_t+I_t),\ (1+r^{-})(B_t-E_t+I_t)\Big\},
 
 当把 $B_t$ 当作变量时，这些方程显然**不是**凸的（convex）。我们将描述两种处理方法。
 
+> **“方程不是凸的”是什么意思**：这里“凸（convex）”严格来说不是形容“方程本身”，而是形容**这个方程所定义的集合**（即所有满足该等式的点的全体）是不是凸集（convex set：集合中任意两点的连线仍落在集合内）。正文只是口语化地省略了“其可行集”四个字。之所以说“显然不是凸的”，是因为这个等式是由 $B_{t+1}=\min\{\cdot,\cdot\}$ 决定的，它把某个凸集合的**边界曲面**取出来（两个仿射平面取 min 后形成一条“折线”，再令 $B_{t+1}$ 恰好等于这条折线），而一个凸体的边界一般不是凸集——例如平面上一个折角的图形就不是凸集。于是“方程非凸”这一断言其实来自“等号取边界”这个几何事实，而不是对函数凹凸性的判断。
+
 在第一种方法中，我们把递推方程**松弛（relax）**成下面的凸不等式（convex inequalities）：
 
 ```math
@@ -126,6 +124,8 @@ B_{t+1}\le\min\Big\{(1+r^{+})(B_t-E_t+I_t),\ (1+r^{-})(B_t-E_t+I_t)\Big\}.
 ```
 
 其中变量为 $B_0,\dots,B_T,\ I_1,\dots,I_T,\ x_1,\dots,x_n$。（我们也可以把 $I_t$ 当作一个仿射表达式而不是变量来处理；这没有区别。）
+
+> **为什么 $I_t$ 既被列成变量、又可以说“当不当变量没区别”**：把 $I_t$ 列进变量表，是为了让约束 $\sum_i a^{(i)}_t x_i=I_t$ 读起来是一条“等式约束”，使问题结构一眼可辨（$I_t$ 作为“中间变量”承载债券收入的汇总）。但从数学上，$I_t$ 完全由 $x$ 决定——只要把这条等式代入所有出现 $I_t$ 的地方，$I_t$ 就消失了，问题只剩真正的决策变量 $x$ 和 $B_0,\dots,B_T$。所以“当变量”只是写法上的方便，“当表达式”只是消去中间量，两者的可行域与最优值完全相同，故“没有区别”。正文先列后说明，是想告诉你 $I_t$ 并非独立可调的自由变量。
 
 > **术语 · $\succeq$（分量不小于）**：向量不等式 $x\succeq 0$ 表示 $x$ 的每个分量都 $\ge 0$，即 $x_i\ge 0$ 对所有 $i$。
 
@@ -155,7 +155,11 @@ B_{\tau+1}=\min\Big\{(1+r^{+})(B_\tau-E_\tau+I_\tau),\ (1+r^{-})(B_\tau-E_\tau+I
 
 并且仍然维持现金流的可行性（feasibility）。通过归纳（induction），我们可以继续减小 $B_{\tau-1},B_{\tau-2},\dots,B_0$，并且仍然得到一个可行解。
 
+> **“减小 $B_\tau$ 却能让 $B_{\tau+1}$ 取到等号”到底是怎么发生的**：这里“谁在变、谁在固定”要分清楚。$B_{\tau+1}$ 不是 $B_\tau$ 的函数，而是**由 $B_\tau$ 之外的东西决定的**——在约束里，$B_{\tau+1}$ 是一个独立的变量，它只是被要求“$\le$ 右边那个 min”。min 的右端随 $B_\tau$ 减小而减小（单调不减的反方向），因此当我们减小 $B_\tau$ 时，右边这个 min 的**上界**被压低了；与此同时，$B_{\tau+1}$ 这个独立变量本身并没有被动地“跟着减小”，它可以被我们自由地重新赋值。所以正确的读法是：先把 $B_\tau$ 压低，使右端的 min 变小，直到这个 min 恰好等于（原本就偏小、即严格小于 min 的）$B_{\tau+1}$，于是等号成立。换句话说，我们是在**固定 $B_{\tau+1}$ 不动、只往下调 $B_\tau$**，让“上界”降下来贴着 $B_{\tau+1}$，而不是让 $B_{\tau+1}$ 自己往上爬。
+
 > **为什么能一路减小到 $B_0$ 且仍可行**：因为我们把 $B_\tau$ 减小之后，为了让递推式继续成立（或满足“$\le$”的松弛），前面各期的 $B_t$ 也可以相应减小——这正是“$B_{t+1}$ 关于 $B_t$ 单调不减”这一性质的作用方向：减小前一期的 $B_t$ 只会使后一期的上界变小（或不变），绝不会使它违反下界约束。因此我们可以在不破坏任何约束的前提下，把 $B_0$ 一路压小。这个新的现金流是可行的，并且减小了 $B_0$，这正说明原来的点不是最优的。
+
+> **术语 · feasibility（可行性）**：这里“现金流的可行性”指的就是**这个解（由 $B_0,\dots,B_T,x$ 决定）仍然满足全部约束，即仍然是一个可行解（feasible solution）**。“现金流可行”＝“该现金流对应的解仍满足所有约束”，而不是在说某笔现金流本身有某种独立属性。
 
 > **结论（为什么松弛后 LP 与原问题等价）**：若 LP 的某个可行解在某处取严格不等式 $B_{\tau+1}<\min\{\cdot,\cdot\}$，我们就总能再压小 $B_0$ 得到更优（目标更小）的可行解，故这样的点在最优解中不可能出现。因此最优解必然处处取等号，即满足原始的分段递推方程。于是松弛问题（一个凸的 LP）与原（非凸的）问题具有相同的最优解与最优值，求解 LP 即可。
 
@@ -182,7 +186,7 @@ B_{t+1}(B_0,x)={}&\min\Big\{(1+r^{+})\big(B_t(B_0,x)-E_t+I_t(x)\big),\\
 
 > **术语 · concave function（凹函数）**：若 $-f$ 是凸函数，则称 $f$ 为凹函数；等价地，对任意 $x,y$ 与 $\theta\in[0,1]$ 有 $f(\theta x+(1-\theta)y)\ge\theta f(x)+(1-\theta)f(y)$。
 >
-> **术语 · pointwise minimum（逐点最小值）**：函数 $h(x)=\min\{f_1(x),f_2(x)\}$。关键性质：**两个凹函数的逐点最小值仍是凹函数**。理由——$h$ 是 $\mathrm{hypo}f_1\cap\mathrm{hypo}f_2$（下图中两个下水平集之交）的“上包络”，而凹函数的下图（hypograph）是凸集，两个凸集之交仍是凸集，故 $h$ 的 hypograph 是凸集，即 $h$ 凹。（这是与“凸函数的逐点最大值仍是凸函数”相对偶的结论。）
+> **术语 · pointwise minimum（逐点最小值）**：函数 $h(x)=\min\{f_1(x),f_2(x)\}$。关键性质：**两个凹函数的逐点最小值仍是凹函数**。理由——把凹函数 $f$ 的 hypograph（下图，即位于图像曲线下方的点集 $\{(x,y):y\le f(x)\}$）记作 $\mathrm{hypo}\,f$；凹函数的下图是凸集，而 $h$ 的 hypograph 恰好是两个下图的交集 $\mathrm{hypo}\,f_1\cap\mathrm{hypo}\,f_2$，两个凸集之交仍是凸集，故 $h$ 的 hypograph 是凸集，即 $h$ 凹。（这是与“凸函数的逐点最大值仍是凸函数”相对偶的结论。）
 
 > **为什么这里用归纳法（induction）**：第一步验证了 $t=1$ 时 $B_1$ 是凹（仿射）函数，作为归纳基础。归纳假设 $B_t$ 凹；由于 $I_t(x)=\sum_i a^{(i)}_t x_i$ 关于 $x$ 是仿射的，故 $B_t(B_0,x)-E_t+I_t(x)$ 关于 $(B_0,x)$ 仍是凹函数；再乘以正的系数 $(1+r^{+})$ 或 $(1+r^{-})$ 仍保持凹性；最后对两个凹函数取 $\min$ 仍凹。这样就把凹性从 $B_t$ 传递到了 $B_{t+1}$，从而对所有 $t$ 成立。
 
@@ -192,7 +196,7 @@ B_{t+1}(B_0,x)={}&\min\Big\{(1+r^{+})\big(B_t(B_0,x)-E_t+I_t(x)\big),\\
 B_T(B_0,x)-E_T+I_T(x)\ge 0.
 ```
 
-> **为什么 $B_T(B_0,x)-E_T+I_T(x)=0$ 非凸**：等式约束的可行集是函数 $B_T-E_T+I_T$ 的零水平集（level set）$\{z:g(z)=0\}$。若 $g$ 是凹函数，则 $\{z:g(z)\ge 0\}$ 是凸集（凹函数的上水平集 superlevel set 是凸的），但零水平集 $\{g=0\}$ 是凸集与凸集 $\{g\le 0\}$ 的“边界”，一般不是凸的。因此带等号的约束非凸，而带“$\ge$”的松弛是凸的。
+> **为什么 $B_T(B_0,x)-E_T+I_T(x)=0$ 非凸**：等式约束的可行集是函数 $B_T-E_T+I_T$ 的零水平集（level set）$\{z:g(z)=0\}$。若 $g$ 是凹函数，则 $\{z:g(z)\ge 0\}$ 是凸集（凹函数的上水平集 superlevel set，即取值不小于某常数的点集，是凸的），但零水平集 $\{g=0\}$ 是凸集与凸集 $\{g\le 0\}$ 的“边界”，一般不是凸的。因此带等号的约束非凸，而带“$\ge$”的松弛是凸的。
 
 经过这一松弛，问题可以表述为：
 
@@ -250,11 +254,11 @@ S^{-}_t&\ge 0.
 \end{aligned}
 ```
 
-> **为什么这等价于分段定义**：我们把净余额 $B_t-E_t+I_t$ 用两个非负变量之差 $S^{+}_t-S^{-}_t$ 表示（即把净余额拆成正部与负部）。假设 $B_t-E_t+I_t$ 为正，则取 $S^{+}_t=B_t-E_t+I_t$ 且 $S^{-}_t=0$，于是 $B_{t+1}=(1+r^{+})(B_t-E_t+I_t)$。若 $B_t-E_t+I_t$ 为负，则取 $S^{+}_t=0$ 且 $S^{-}_t=-(B_t-E_t+I_t)=|B_t-E_t+I_t|$（注意此时 $B_t-E_t+I_t=S^{+}_t-S^{-}_t$ 仍成立），于是 $B_{t+1}=-(1+r^{-})|B_t-E_t+I_t|=(1+r^{-})(B_t-E_t+I_t)$。这样两支分别复现了分段定义中的两种情形。
+> **为什么这等价于分段定义**：我们把净余额 $B_t-E_t+I_t$ 用两个非负变量之差 $S^{+}_t-S^{-}_t$ 表示（即把净余额拆成正部与负部）。假设 $B_t-E_t+I_t$ 为正，则取 $S^{+}_t=B_t-E_t+I_t$ 且 $S^{-}_t=0$，于是 $B_{t+1}=(1+r^{+})(B_t-E_t+I_t)$。若 $B_t-E_t+I_t$ 为负，则取 $S^{+}_t=0$ 且 $S^{-}_t=-(B_t-E_t+I_t)=|B_t-E_t+I_t|$（注意此时净余额为负，故 $S^{-}_t$ 是非负数；而 $B_t-E_t+I_t=S^{+}_t-S^{-}_t=-S^{-}_t$ 仍成立），于是 $B_{t+1}=-(1+r^{-})S^{-}_t=(1+r^{-})(B_t-E_t+I_t)$。这样两支分别复现了分段定义中的两种情形。
 
-这个等价性很容易证明：假设 $B_t-E_t+I_t$ 为正，那么 $S^{+}_t=B_t-E_t+I_t$ 且 $S^{-}_t=0$，所以 $B_{t+1}=(1+r^{+})(B_t-E_t+I_t)$。若 $B_t-E_t+I_t$ 为负，那么 $S^{+}_t=0$ 且 $S^{-}_t=B_t-E_t+I_t$，所以 $B_{t+1}=(1+r^{-})(B_t-E_t+I_t)$。
+（这个等价性的“可逆”方向也不难验证：若某解满足上面四条 LP 约束，则当 $B_t-E_t+I_t\ge 0$ 时必有 $S^{+}_t=B_t-E_t+I_t$、$S^{-}_t=0$，当 $B_t-E_t+I_t<0$ 时必有 $S^{+}_t=0$、$S^{-}_t=-(B_t-E_t+I_t)$，于是 $B_{t+1}$ 恰好落在分段定义的对应一支上。这一“正负部唯一”的论证见后文“为什么 $S^{+}_t$ 与 $S^{-}_t$ 不会同时为正”。）
 
-> **注记 · 关于 $S^{+}_t$、$S^{-}_t$ 的符号约定**：原文这里写 $S^{-}_t=B_t-E_t+I_t$ 是略去绝对值号的简写，其含义是“$S^{-}_t$ 取为净余额的绝对值”。正式写法应是：当净余额为负时，令 $S^{-}_t=-(B_t-E_t+I_t)\ge 0$，从而 $B_{t+1}=(1+r^{+})\cdot 0-(1+r^{-})S^{-}_t=(1+r^{-})(B_t-E_t+I_t)$，与分段定义一致。
+> **注记 · 关于 $S^{+}_t$、$S^{-}_t$ 的符号约定**：在负分支（净余额为负）时，$S^{-}_t$ 必须取净余额的**绝对值** $-(B_t-E_t+I_t)\ge 0$，而不能直接写 $S^{-}_t=B_t-E_t+I_t$（右边是负数，会与约束 $S^{-}_t\ge 0$ 冲突）。上面正文统一采用这一约定，正分支取 $S^{+}_t=B_t-E_t+I_t$、负分支取 $S^{-}_t=-(B_t-E_t+I_t)$，两分支符号一致，分别对应净余额的正部与负部。
 
 因此，问题可以表述为一个 LP：
 
@@ -393,7 +397,11 @@ R_{ij}=
 \end{cases}
 ```
 
-于是链路流量向量 $t\in\mathbb{R}^{m}$ 由 $t=Rf$ 给出。链路容量约束可表达为 $Rf\preceq c$。（对数）网络效用（network utility）定义为
+于是链路流量向量 $t\in\mathbb{R}^{m}$ 由 $t=Rf$ 给出。
+
+> **记号 · $\preceq$（广义不等式 generalized inequality）**：对两个同维向量 $u,v\in\mathbb{R}^{k}$，$u\preceq v$ 表示**逐分量（componentwise）不等式**，即 $u_i\le v_i$ 对每一个分量 $i=1,\dots,k$ 都成立。同理 $\succeq$ 是它的反向（$u\succeq v$ 即 $u_i\ge v_i$ 对所有 $i$）。用在本句里，链路容量约束 $Rf\preceq c$ 就是说“对每条链路 $i$，经过它的总流量 $t_i=(Rf)_i$ 不超过它的容量 $c_i$”。
+
+（对数）网络效用（network utility）定义为
 
 ```math
 U(f)=\sum_{j=1}^{n}\log f_j.
@@ -438,7 +446,11 @@ L=\max\{l_1,\dots,l_n\}.
 
 > **为什么这是凸优化问题，且 $f\succeq 0$ 是“隐式”的**：目标 $\sum_j\log f_j$ 是凹函数（$\log$ 是凹函数，各分量之和仍凹），我们是在**最大化**一个凹函数，等价于最小化凸函数 $-\sum_j\log f_j$；约束 $Rf\preceq c$ 是仿射不等式，故可行集是多面体（凸集）。$f\succeq 0$ 不必显式写出，因为 $\log f_j$ 的定义域（domain）本身就要求 $f_j>0$，任何使目标有定义的 $f$ 自动满足 $f_j>0$。因此这是凸优化问题。
 
-**(b)** 链路延迟关于流量是**单调递增（monotonically increasing）**的，所以它在流量为零时最小。由于流延迟是各链路延迟之和，它也在取 $f=0$ 时最小。所以零流使每条流的延迟都最小。当 $f=0$ 时我们有 $d_i=1/c_i$。为把这些延迟沿各路由求和，我们乘以 $R^{T}$，得到
+**(b)** 链路延迟关于流量是**单调递增（monotonically increasing）**的，所以它在流量为零时最小。由于流延迟是各链路延迟之和，它也在取 $f=0$ 时最小。所以零流使每条流的延迟都最小。当 $f=0$ 时我们有 $d_i=1/c_i$。
+
+> **为什么零流是 (b) 的合法解，即使那里 $\log 0$ 无定义**：关键要分清——(b) 要最小化的目标只是最大延迟 $L$，它只由链路延迟 $d_i$（因而只由流量 $t=Rf$）决定，与效用 $U(f)=\sum_j\log f_j$ 无关；$\log f_j$ 在 $f_j=0$ 处无定义，只影响“效用”这个量在 $f=0$ 处的取值，并不妨碍 $f=0$ 作为延迟最小化问题的解。题目里“特别地，我们允许 $U=-\infty$”这句话正是在约定：当我们取 $f_j=0$ 时，$\log f_j$ 虽无定义，但可以把该效用值约定为 $-\infty$（即令 $f_j\to 0^{+}$ 时 $\log f_j\to-\infty$ 的极限作为它在边界 $f_j=0$ 处的取值）。这样 $f=0$ 在“延迟最小化”问题里是完全合法的，只是它对应的效用被约定为 $-\infty$ 罢了。
+
+为把这些延迟沿各路由求和，我们乘以 $R^{T}$，得到
 
 ```math
 l=R^{T}(1/c_1,\dots,1/c_m),
@@ -450,11 +462,11 @@ l=R^{T}(1/c_1,\dots,1/c_m),
 L_{\min}=\max\Big(R^{T}(1/c_1,\dots,1/c_m)\Big),
 ```
 
-其中 $\max$ 是对向量 $R^{T}(1/c_1,\dots,1/c_m)$ 各分量取最大值。
+> **记号 · 无下标的 $\max$ 是“逐分量取最大”的简写**：上一行里的 $l=R^{T}(1/c_1,\dots,1/c_m)$ 是一个**向量**（它的第 $j$ 个分量 $l_j$ 就是流 $j$ 的延迟）。因此这一行 $L_{\min}=\max\Big(R^{T}(1/c_1,\dots,1/c_m)\Big)$ 里的 $\max$ 不是“对某个量求标准最大值”的一元算子，而是作用在这个**向量**上、取其**所有分量中的最大值**：即 $L_{\min}=\max\{l_1,\dots,l_n\}$，其中 $l_j$ 是 $l=R^{T}(1/c_1,\dots,1/c_m)$ 的第 $j$ 个分量。这正与开头“最大流延迟 $L=\max\{l_1,\dots,l_n\}$”的定义一致。
 
 > **为什么零流使延迟最小**：链路延迟 $d_i=\dfrac{1}{c_i-t_i}$ 关于 $t_i$ 单调递增（分母随 $t_i$ 增大而减小，故 $d_i$ 增大），而 $t_i$ 是经过链路 $i$ 的各流率之和，随每个 $f_j$ 单调递增。因此要最小化每个 $d_i$（进而最小化每条流延迟 $l_j=\sum_{i:\text{流}j\text{经过}i}d_i$ 与最大延迟 $L$），应让所有 $f_j$ 尽量小，即取 $f=0$（受 $f\succeq 0$ 约束，最小值就是 $0$）。
 
-> **为什么 $l=R^{T}(1/c_1,\dots,1/c_m)$**：流 $j$ 的延迟是它经过的所有链路的 $d_i$ 之和。$R$ 的第 $i$ 行对应链路 $i$，第 $j$ 列对应流 $j$，$R_{ij}=1$ 当且仅当流 $j$ 经过链路 $i$。因此 $\sum_i R_{ij}d_i$ 恰好就是流 $j$ 的延迟 $l_j$。写成向量形式：$l=R^{T}d$，其中 $d=(1/c_1,\dots,1/c_m)$ 是各链路延迟向量。$R^{T}$ 的第 $j$ 行是 $R$ 的第 $j$ 列，与 $d$ 做内积即 $\sum_i R_{ij}(1/c_i)=l_j$。
+> **为什么 $l=R^{T}(1/c_1,\dots,1/c_m)$**：流 $j$ 的延迟是它经过的所有链路的 $d_i$ 之和。$R$ 的第 $i$ 行对应链路 $i$，第 $j$ 列对应流 $j$，$R_{ij}=1$ 当且仅当流 $j$ 经过链路 $i$。因此 $\sum_i R_{ij}d_i$ 恰好就是流 $j$ 的延迟 $l_j$。写成向量形式：$l=R^{T}d$，其中 $d=(1/c_1,\dots,1/c_m)$ 是各链路延迟向量。$R^{T}$ 的第 $j$ 行（即 $R$ 的第 $j$ 列）与 $d$ 做内积，得到的正是 $\sum_i R_{ij}(1/c_i)=l_j$。
 
 **(c)** 设 $b^{T}_1,\dots,b^{T}_m$ 表示 $R$ 的行。为找到 $U$ 与 $L$ 之间的最优权衡，我们对一段 $L$ 的取值求解问题
 
@@ -468,7 +480,9 @@ L_{\min}=\max\Big(R^{T}(1/c_1,\dots,1/c_m)\Big),
 
 其中变量为 $f$，并有隐式约束 $f\succeq 0$。
 
-> **为什么用 $b^{T}_i f$ 表示链路流量**：$b^{T}_i$ 是 $R$ 的第 $i$ 行，故 $b^{T}_i f=\sum_j R_{ij}f_j=t_i$，即链路 $i$ 的总流量。于是 $c_i-b^{T}_i f=c_i-t_i$ 是链路 $i$ 的剩余容量，$1/(c_i-b^{T}_i f)$ 即链路延迟 $d_i$。流 $j$ 的延迟 $l_j$ 是它经过的所有链路延迟之和，即 $\sum_{i}R_{ij}/(c_i-b^{T}_i f)$（因为 $R_{ij}=1$ 时该项计入，$R_{ij}=0$ 时该项为 $0$，故可直接对所有 $i$ 求和）。约束 $l_j\le L$ 对每个 $j$ 成立，就等价于 $L=\max_j l_j$ 不超过给定值 $L$。
+> **为什么用 $b^{T}_i f$ 表示链路流量**：$b^{T}_i$ 是 $R$ 的第 $i$ 行，故 $b^{T}_i f=\sum_j R_{ij}f_j=t_i$，即链路 $i$ 的总流量。于是 $c_i-b^{T}_i f=c_i-t_i$ 是链路 $i$ 的剩余容量，$1/(c_i-b^{T}_i f)$ 即链路延迟 $d_i$。流 $j$ 的延迟 $l_j$ 是它经过的所有链路延迟之和，即 $\sum_{i}R_{ij}/(c_i-b^{T}_i f)$（因为 $R_{ij}=1$ 时该项计入，$R_{ij}=0$ 时该项为 $0$，故可直接对所有 $i$ 求和）。
+
+> **为什么“每条流 $l_j\le L$”与“最大延迟 $\max_j l_j\le L$”等价**：这里要区分两个不同的符号角色。式中的 $l_j$ 是**第 $j$ 条流的延迟**（由 $f$ 决定，是待求的“量”）；而约束右侧的 $L$ 是**我们事先选定的一个阈值（threshold）**，是一个给定的数。约束 $\sum_i R_{ij}/(c_i-b^{T}_i f)\le L$ 要求每条流的延迟 $l_j$ 都不超过这个阈值 $L$。当这一条对**每一个** $j$ 都成立时，等价于“所有 $l_j$ 中的最大值 $\max_j l_j$ 也不超过阈值 $L$”。所以这句话的主干是：**约束的是“每条流的延迟 $l_j$ 都被压在阈值 $L$ 之下”**，而不是让某个量“既当最大延迟又当上限”。
 
 显然，若 $Rf\preceq c$ 则必有 $c_i-b^{T}_i f\ge 0$，所以约束
 
@@ -478,7 +492,11 @@ L_{\min}=\max\Big(R^{T}(1/c_1,\dots,1/c_m)\Big),
 
 是凸的。因此这是一个凸优化问题。
 
-> **为什么这些约束是凸的**：函数 $c_i-b^{T}_i f$ 关于 $f$ 是仿射的，且在可行集上（由 $Rf\preceq c$ 保证）非负。函数 $g(y)=1/y$ 在 $y>0$ 上是凸的、递减的。因此 $1/(c_i-b^{T}_i f)$ 是“凸的、非增的 $g$ 与仿射的 $c_i-b^{T}_i f$ 的复合”，由复合规则（composition rule）知它是凸函数（concave 仿射内函数配凸递减外函数 → 凸）。凸函数的非负线性组合（系数 $R_{ij}\in\{0,1\}$）仍是凸的，故 $\sum_i R_{ij}/(c_i-b^{T}_i f)$ 是凸函数，其“$\le L$”的下水平集约束是凸约束。目标仍是凹函数（最大化），故整体是凸优化问题。
+> **为什么这些约束是凸的**：函数 $c_i-b^{T}_i f$ 关于 $f$ 是仿射的，且在可行集上（由 $Rf\preceq c$ 保证）非负。函数 $g(y)=1/y$ 在 $y>0$ 上是凸的、递减的。于是 $1/(c_i-b^{T}_i f)$ 可以看成“内层函数 $h(f)=c_i-b^{T}_i f$ 与外层函数 $g(y)=1/y$”的复合 $g(h(f))$。由下面的复合规则，它关于 $f$ 是凸函数。凸函数的非负线性组合（系数 $R_{ij}\in\{0,1\}$）仍是凸的，故 $\sum_i R_{ij}/(c_i-b^{T}_i f)$ 是凸函数，其“$\le L$”的下水平集约束是凸约束。目标仍是凹函数（最大化），故整体是凸优化问题。
+
+> **规则 · composition rule（复合规则）**：设 $h$ 是凸函数、$g$ 是**凸且不减（nondecreasing）**的函数，则复合 $g(h(x))$ 是凸函数；设 $h$ 是**凹（concave）**函数、$g$ 是**凸且不减**的函数，则复合 $g(h(x))$ 也是凸函数。直观记忆：**“外层 $g$ 是凸的”** 保证复合仍凸，而 **“内层 $h$ 的凸凹性决定 $g$ 需不需要单调性、以及单调性的方向”**——若 $h$ 凸，要求 $g$ 不减；若 $h$ 凹，要求 $g$ 不减（注：这里是凸外函数的简化口径，见下）。
+
+> **规则补正 · 本处用到的是“凹内 + 凸且减外 → 凸”这一支**：上面那套简化口诀要精确到本问题才行。真正的复合规则是：**若 $h$ 是凹函数、$g$ 是凸函数且 $g$ 递减（nonincreasing），则复合 $g(h(x))$ 是凸函数**。本处 $h(f)=c_i-b^{T}_i f$ 是仿射函数，而仿射函数**既凸又凹**（它同时满足凸函数与凹函数的定义），所以可以把它当作“凹内层”来套这条规则；外层 $g(y)=1/y$ 在 $y>0$ 上是凸的、且是递减的。于是“凹内层 + 凸且减外层”这一组合满足复合规则，故 $g(h(f))=1/(c_i-b^{T}_i f)$ 是凸函数。之所以不套“凸内 + 凸且不减外”（$g=1/y$ 并不减，故这一支用不上），正是因为这里的外层 $1/y$ 是递减的，必须搭配凹内层。
 
 > **如何用 (c) 得到权衡曲线**：对一系列递增的 $L$ 值（从 $L_{\min}$ 到较大值），逐个求解上面的凸问题，得到对应的最大效用 $U(L)$，再画出 $(L,U(L))$ 曲线。当 $L\ge$ 某个阈值后，效用达到 (a) 中的 $U_{\max}$（延迟约束不再起作用）；当 $L$ 逼近 $L_{\min}$ 时，效用趋近 $-\infty$（对应 $f\to 0$）。
 
@@ -533,11 +551,16 @@ xlabel('L'); ylabel('U');
 
 > **代码解读（为什么要这样写）**：
 >
-> - `Lmin = max(R'*(1./c))`：当完全不做效用约束（$f=0$，即不分配任何带宽给用户流量时），延迟由链路容量 $c$ 独自决定。链路 $j$ 的延迟约为 $1/c_j$，用路由矩阵 $R$ 把链路容量映射到各用户路径上（$R^T(1./c)$），取最大值即为该系统能实现的最小最大延迟（minimum latency）$L_{\min}$。这一步是解析下界，无需优化。
+> 先厘清符号约定：**routing matrix（路由矩阵）$R$** 是「链路×用户」矩阵，即 $R$ 的第 $j$ 行第 $i$ 列元素 $R_{ji}\in\{0,1\}$ 表示用户 $i$ 的流量是否经过链路 $j$；因此 $Rf$（$R$ 左乘 $f$）得到的第 $j$ 个分量 $(Rf)_j=\sum_i R_{ji}f_i$ 是**链路 $j$ 上的总流量**，而 $R^T x$（$R$ 的转置左乘 $x$）得到的第 $i$ 个分量 $(R^T x)_i=\sum_j R_{ji}x_j$ 是**用户 $i$ 路径上各链路量 $x$ 的求和**。下文的 $R'$ 即 $R^T$（MATLAB 中 `'` 表示共轭转置，实矩阵下即转置）。
+>
+> 延迟的量纲约定：链路 $j$ 的传输延迟约为 $1/c_j$（其中 $c_j$ 是链路 $j$ 的容量，$1/c_j$ 的量纲即「时间」，因容量 $c_j$ 的量纲为「数据量/时间」）。
+>
+> - `Lmin = max(R'*(1./c))`：当完全不做效用约束（$f=0$，即不分配任何带宽给用户流量时），延迟由链路容量 $c$ 独自决定。链路 $j$ 的延迟约为 $1/c_j$；`1./c` 得到各链路的延迟向量，再用 `R'*(1./c)` 把链路延迟**求和**映射到各用户路径上（第 $i$ 个分量为 $\sum_j R_{ji}/c_j$，即用户 $i$ 路径上各链路延迟之和，也就是用户 $i$ 的端到端延迟），最后 `max` 取各用户延迟中的最大值，即为该系统能实现的最小最大延迟（minimum latency）$L_{\min}$。这一步是解析下界，无需优化。
 > - `ds = 1.10*Lmin*logspace(0,1,N)`：在 $[L_{\min},\,10L_{\min}]$ 之间按对数间隔取 $N=20$ 个延迟上界 $d$，从略高于下界（高出 10%）一直扫到 10 倍，覆盖整个 Pareto 前沿（Pareto frontier）上「低延迟—低效用」到「高延迟—高效用」的折中范围。
-> - 循环体对每个 $d$ 求解一个**最大化 $\mathrm{geomean}(f)$（几何平均效用）**、约束 $R^T(c-Rf)^{-1}\le d\,\mathbf{1}$ 的 convex optimization 子问题。目标 $\log\det$-型凸问题的变形，用 `geomean` 表示几何平均，是 concave 的目标，故 `maximize` 成立。
-> - `inv_pos(c-R*f)` 是分量取倒数的正部分，对应延迟表达式 $1/(c_j-(Rf)_j)$；其定义域自动强制 $R f<c$，故注释里说 `R*f <= c` 与 `f >= 0` 不必显式写出——`inv_pos` 的定义域要求 $c-Rf>0$，`geomean` 的定义域要求 $f>0$。
-> - `Uopt` 记录每个 $d$ 对应的最优效用值（`cvx_optval` 是几何平均，取对数再乘 $n$ 得到 $\log\prod f_i$ 形式的效用标度）。
+> - 循环体对每个 $d$ 求解一个**最大化 $\mathrm{geomean}(f)$（几何平均效用）**、约束 $R^T(c-Rf)^{-1}\le d\,\mathbf{1}$ 的 convex optimization 子问题。这里的约束与目标都是 concave 型：$\log\det$-型（$\log\det$-type，即「对数-行列式」型）凸问题经变量替换后，其「几何平均」正是「对数-行列式」目标在标量分量情形下的退化形式（见下一条说明），故用 `geomean` 表示几何平均，是 concave 的目标，`maximize` 成立。
+> - `inv_pos(c-R*f)` 是分量取倒数的正部分，对应延迟表达式 $1/(c_j-(Rf)_j)$：其中 $R*f$ 得到的是各链路总流量向量 $(Rf)_j$，逐分量减去后被 `inv_pos` 取倒数，所得第 $j$ 个分量即「考虑当前流量占用后」链路 $j$ 的延迟；再左乘 `R'` 把各链路延迟求和到用户路径上，与 `Lmin` 那行完全同一套「转置求和」逻辑。`inv_pos` 的定义域自动强制 $c-Rf>0$，`geomean` 的定义域要求 $f>0$，故注释里说 `R*f <= c` 与 `f >= 0` 不必显式写出。
+> - `Uopt = [Uopt n*log(cvx_optval)]`：`cvx_optval` 是该子问题的最优目标值，即几何平均 $\mathrm{geomean}(f)=(\prod_i f_i)^{1/n}$；取对数得 $\frac{1}{n}\sum_i\log f_i$，再乘 $n$ 得到 $\sum_i\log f_i=\log\prod_i f_i$ 形式的效用标度（沿用原效用定义 $U=\sum_i\log f_i$ 的标度），逐次 `d` 记录进 `Uopt`。
+> - `Umax` 是**无延迟约束（$d\to\infty$）时的最大效用**，即先于本段循环、在无最大延迟约束下单独解一次 `maximize geomean(f)` 所得最优值的同一标度 $n\log(\mathrm{geomean}(f))$（对应问题在上一文件中已给出该无约束最优效用值）；此处直接引用该数值用于画图。
 > - `semilogx` 用对数横轴画出效用 $U$ 对延迟 $L$ 的 trade-off 曲线，实线为折中曲线，两条虚线分别标出 $L_{\min}$ 与 $U_{\max}$ 的位置。
 
 折中曲线（trade-off curve）如图 3 所示。
@@ -546,7 +569,7 @@ xlabel('L'); ylabel('U');
 
 ![Figure 3](figure3.png)
 
-> **图 3 说明**：横轴为最大延迟 $L$（对数坐标，$10^1$ 到 $10^3$），纵轴为效用 $U$（范围约 $-480$ 到 $-340$）。实线（solid）是 utility 对 maximum latency 的折中曲线，两条虚线（dashed）分别标出 $L_{\min}$ 与 $U_{\max}$ 的位置。曲线从左下到右上单调上升，体现「延迟越松（$L$ 越大），可达效用 $U$ 越高」的 Pareto 折中关系。
+> **图 3 说明**：横轴为最大延迟 $L$（对数坐标，$10^1$ 到 $10^3$），纵轴为效用 $U$（范围约 $-480$ 到 $-340$）。纵轴范围 $-480$ 到 $-340$ 来自被注释掉的 `axis` 语句所设的显示区间（该语句被注释仅表示「不强制此坐标范围、让 MATLAB 自动缩放」，并非该范围作废，数值仍是此问题参数下的典型取值区间，供说明参考）。实线（solid）是 utility 对 maximum latency 的折中曲线，两条虚线（dashed）分别标出 $L_{\min}$ 与 $U_{\max}$ 的位置。曲线从左下到右上单调上升，体现「延迟越松（$L$ 越大），可达效用 $U$ 越高」的 Pareto 折中关系。
 
 ---
 
@@ -609,11 +632,13 @@ E(x,y,k)=\frac{1}{2}x^T A\,\operatorname{diag}(k)\,A^T x+\frac{1}{2}y^T A\,\oper
 
 > **术语 · concave function（凹函数）**：满足 $f(\theta u+(1-\theta)v)\ge\theta f(u)+(1-\theta)f(v)$ 对任意 $\theta\in[0,1]$ 成立的函数，即其「上方」是凸集、函数图像在弦之上。凹函数取最大是凸优化问题。
 
-> **为什么 $E_{\min}$ 是 $k$ 的凹函数**：$E_{\min}(k)=\min_{x,y\,(\text{满足固定约束})} E(x,y,k)$。$E$ 作为 $k$ 的函数是仿射的（既凸又凹），而对一族（仿射的）凸函数逐点取最小，得到的函数仍是凸的；对称地，对一族仿射（因而也是凹）函数逐点取最小，得到的仍是凹函数。这正是「pointwise minimum（逐点最小）保凹性」的结论。因此 $E_{\min}(k)$ 是凹函数——这很好，因为我们正是要最大化它。
+> **为什么 $E_{\min}$ 是 $k$ 的凹函数**：$E_{\min}(k)=\min_{x,y\,(\text{满足固定约束})} E(x,y,k)$。先把 $k$ 固定、只看 $E$ 作为 $(x,y)$ 的函数，它是凸的（各项都是二次型或线性项，且 $k\succeq 0$ 使二次型半正定）；再把 $(x,y)$ 固定、只看 $E$ 作为 $k$ 的函数，它又是仿射的（既凸又凹）。现在把 $k$ 当作主变量：因为 $E$ 关于 $k$ 是仿射的，所以「对一族关于 $k$ 的（仿射，因而也是）凹函数逐点取最小」，得到的仍是凹函数——这正是「pointwise minimum（逐点最小）保凹性」的结论。（作为对照：若是「对一族关于 $k$ 的凸函数逐点取最小」，结论才会是凸的；两条结论方向相反，关键看被逐点取最小的那族函数关于 $k$ 是凹还是凸。）这里被取最小的一族 $E(x,y,\cdot)$ 关于 $k$ 都是凹的，因此 $E_{\min}(k)$ 是凹函数——这很好，因为我们正是要最大化它。
 
 我们需要 $E_{\min}$ 的显式公式。为此，把 $A$ 分块为 $A_1$ 与 $A_2$，其中 $A_1\in\mathbb{R}^{p\times N}$ 由 $A$ 的前 $p$ 行构成，而 $A_2\in\mathbb{R}^{(n-p)\times N}$ 由 $A$ 的后 $n-p$ 行构成。
 
-令 $\bar x,\bar y,\bar c\in\mathbb{R}^{n-p}$ 分别表示 $x$、$y$、$c$ 的最后 $n-p$ 个（即自由的 free）分量。最小能量可写为
+> **编号约定**：质点的编号顺序与「前 $p$ 个固定、后 $n-p$ 个自由」一致，即质点 $1,\dots,p$ 是固定质点（fixed masses），质点 $p+1,\dots,n$ 是自由质点（free masses）。因此 $A$ 的前 $p$ 行对应固定质点，后 $n-p$ 行对应自由质点。自由质点 $p+i$（$i=1,\dots,n-p$）在向量 $x$、$y$、$c$ 中的分量是第 $p+i$ 个，即「最后 $n-p$ 个分量」。
+
+令 $\bar x,\bar y,\bar c\in\mathbb{R}^{n-p}$ 分别表示 $x$、$y$、$c$ 的最后 $n-p$ 个（即自由的 free）分量，具体地 $\bar x_i=x_{p+i}$，$\bar y_i=y_{p+i}$，$\bar c_i=c_{p+i}=g m_{p+i}$。最小能量可写为
 
 ```math
 E_{\min}(k)=\min_{\bar x,\bar y}\left(\frac{1}{2}z_x^T\operatorname{diag}(k)z_x+\frac{1}{2}z_y^T\operatorname{diag}(k)z_y+\bar c^T\bar y+C\right),
@@ -636,7 +661,7 @@ b_y &= A_1^T y^{\mathrm{fixed}}.
 \end{aligned}
 ```
 
-> **为什么做这个分块**：前 $p$ 个质点的坐标是固定的（已知常数），只有后 $n-p$ 个是自由变量。把 $A$ 分成「对应固定质点的行 $A_1$」与「对应自由质点的行 $A_2$」，弹簧位移 $z_x=A^T x$ 就能拆成「自由部分 $A_2^T\bar x$」加「固定部分 $A_1^T x^{\mathrm{fixed}}=b_x$」的常向量。同理 $z_y$。而重力势能 $\sum_i g m_i y_i$ 中，固定质点的贡献 $\sum_{i=1}^{p} g m_i y_i^{\mathrm{fixed}}$ 是与 $\bar y$ 无关的常数 $C$，自由质点的贡献是 $\bar c^T\bar y$（其中 $\bar c_i=g m_{p+i}$）。
+> **为什么做这个分块**：前 $p$ 个质点的坐标是固定的（已知常数），只有后 $n-p$ 个是自由变量。把 $A$ 分成「对应固定质点的行 $A_1$」与「对应自由质点的行 $A_2$」，弹簧位移 $z_x=A^T x$ 就能拆成「自由部分 $A_2^T\bar x$」加「固定部分 $A_1^T x^{\mathrm{fixed}}=b_x$」的常向量（即 $z_x=A_2^T\bar x+b_x$）。同理 $z_y=A_2^T\bar y+b_y$。而重力势能 $\sum_i g m_i y_i$ 中，固定质点的贡献 $\sum_{i=1}^{p} g m_i y_i^{\mathrm{fixed}}$ 是与 $\bar y$ 无关的常数 $C$，自由质点的贡献是 $\bar c^T\bar y$（其中 $\bar c_i=g m_{p+i}$）。
 
 因此，为求 $E_{\min}$，我们只需对一个关于 $\bar x$ 与 $\bar y$ 的**无约束二次型（unconstrained quadratic）**取最小值。这给出
 
@@ -655,13 +680,15 @@ v_y &= A_2 D b_y + \bar c.
 \end{aligned}
 ```
 
+> **符号一览**：$D=\operatorname{diag}(k)$ 是把弹簧刚度排在对角线上的对角矩阵；$Q=A_2 D A_2^T$ 是「自由部分刚度矩阵」（由自由质点的关联子矩阵 $A_2$ 与 $D$ 拼出的对称矩阵，它把自由质点的位移映射为对应的力，故必半正定）；$b_x=A_1^T x^{\mathrm{fixed}}$ 与 $b_y=A_1^T y^{\mathrm{fixed}}$ 是「固定质点对弹簧位移的常数贡献」；$z_x=A_2^T\bar x+b_x$ 与 $z_y=A_2^T\bar y+b_y$ 就是 $x$、$y$ 方向的弹簧位移向量；$v_x=A_2 D b_x$、$v_y=A_2 D b_y+\bar c$ 是下面配方中自然出现的线性项系数。
+
 > **为什么这个显式公式成立（逐点最小化二次型）**：把 $\bar x$ 部分的能量写成
 >
 > ```math
 > \frac{1}{2}z_x^T D z_x=\frac{1}{2}(A_2^T\bar x+b_x)^T D(A_2^T\bar x+b_x).
 > ```
 >
-> 对 $\bar x$ 求导并令其为零，得梯度方程 $A_2 D(A_2^T\bar x+b_x)=A_2 D A_2^T\bar x+A_2 D b_x=Q\bar x+v_x=0$，故 $\bar x^{\star}=-Q^{-1}v_x$。代回得到最小值为 $\frac{1}{2}\big(b_x^T D b_x-v_x^T Q^{-1}v_x\big)$——这正是「二次型配方求极小」的标准结果：$\min_u \tfrac{1}{2}u^T Q u+v^T u=-\tfrac{1}{2}v^T Q^{-1}v$（当 $Q\succ 0$）。$y$ 部分完全同理，只是线性项多了一个 $+\bar c^T\bar y$，体现在 $v_y=A_2 D b_y+\bar c$ 上。二者相加再加常数 $C$，即得上式。
+> 对 $\bar x$ 求导并令其为零，得梯度方程 $A_2 D(A_2^T\bar x+b_x)=A_2 D A_2^T\bar x+A_2 D b_x=Q\bar x+v_x=0$，故 $\bar x^{\star}=-Q^{-1}v_x$。代回得到最小值为 $\frac{1}{2}\big(b_x^T D b_x-v_x^T Q^{-1}v_x\big)$——这正是「二次型配方求极小」的标准结果。下面讲清那个「多出来的常数项」是怎么消掉的：把二次型展开成 $\tfrac{1}{2}(A_2^T\bar x+b_x)^T D(A_2^T\bar x+b_x)=\tfrac{1}{2}\bar x^T Q\bar x+v_x^T\bar x+\tfrac{1}{2}b_x^T D b_x$（用到了 $v_x=A_2 D b_x$，且 $\bar x^T A_2 D b_x=(A_2 D b_x)^T\bar x=v_x^T\bar x$）。配方得 $\tfrac{1}{2}(\bar x+Q^{-1}v_x)^T Q(\bar x+Q^{-1}v_x)-\tfrac{1}{2}v_x^T Q^{-1}v_x+\tfrac{1}{2}b_x^T D b_x$。此时前一项在 $\bar x=-Q^{-1}v_x$ 处取到最小值 $0$，于是最小值只剩 $-\tfrac{1}{2}v_x^T Q^{-1}v_x+\tfrac{1}{2}b_x^T D b_x$。换句话说，标准公式 $\min_u \tfrac{1}{2}u^T Q u+v^T u=-\tfrac{1}{2}v^T Q^{-1}v$（当 $Q\succ 0$）处理的是「不含常数项」的二次型，而我们这里的二次型自带常数项 $\tfrac{1}{2}b_x^T D b_x$（它来自固定的 $b_x$，与 $\bar x$ 无关，求极小不动它），所以结果要在标准公式上再补回这一常数项。$y$ 部分完全同理，只是线性项多了一个 $+\bar c^T\bar y$，体现在 $v_y=A_2 D b_y+\bar c$ 上。二者相加再加常数 $C$，即得上式。
 
 注意所有这些项都是关于 $k$ 的仿射函数（affine）。因此我们可以把「重新分配刚度」的问题写为
 
@@ -673,13 +700,15 @@ v_y &= A_2 D b_y + \bar c.
 \end{aligned}
 ```
 
-这是一个凸优化问题（convex optimization problem）。约束关于 $k$ 显然是凸的。目标函数含两项关于 $k$ 的仿射（因而也是凹）项，以及两项「仿射项的矩阵分式（matrix fractional）」的负值（因而也是凹的）。因此目标关于 $k$ 是凹的。
+这是一个凸优化问题（convex optimization problem）。约束关于 $k$ 显然是凸的。目标函数含两项关于 $k$ 的仿射（因而也是凹）项，以及两项「仿射项的 matrix fractional（矩阵分式）」取负后的凹项。因此目标关于 $k$ 是凹的。
 
 > **术语 · convex set（凸集）**：对任意两点 $u,v$，连线 $\{\theta u+(1-\theta)v:\theta\in[0,1]\}$ 仍完全落在集合内的集合。这里约束集 $\{k:1^T k=k_{\mathrm{tot}},\ k\succeq 0\}$ 是一个仿射超平面与正卦限的交，是凸集。
 
-> **术语 · matrix fractional（矩阵分式）**：形如 $f(Q,v)=v^T Q^{-1}v$（$Q\succ 0$）的函数，关于 $(Q,v)$ 是凸的。因此它的负值 $-v^T Q^{-1}v$ 是凹的。这里 $Q=A_2 D A_2^T$ 与 $v_x,v_y$ 都是 $k$ 的仿射函数，把仿射映射代入凸函数复合后仍是凸的（convex 在仿射复合下保持），故 $-v_x^T Q^{-1}v_x$ 关于 $k$ 是凹的。
+> **术语 · matrix fractional（矩阵分式）**：形如 $f(Q,v)=v^T Q^{-1}v$（$Q\succ 0$）的函数，关于 $(Q,v)$ 是凸的。因此它的负值 $-v^T Q^{-1}v$ 是凹的。
 
-> **为什么目标关于 $k$ 是凹的**：$b_x^T D b_x=\sum_j k_j (b_x)_j^2$ 与 $b_y^T D b_y$ 都是 $k$ 的线性函数（系数非负），线性函数既凸又凹，视为凹项没问题。$v_x^T Q^{-1}v_x$ 是矩阵分式，作为 $k$ 的复合是凸的，前面加负号即为凹。凹函数之和仍凹。于是「最大化凹目标 + 凸约束」正是标准的凸优化问题。
+> **为什么 $v_x^T Q^{-1}v_x$ 作为 $k$ 的复合是凸的**：这里要逐一看清 $Q$ 与 $v_x$ 是怎样由 $k$ 决定的。$D=\operatorname{diag}(k)$ 关于 $k$ 是仿射映射；$Q=A_2 D A_2^T=A_2\operatorname{diag}(k)A_2^T=\sum_j k_j(A_2)_j(A_2)_j^T$ 是 $k$ 的仿射（线性）函数；$v_x=A_2 D b_x=A_2\operatorname{diag}(k)b_x$ 也是 $k$ 的仿射（线性）函数。于是 $(Q,v_x)$ 作为 $k$ 的函数是一个仿射映射。而 matrix fractional $f(Q,v)=v^T Q^{-1}v$ 关于 $(Q,v)$ 是凸的，把「关于 $k$ 的仿射映射」代入「关于 $(Q,v)$ 的凸函数」复合后仍是凸函数（convex 在仿射复合下保持），所以 $v_x^T Q^{-1}v_x$ 关于 $k$ 是凸的，取负后 $-v_x^T Q^{-1}v_x$ 关于 $k$ 是凹的。
+
+> **为什么目标关于 $k$ 是凹的**：$b_x^T D b_x=\sum_j k_j (b_x)_j^2$ 与 $b_y^T D b_y$ 都是 $k$ 的线性函数（系数非负），线性函数既凸又凹，视为凹项没问题。$v_x^T Q^{-1}v_x$ 与 $v_y^T Q^{-1}v_y$ 都是 matrix fractional，作为 $k$ 的复合是凸的，前面加负号即为凹。凹函数之和仍凹。于是「最大化凹目标 + 凸约束」正是标准的凸优化问题。
 
 > **结论**：问题 `maximize $E_{\min}(k)$ s.t. $1^T k=k_{\mathrm{tot}},\ k\succeq 0$` 是一个 concave maximization（凹函数最大化）问题，可用凸优化求解器（如 cvx）直接求解。
 
@@ -725,7 +754,7 @@ L(k,\mu)&=\frac{1}{2}\Big(x^{\star T}A\operatorname{diag}(k)A^T x^{\star}+y^{\st
 
 下面是一个**行不通**的做法（但被很多人提出过）：在「最小化 $x,y$」与「最大化 $k$」之间交替迭代。有些人论证说，这会对该问题收敛到局部最优（local optimum），而由于问题是凸的，局部最优也就是全局最优（global optimum）。然而，这种说法是不对的。
 
-> **为什么交替最小化/最大化不成立**：交替在 $x,y$ 上最小、在 $k$ 上最大，对应的是对「极小化极大（minimax）」问题的坐标下降（coordinate descent）。但原问题是「$\max_k \min_{x,y}$」（先极小后极大），而交替迭代处理的是同一函数在不同块上的交替优化，并不保证收敛到真正的鞍点或最优值。凸性只在「对某一整块优化到精确最优」时才能保证全局性；对非凸的联合目标（$E$ 关于 $(x,y,k)$ 联合起来并非凸的——它是 $x,y$ 的二次与 $k$ 的线性之乘积型项），交替下降可能停在非最优的驻点。故「因为是凸所以局部即全局」的论证在这里失效，因为该交替过程所优化的对象本身并不凸。
+> **为什么交替最小化/最大化不成立**：交替在 $x,y$ 上最小、在 $k$ 上最大，对应的是对「极小化极大（minimax）」问题的坐标下降（coordinate descent）。但原问题是「$\max_k \min_{x,y}$」（先极小后极大），而交替迭代处理的是同一函数在不同块上的交替优化，并不保证收敛到真正的鞍点或最优值。所谓「凸性保证全局性」，指的是：只有当每一步都把某一个变量块优化到精确最优（exactly optimal）——即每一次固定其余块、对当前块求得真正的全局最优解，而不是只下降一步——交替坐标下降（coordinate descent）才在目标函数关于各块联合凸时收敛到全局最优。但这里 $E$ 关于 $(x,y,k)$ 联合起来**并非凸的**：它含有「关于 $x,y$ 是二次、关于 $k$ 是线性、二者相乘」的乘积型交叉项（例如 $k_j x_r x_s$ 这类项）。既然联合目标本身不凸，交替过程所优化的对象就不满足那个保证全局性的前提，于是「因为是凸所以局部即全局」的论证在这里失效，交替下降可能停在非最优的驻点。
 
 **(b)** 以下代码求解刚度重新分配问题。
 
@@ -803,7 +832,6 @@ axis([0.1 0.8 -1.5 1])
 ---
 
 ## （第 17 页）
-
 ```matlab
 figure
 ind_ex = find(k < 1e-2); %do not show springs with k < 1e-2
@@ -816,13 +844,9 @@ xlabel('x'); ylabel('y');
 axis([0.1 0.8 -1.5 1])
 hold off
 ```
-
 **译注**：与上一段完全对称，只是把均匀刚度换成**优化后的刚度** $k$，坐标换成 $x_{\text{opt}}$、$y_{\text{opt}}$，画出优化后的结构。两次绘图共用一个坐标窗口范围 `axis([0.1 0.8 -1.5 1])`，便于对比。
-
 **结论**：最优能量为 $E_{\min}(k^{\star})=57.84$；相比之下，均匀分配刚度时的最小能量是 $18.37$。均匀与最优两种刚度分配下的质量构型见图 4。刚度小于 $10^{-2}$ 的弹簧不再画出。
-
-> **译注**：注意这里的数值语义 —— 原文写 "the minimum energy is 18.37 when stiffness is uniformly allocated"，而 $E_{\min}(k^\star)=57.84$。也就是说，在本题的设定（质量配置是待优化对象、能量目标方向）下，均匀分配反而给出更小的能量值；题目的本意是展示优化刚度分配得到的构型与均匀分配构型的差异，图 4 直观呈现了这一点。
-
+> **译注**：注意这里的数值语义 —— 原文写 "the minimum energy is 18.37 when stiffness is uniformly allocated"，而 $E_{\min}(k^\star)=57.84$。也就是说，在本题的设定下，待优化对象是刚度分配 $k$、目标是最小化能量 $E$；按此目标优化出的刚度构型对应的能量 $57.84$，反而**大于**均匀分配刚度时的最小能量 $18.37$。题目的本意是展示优化刚度分配得到的构型与均匀分配构型的差异，图 4 直观呈现了这一点。
 ---
 
 ## （第 18 页 —— 图 4）
@@ -849,7 +873,7 @@ x(t+1) = Ax(t) + Bu(t) + w(t), \qquad t = 1, \dots, T-1,
 
 where $x(t)\in\mathbb{R}^{n}$ is the state, $u(t)\in\mathbb{R}^{m}$ is the input signal, and $w(t)\in\mathbb{R}^{n}$ is the process noise, at time $t$. We assume the process noises are IID $\mathcal{N}(0,W)$, where $W\succ 0$ is the covariance matrix. The matrix $A\in\mathbb{R}^{n\times n}$ is called the dynamics matrix or the state transition matrix, and the matrix $B\in\mathbb{R}^{n\times m}$ is called the input matrix.
 
-一个线性动力系统（linear dynamical system）形如上述等式，其中 $x(t)\in\mathbb{R}^{n}$ 是时刻 $t$ 的状态（state），$u(t)\in\mathbb{R}^{m}$ 是输入信号（input signal），$w(t)\in\mathbb{R}^{n}$ 是过程噪声（process noise）。我们假设各时刻的过程噪声独立同分布（IID）且服从 $\mathcal{N}(0,W)$，其中 $W\succ 0$ 是协方差矩阵（covariance matrix，即正定的 $W$）。矩阵 $A\in\mathbb{R}^{n\times n}$ 称为动力学矩阵（dynamics matrix）或状态转移矩阵（state transition matrix），矩阵 $B\in\mathbb{R}^{n\times m}$ 称为输入矩阵（input matrix）。
+一个线性动力系统（linear dynamical system）形如上述等式，其中 $x(t)\in\mathbb{R}^{n}$ 是时刻 $t$ 的状态（state），$u(t)\in\mathbb{R}^{m}$ 是输入信号（input signal），$w(t)\in\mathbb{R}^{n}$ 是过程噪声（process noise）。我们假设各时刻的过程噪声独立同分布（IID）且服从 $\mathcal{N}(0,W)$，其中 $W\succ 0$ 是协方差矩阵（covariance matrix，即正定的 $W$）。这里 $\succ 0$ 是**正定（positive definite）**记号，表示对任意非零向量 $z$ 都有 $z^{T}Wz>0$；协方差矩阵 $W$ 之所以要求正定，是因为它是高斯分布的协方差，必须是对称正定阵，这样它才可逆、且能开对称平方根 $W^{1/2}$（后面白化要用到）。矩阵 $A\in\mathbb{R}^{n\times n}$ 称为动力学矩阵（dynamics matrix）或状态转移矩阵（state transition matrix），矩阵 $B\in\mathbb{R}^{n\times m}$ 称为输入矩阵（input matrix）。
 
 You are given accurate measurements of the state and input signal, i.e., $x(1), \dots, x(T)$, $u(1), \dots, u(T-1)$, and $W$ is known. Your job is to find a state transition matrix $\hat{A}$ and input matrix $\hat{B}$ from these data, that are plausible, and in addition are sparse, i.e., have many zero entries. (The sparser the better.)
 
@@ -903,7 +927,7 @@ The problem can be expressed as
 
 where $\operatorname{card}(X)$ is the cardinality (the number of nonzero entries) of matrix $X$.
 
-该问题可写为上述形式，其中 $\operatorname{card}(X)$ 是矩阵 $X$ 的**基数（cardinality）**，即其非零元素的个数。
+该问题可写为上述形式。其中 $\operatorname{card}(X)$ 是矩阵 $X$ 的**基数（cardinality）**，即其非零元素的个数——目标函数 $\operatorname{card}(\hat{A})+\operatorname{card}(\hat{B})$ 就是希望 $\hat{A}$、$\hat{B}$ 的非零元素总数尽可能少，也就是让它们尽可能稀疏。
 
 However, there are two problems with this: the objective is non-convex, and the lower bound
 
@@ -913,11 +937,11 @@ However, there are two problems with this: the objective is non-convex, and the 
 
 is not a convex constraint.
 
-然而这样做有两个问题：其一是**目标函数非凸**（cardinality 计数函数 $\operatorname{card}$ 非凸，因为它对非零元素一律计 1，产生大量平台与不连续，不满足凸函数定义）；其二是**下界约束不是凸约束**（上式左侧是凸函数，但要求它 $\ge$ 某个值，即在一个凸函数的**下方**区域之外，这种集合一般非凸）。
+然而这样做有两个问题：其一是**目标函数非凸**（基数计数函数 $\operatorname{card}$ 非凸，因为它对非零元素一律计 1，产生大量平台与不连续，不满足凸函数定义）；其二是**下界约束不是凸约束**（上式左侧是凸函数，但约束"它 $\ge$ 某个常数"要求的可行域是凸函数的**上水平集（superlevel set）**，也就是凸函数图（epigraph）的外部补集，这种集合一般非凸）。
 
 The second problem is dealt with by noting that we can always increase the magnitudes of the implied errors by (for example) multiplying candidate $\hat{A}$ and $\hat{B}$ by a constant. Hence the lower bound can be neglected, without loss of generality.
 
-第二个问题（下界非凸）可这样处理：我们总可以通过（例如）把候选的 $\hat{A}$、$\hat{B}$ 同时乘以一个常数来**增大**隐含误差的幅度（即残差平方和可以任意调大）。因此，下界约束在**不失一般性（without loss of generality）**的前提下可以被忽略——因为只要残差不太大，总能把它调大到超过下界，故下界约束永远是松的，无需显式写出。
+第二个问题（下界非凸）可这样处理：我们总可以通过（例如）把候选的 $\hat{A}$、$\hat{B}$ 同时乘以一个常数来**增大**隐含误差的幅度（即残差平方和可以任意调大）。因此，下界约束在**不失一般性（without loss of generality）**的前提下可以被忽略——因为只要残差平方和还没大到超过下界，我们总能把它进一步调大，使约束 $(\text{残差平方和})\ge n(T-1)-2\sqrt{2n(T-1)}$ 永远被满足，故下界约束永远是松的，无需显式写出。
 
 Unfortunately the card function is less comprehensively dealt with. However, we can use the (standard) heuristic of instead minimizing the $\ell_1$ norm of the entries of $\hat{A}$ and $\hat{B}$. This gives the convex optimization problem
 
@@ -931,13 +955,13 @@ Unfortunately the card function is less comprehensively dealt with. However, we 
 
 where $\operatorname{vec}(X)$ represents the columns of $X$ concatenated to make a single column vector.
 
-遗憾的是，$\operatorname{card}$ 函数没有那么好处理。不过我们可以用一个（标准的）**启发式（heuristic）**：改为最小化 $\hat{A}$、$\hat{B}$ 各元素的 $\ell_1$ 范数（$\ell_1$ norm，即所有元素绝对值之和）。这样就得到上述凸优化问题，其中 $\operatorname{vec}(X)$ 表示把 $X$ 的各列依次首尾相接拼成一个列向量。
+遗憾的是，$\operatorname{card}$ 函数没有那么好处理。不过我们可以用一个（标准的）**启发式（heuristic）**：改为最小化 $\hat{A}$、$\hat{B}$ 各元素的 $\ell_1$ 范数（$\ell_1$ norm，即所有元素绝对值之和）。这样就得到上述凸优化问题，其中 $\operatorname{vec}(X)$ 表示把 $X$ 的各列依次首尾相接拼成一个列向量（这个操作称为**向量化 / 拉直（vectorization）**，符号 $\operatorname{vec}$ 是约定俗成的记号）。
 
 > **译注**：这里的关键替换是**用 $\ell_1$ 范数替代 $\operatorname{card}$ 作为稀疏性的凸松弛**。$\ell_1$ 范数是凸函数（绝对值和的凸性），且其最小化会促使许多元素被压到恰好为 0（$\ell_1$ 在 0 处有尖角，产生稀疏解），这与稀疏回归 / compressive sensing 中的经典思想一致。同时把下界约束换成**上界约束**（残差平方和 $\le n(T-1)+2\sqrt{2n(T-1)}$），因为"残差 $\le$ 某值"是凸约束（凸函数的 sublevel set 是凸的）。
 
 Roughly speaking, note that the constraint will always be tight: relaxing the requirement on the implied errors allows more freedom to reduce the $\ell_1$ norm of $\hat{A}$ and $\hat{B}$. Thus, in reality, we never need to worry about the lower bound from above as it will be always satisfied.
 
-粗略地说，注意这个约束总是会**取等号（tight）**：放宽对隐含误差的要求（允许残差更大）会给我们更多自由度去减小 $\hat{A}$、$\hat{B}$ 的 $\ell_1$ 范数。因此实际上我们永远不用担心上界里的下界部分——它总是被满足。
+粗略地说，注意这个约束总是会**取等号（tight）**：放宽对隐含误差的要求（允许残差更大）会给我们更多自由度去减小 $\hat{A}$、$\hat{B}$ 的 $\ell_1$ 范数。因此实际上我们永远不用担心"残差平方和 $\ge$ 下界"这个被丢掉的下界约束——它总是被满足。
 
 > **译注**：这一句的逻辑是：最小化 $\ell_1$ 范数会倾向于"用尽"允许的残差预算（把残差顶到上界），因为残差越松、可压缩空间越大；于是最优解处的残差会自动落在上界附近，自然大于下界，故下界无需单独约束。
 
@@ -960,11 +984,11 @@ disp(norm(inv(Whalf)*(xs(:,2:T) ...
 - Ahat*xs(:,1:T-1) - Bhat*us), 'fro') >= fit_tol_m);
 ```
 
-这个问题用如下 CVX 代码即可轻松求解。
+这个问题用如下 CVX 代码即可轻松求解。其中第一句 `sparse_lds_data;` 加载数据文件，`xs`、`us`、`Whalf` 这些变量都由该文件定义（`xs` 存放各时刻的状态观测值，`us` 存放输入信号，`Whalf` 是已白化的矩阵，对应 $W^{-1/2}$），`n`、`m`、`T` 为问题维数。
 
 **译注**：代码解读——
 
-- `fit_tol` 是上界 $n(T-1)+2\sqrt{2n(T-1)}$ 的**平方根**，因为约束里用的是 Frobenius 范数（$\|\cdot\|_{\text{fro}}$），而 Frobenius 范数的平方正是各元素平方和，与原文的 $\sum_t\|\cdot\|_2^2$ 一致（Frobenius 范数平方 = 所有元素平方和 = 各时刻 $\|\cdot\|_2^2$ 之和）。
+- `fit_tol` 是上界 $n(T-1)+2\sqrt{2n(T-1)}$ 的**平方根**，因为约束里用的是 Frobenius 范数（$\|\cdot\|_{\text{fro}}$），而 Frobenius 范数的平方正是各元素平方和，与原文的 $\sum_t\|\cdot\|_2^2$ 一致（Frobenius 范数平方 = 所有元素平方和 = 各时刻 $\|\cdot\|_2^2$ 之和）。因此正文公式里"平方和 $\le$ 上界"与代码里"Frobenius 范数 $\le$ 平方根"是**完全等价**的两种写法。
 - `sum(norms(Ahat,1))` 把 $\hat{A}$ 的每一列取 $\ell_1$ 范数再求和，等价于所有元素绝对值之和，即 $\|\operatorname{vec}(\hat{A})\|_1$。
 - `inv(Whalf)` 对应 $W^{-1/2}$（数据里已给出白化矩阵 `Whalf`）。
 - 约束 `norm(...) <= fit_tol` 正是残差的 Frobenius 范数 $\le$ 上界。
@@ -973,7 +997,6 @@ disp(norm(inv(Whalf)*(xs(:,2:T) ...
 ---
 
 ## （第 21 页）
-
 ```matlab
 % Round near-zero elements to zero.
 Ahat = Ahat .* (abs(Ahat) >= 0.01)
@@ -984,15 +1007,10 @@ disp(['false negatives, Ahat: ' num2str(nnz((Ahat == 0) & (A ~= 0)))])
 disp(['false positives, Bhat: ' num2str(nnz((Bhat ~= 0) & (B == 0)))])
 disp(['false negatives, Bhat: ' num2str(nnz((Bhat == 0) & (B ~= 0)))])
 ```
-
 **译注**：第一、二行把接近零的元素**四舍五入置零**（`abs(Ahat) >= 0.01` 是逻辑掩码，与 `Ahat` 逐元素相乘，凡绝对值小于 $0.01$ 的元素归零），实现"判断某元素是否非零"的 $0.01$ 阈值。后四行分别用 `nnz`（nonzero 计数）统计假阳性/假阴性：`(Ahat ~= 0) & (A == 0)` 即"估计非零而真值为零"的假阳性，`(Ahat == 0) & (A ~= 0)` 即"估计为零而真值非零"的假阴性，对 $\hat{A}$、$\hat{B}$ 各统计一次。
-
 With the given problem data, we get 1 false positive and 2 false negatives for $\hat{A}$, and no false positives and 1 false negative for $\hat{B}$.
-
 对于给定的问题数据，$\hat{A}$ 得到 1 个假阳性与 2 个假阴性，$\hat{B}$ 无假阳性、1 个假阴性。
-
 The matrix estimates are
-
 ```math
 \hat{A} = \begin{bmatrix}
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -1006,9 +1024,7 @@ The matrix estimates are
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
 \end{bmatrix},
 ```
-
 and
-
 ```math
 \hat{B} = \begin{bmatrix}
 -1.4717 & 0 & 0 & 0 \\
@@ -1022,16 +1038,12 @@ and
 0 & 0 & 0 & 0
 \end{bmatrix}.
 ```
-
 估计得到的矩阵如上。
-
 > **译注**：$\hat{A}$ 是 $9\times9$ 矩阵（$n=9$），$\hat{B}$ 是 $9\times4$ 矩阵（$m=4$）。可见二者都相当稀疏，大量元素为零，印证了 $\ell_1$ 松弛的稀疏化效果。
-
 Finally, there are lots of methods that will do better than this, usually by taking this as a starting point and ‘polishing’ the result after that. Several of these have been shown to give fairly reliable, if modest, improvements. You were not required to implement any of these methods.
-
 最后，有很多方法能比这做得更好，通常是以此结果为起点再做"打磨（polishing）"。其中若干方法已被证明能带来虽不大但相当可靠的改进。你无需实现其中任何一种方法。
 
----
+> **译注**：这里所说的"打磨（polishing）"是指在 $\ell_1$ 松弛得到的稀疏估计 $\hat{A}$、$\hat{B}$ 基础上，进一步用更精细的算法（如局部再优化、阈值修正等）改善估计精度；而"无需实现其中任何一种方法"针对的是本作业的要求——本作业只要求你用 $\ell_1$ 松弛这类方法求出稀疏估计并验证其结果，不要求再去实现这些更进一步的打磨算法。〔待核：本页未载明作业题干，作业的完整要求见本题作业原文；此处对"作业只要求 $\ell_1$ 松弛"的说明系依据本段文意补出，若与作业原文不符应以作业原文为准〕
 
 ## Problem 5（第 5 题，第 22–25 页）
 
@@ -1044,6 +1056,8 @@ E=\sum_{t=1}^{T}\varphi(s_t).
 处理器必须处理 $n$ 个作业（job），记为 $1,\dots,n$。每个作业有一个**可用时间（availability time）** $A_i\in\{1,\dots,T\}$ 和一个**截止时间（deadline）** $D_i\in\{1,\dots,T\}$，且 $D_i\ge A_i$。处理器在时间段 $t=A_i$ 之前不能开始作业 $i$ 的工作，并且必须在时间段 $D_i$ 结束之前完成该作业。作业 $i$ 涉及一个（非负的）总工作量 $W_i$。你可以假设在每个时间段都至少有一个作业可用，也就是说，对每个 $t$，都存在至少一个 $i$ 使得 $A_i\le t$ 且 $D_i\ge t$。
 
 在时间段 $t$，处理器把它的努力（effort）在 $n$ 个作业之间分配，记为 $\theta_t$，其中 $\mathbf{1}^{T}\theta_t=1$，$\theta_t\succeq 0$。这里 $\theta_{ti}$（$\theta_t$ 的第 $i$ 个分量）给出时间段 $t$ 内处理器努力中用于作业 $i$ 的**比例（fraction）**。
+
+> **术语 · $\mathbf{1}$（全一向量，ones vector）**：分量全部等于 $1$ 的向量。在下文所有出现处，$\mathbf{1}$ 都是 **$n$ 维**的（即 $\mathbf{1}=(1,\dots,1)^{T}\in\mathbb{R}^{n}$，与作业个数一致），除非某处另行标明维数。例如上面的 $\mathbf{1}^{T}\theta_t=1$ 中，$\mathbf{1}\in\mathbb{R}^{n}$、$\theta_t\in\mathbb{R}^{n}$，$\mathbf{1}^{T}\theta_t=\sum_{i=1}^{n}\theta_{ti}=1$ 表示各作业分配比例之和为 $1$。
 
 > **术语 · slew-rate limit（压摆率限制）**：对相邻时间段速度变化量 $|s_{t+1}-s_t|$ 的绝对上界 $R$，用于限制处理器速度不能突变过快。注意它是对绝对值的一对仿射不等式（$s_{t+1}-s_t\le R$ 且 $s_t-s_{t+1}\le R$），因此是**凸约束**。
 
@@ -1059,15 +1073,17 @@ E=\sum_{t=1}^{T}\varphi(s_t).
 
 ### Solution（解答）
 
-窍门是使用变量 $x_{ti}=\theta_{ti}s_t$，它必须非负。令 $X\in\mathbb{R}^{T\times n}$ 表示分量为 $x_{ti}$ 的矩阵。作业完成约束可以表达为 $X^{T}\mathbf{1}\succeq W$。可用性与截止时间约束可以表达为：当 $t<A_i$ 或 $t>D_i$ 时 $x_{ti}=0$，这些都是线性约束（linear constraint）。
+窍门是使用变量 $x_{ti}=\theta_{ti}s_t$，它必须非负。令 $X\in\mathbb{R}^{T\times n}$ 表示分量为 $x_{ti}$ 的矩阵。作业完成约束可以表达为 $X^{T}\mathbf{1}\succeq W$，其中 $W=(W_1,\dots,W_n)^{T}\in\mathbb{R}^{n}$ 是把各作业的总工作量收集成的**向量**（$X^{T}\mathbf{1}$ 的第 $i$ 个分量是 $\sum_t x_{ti}$）。可用性与截止时间约束可以表达为：当 $t<A_i$ 或 $t>D_i$ 时 $x_{ti}=0$，这些都是线性约束（linear constraint）。
 
 > **为什么引入新变量 $x_{ti}=\theta_{ti}s_t$（变量替换的理由）**：原问题里，作业完成约束 $\sum_t\theta_{ti}s_t\ge W_i$ 同时包含两个变量的乘积 $\theta_{ti}\cdot s_t$，是**双线性（bilinear）项**，即关于 $(\theta,s)$ 联合起来不是凸（甚至不是仿射）的。把乘积整体当作一个新变量 $x_{ti}$，就能把这条约束变成关于 $x$ 的**线性**约束 $\sum_t x_{ti}\ge W_i$。$x_{ti}=\theta_{ti}s_t$ 的物理含义是「时间段 $t$ 内处理器投给作业 $i$ 的**有效速度（effective speed）**」——因为 $\theta_{ti}$ 是时间比例、$s_t$ 是速度，二者之积正是这段时间实际分给该作业的速度量。同时，约束 $\theta_{ti}\ge 0$ 与 $s_t>0$（速度有正下界 $S_{\min}>0$）保证 $x_{ti}\ge 0$ 自动成立；而「$t<A_i$ 或 $t>D_i$ 时 $\theta_{ti}=0$」也直接转化为「$t<A_i$ 或 $t>D_i$ 时 $x_{ti}=0$」，仍是线性等式约束。于是整个问题变成关于 $x$（以及可由 $x$ 导出的 $s$）的凸问题。
 
-速度可以表达为 $s=X\mathbf{1}$，这是变量 $X$ 的一个线性函数。
+> **术语 · $W$（工作量向量）**：在上面的题干中 $W_i$ 是作业 $i$ 的标量总工作量，这里引入记号 $W=(W_1,\dots,W_n)^{T}\in\mathbb{R}^{n}$ 把它们收集成一个 $n$ 维向量，于是「每个作业都完成」的 $n$ 条标量约束 $\sum_t x_{ti}\ge W_i$ 可紧凑写成一条向量约束 $X^{T}\mathbf{1}\succeq W$，其中 $\succeq$ 是逐元素不等式。
+
+速度可以表达为 $s=X\mathbf{1}$，这是变量 $X$ 的一个线性函数。这里的 $\mathbf{1}$ 同上，是 $n$ 维全一向量（$\mathbf{1}\in\mathbb{R}^{n}$），于是 $X\mathbf{1}$ 就是对 $X$ 每一行求和。
 
 > **为什么 $s=X\mathbf{1}$**：对每个时间段 $t$，分配向量 $\theta_t$ 满足 $\mathbf{1}^{T}\theta_t=\sum_i\theta_{ti}=1$（即处理器在每段把 100% 的努力分出去）。因此 $\sum_i x_{ti}=\sum_i\theta_{ti}s_t=s_t\sum_i\theta_{ti}=s_t\cdot 1=s_t$。写成矩阵形式，$X$ 的每一行是 $t$ 时刻对 $n$ 个作业的 $x_{ti}$，右乘全一向量 $\mathbf{1}\in\mathbb{R}^{n}$ 就得到逐行求和，即 $s=(s_1,\dots,s_T)^{T}=X\mathbf{1}$。这说明 $s$ 由 $X$ 唯一确定，不必再单独保留 $s$ 作为独立变量（虽然在下面的表述里仍把 $s$ 显式列出来，作为 $X$ 的线性函数）。
 
-目标 $E$ 显然是 $s$ 的凸函数（因此也是 $X$ 的凸函数）。
+目标 $E$ 显然是 $s$ 的凸函数：$\varphi$ 凸，故 $E=\sum_t\varphi(s_t)$ 关于 $s$ 是凸的；又因为 $s=X\mathbf{1}$ 是 $X$ 的仿射函数（各 $s_t$ 是 $X$ 第 $t$ 行之和），由「凸函数与仿射函数的复合仍凸」，$E$ 作为 $X$ 的函数也是凸的。
 
 > **为什么 $E$ 是凸函数**：$\varphi$ 是凸函数，$E=\sum_t\varphi(s_t)$ 是各分量 $\varphi(s_t)$ 之和。而 $s_t$ 是 $X$ 的第 $t$ 行之和，是 $X$ 的仿射函数。凸函数与仿射函数复合仍是凸函数（composition rule：$\varphi(s_t(X))$ 是「凸外函数 $\varphi$ 配仿射内函数 $s_t(X)$」，故凸），凸函数之和仍是凸函数，所以 $E$ 关于 $X$ 是凸的。这是目标可被凸优化的关键。
 
@@ -1092,7 +1108,7 @@ E=\sum_{t=1}^{T}\varphi(s_t).
 
 > **术语 · convex optimization problem（凸优化问题）**：形如「最小化一个凸函数、且约束由一个凸集（典型地由 $f_i(x)\le 0$ 其中 $f_i$ 凸、$h_j(x)=0$ 其中 $h_j$ 仿射）描述」的优化问题。可判定的定义：目标函数是凸的，等式约束函数是仿射的，不等式约束函数是凸的（此处全部退化为仿射，即一个 LP 型的多面体约束）。
 
-一旦找到最优解 $X^{\star}$ 与 $s^{\star}$，我们就可以恢复出 $\theta^{\star}_{t}$ 为
+一旦找到最优解 $X^{\star}$ 与 $s^{\star}$，我们就可以恢复出 $\theta^{\star}_{t}$，其分量为
 
 ```math
 \theta^{\star}_{ti}=\frac{1}{s^{\star}_{t}}\,x^{\star}_{ti},\qquad t=1,\dots,T,\ i=1,\dots,n.
@@ -1190,6 +1206,8 @@ ylabel('s_t');
 
 原文此处承接前面关于**资源采购与产品生产规划（resource / product planning）**问题的讨论。为便于阅读，先给出两种情形的问题形式，再进入数值结果。
 
+> **补注（承接上一页，重建被缺页截断的记号）**：本片开头接的是上一页讲到一半就被截断的「资源的成本是……」，为免断链，这里先把这道题的**基本记号**一次补齐。决策变量有两个：$r\in\mathbb{R}^m$ 是我们要订购的**各种原料（raw material）的数量向量**（$r\succeq 0$，每种原料订购量非负），$q\in\mathbb{R}^n$ 是我们要生产的**各种产品的产量向量**（$q\succeq 0$）。已知数据有：$c\in\mathbb{R}^m$ 是**原料的单价向量**，所以订购 $r$ 要花掉的总成本是 $c^{\top} r=\sum_{i=1}^{m}c_i r_i$（这正是上一页被截断的那句「资源的成本是……」所指的确定性成本项）；$p\in\mathbb{R}^n$（$p\ge 0$）是**产品的售价向量**；$A\in\mathbb{R}^{m\times n}$ 是**原料—产品消耗矩阵（recipe matrix）**，含义是「生产产品组合 $q$ 需要消耗 $Aq$ 这么多原料」，于是资源约束写作 $r\succeq A q$（订购的原料必须够用）。需求 $d$ 是**随机的**，取值于 $K$ 种可能情形 $d^{(1)},\dots,d^{(K)}$，每种情形发生的概率为 $\pi_k$（$\pi_k\ge 0$，$\sum_k\pi_k=1$）。利润 = 销售收入 − 原料成本，下面两种情形都在最大化这个利润的**期望值**。
+
 #### 情形 I：先订购资源，且产品组合（product mix）也只能按期望需求一次性决定
 
 在这种情形下，产品产量是在**不知道**实际需求（demand）之前、随资源一起决定的，因此只有一个产品产量向量 $q$。期望利润（expected profit）为
@@ -1215,7 +1233,7 @@ ylabel('s_t');
 
 其中变量为 $r$ 与 $q$。目标函数是凹的（concave）且分段线性（piecewise-linear），约束全都是线性不等式（linear inequality），因此这是一个凸优化问题（convex optimization problem，即目标函数凹、约束集为凸集、可化为标准凸形式的最小化问题）。
 
-> **译注**：为什么目标是凹的？$\min\{q, d^{(k)}\}$ 关于 $q$ 是逐元素取小，而两个凹函数逐元素取小仍是凹函数（实际上 $\min$ 是凹函数，因为它是两个线性函数的下确界）；再乘非负价格 $p^{\top}$（$p\ge0$）仍是凹的，$c^{\top}r$ 是线性项，故整体关于 $(r,q)$ 凹。约束 $q\succeq0$、$r\succeq0$、$r\succeq Aq$ 都是半空间（halfspace）类型的线性不等式，故可行集为凸集。凹目标最大化等价于凸目标最小化，故这是凸问题。
+> **译注**：为什么目标是凹的？$\min\{q, d^{(k)}\}$ 关于 $q$ 是逐元素取小，而两个凹函数逐元素取小仍是凹函数（实际上 $\min$ 是凹函数，因为它是两个线性函数的下确界（infimum，即在 $q$ 的每个取值上，取这两个线性函数值中**更小的那个**）；逐点取小所得的曲面位于二者之下，是「向上看」的凹形状）；再乘非负价格 $p^{\top}$（$p\ge0$）仍是凹的，$c^{\top}r$ 是线性项，故整体关于 $(r,q)$ 凹。约束 $q\succeq0$、$r\succeq0$、$r\succeq Aq$ 都是半空间（halfspace）类型的线性不等式，故可行集为凸集。凹目标最大化等价于凸目标最小化，故这是凸问题。
 
 #### 情形 II：先订购资源，但在**知道需求之后**再决定产品组合
 
@@ -1267,7 +1285,7 @@ r_{\text{II}} = (65.7,\ 59.6,\ 55.2,\ 70.8,\ 69.7,\ 68.4,\ 55.3,\ 57.4,\ 63.8,\ 
 
 它们分别给出期望利润 $114.3$ 与 $133.0$。
 
-> **译注**：$r_{\text{I}}$ 是情形 I（资源与产品组合都要先定）的最优资源向量，$r_{\text{II}}$ 是情形 II（先订资源、看需求再定产量）的最优资源向量。注意 $r_{\text{II}}$ 给出更高的期望利润（$133.0 > 114.3$），这正是"信息越多、利润越高"的直观体现：情形 II 掌握了需求信息后才定产量，能更充分地利用资源。
+> **译注**：先交代本段用到的符号规模。记 $m$（原料种数）＝$10$，$n$（产品种数）、$K$（可能的需求情形数，即随机需求 $d$ 的取值个数）由 `planning_data.m` 给出；$r\in\mathbb{R}^m$（原料采购向量，$r_j$ 是第 $j$ 种原料的采购量）；$q\in\mathbb{R}^n$（产品产量向量，$q_i$ 是第 $i$ 种产品的产量）；$p\in\mathbb{R}^n$（产品售价向量）；$c\in\mathbb{R}^m$（原料成本向量）；$A\in\mathbb{R}^{m\times n}$（原料—产品系数矩阵，$A_{ji}$ 表示生产一单位产品 $i$ 需要消耗的原料 $j$ 的数量，故 $Aq\in\mathbb{R}^m$ 是生产 $q$ 总共消耗的各原料量）；$D\in\mathbb{R}^{n\times K}$（需求矩阵，第 $k$ 列 $d^{(k)}$ 是第 $k$ 种需求情形下各产品的需求量）；$\pi\in\mathbb{R}^K$（需求情形的概率向量，$\pi_k$ 是第 $k$ 种情形出现的概率，满足 $\pi_k\ge 0$、$\sum_k\pi_k=1$）。$r_{\text{I}}$ 是情形 I（资源与产品组合都要先定）的最优资源向量，$r_{\text{II}}$ 是情形 II（先订资源、看需求再定产量）的最优资源向量。注意 $r_{\text{II}}$ 给出更高的期望利润（$133.0 > 114.3$），这正是"信息越多、利润越高"的直观体现：情形 II 掌握了需求信息后才定产量，能更充分地利用资源。
 
 求解该问题的 CVX 代码如下。
 
@@ -1305,7 +1323,8 @@ profitII = p'*S - c'*r; % save for graphing.
 **译注**：
 
 - 情形 I（Problem I）：变量 $r\in\mathbb{R}^m$（每种原料的采购量）、$q\in\mathbb{R}^n$（每种产品的产量）。`r >= A*q` 即资源约束 $r\succeq Aq$；`S = min(q*ones(1,K), D)` 把产量向量 $q$ 复制 $K$ 列后与需求矩阵 $D$ 逐元素取小，得到 $n\times K$ 的"实际销量"矩阵 $S$，其第 $k$ 列就是 $\min\{q, d^{(k)}\}$。目标 `p'*S*pi - c'*r` 即 $-c^{\top}r + \sum_k \pi_k p^{\top}\min\{q,d^{(k)}\}$。
-- 情形 II（Problem II）：变量 $q$ 扩展为 $n\times K$ 矩阵，第 $k$ 列是 $q^{(k)}$。`r*ones(1,K) >= A*q` 把资源约束对每一列同时施加，等价于 $r\succeq Aq^{(k)}$ 对所有 $k$。其余同理。注意此代码中并未显式写 $q^{(k)}\preceq d^{(k)}$，而是直接用 $\min(q,D)$ 处理——因为 $\min$ 本身已保证不会"多卖"，两种写法在最优值上等价。
+  - 关于两处"利润"的定义：目标函数 `maximize(p'*S*pi - c'*r)` 优化的是**期望利润（expected profit）**，其中销量按 $\pi$ 对 $K$ 种情形做概率加权 $\sum_k \pi_k\, p^{\top}\min\{q,d^{(k)}\}$；而紧随其后的 `profitI = p'*S - c'*r` 只用于画图存档，此时 $S$ 已经是求解完成后按**实际出现的那一列需求**（`planning_data.m` 中给定的某次真实需求 $d$）代入得到的销量，故 `p'*S` 是**在该具体需求下实现的利润**（realized profit），不再乘 $\pi$。两者的语义不同：前者是优化目标，后者是事后画图用的实现利润，因此一处带 `*pi`、一处不带，并不矛盾。
+- 情形 II（Problem II）：变量 $q$ 扩展为 $n\times K$ 矩阵，第 $k$ 列是 $q^{(k)}$。`r*ones(1,K) >= A*q` 把资源约束对每一列同时施加，等价于 $r\succeq Aq^{(k)}$ 对所有 $k$。这里的 `>=` 以及上面 `r >= A*q` 中的 `>=`，在 CVX/MATLAB 里都是**逐元素比较（elementwise）**：对两个同型的 $m\times K$ 矩阵，`L >= R` 的含义是"每个位置都成立 $L_{jk}\ge R_{jk}$"，即 $mK$ 个标量不等式，而**不是**半正定序之类的矩阵偏序。`S = min(q, D)` 中的 `min` 同样是**逐元素取小（elementwise minimum）**：因为此时 $q$ 已是 $n\times K$ 矩阵，`min(q,D)` 直接对两个同型矩阵逐个位置取 $\min\{q_{ik}, d_{ik}\}$，与情形 I 里 `min(q*ones(1,K),D)` 的语义完全一致（情形 I 只是先显式地把 $n$ 维向量 $q$ 复制成 $n\times K$ 再取小，而情形 II 的 $q$ 本来就是 $n\times K$，无需复制）。其余同理。注意此代码中并未显式写 $q^{(k)}\preceq d^{(k)}$，而是直接用 $\min(q,D)$ 处理——因为 $\min$ 本身已保证不会"多卖"，两种写法在最优值上等价。
 
 我们另外提及两个没有要求你深入探究的优化问题。第一，假设我们在第一种方案下承诺采购 $r_{\text{I}}$ 的资源，但之后（在开始生产前）得知了需求。此时的问题是：用第一题中的 $r_{\text{I}}$ 替代 $r_{\text{II}}$，期望利润会有多**次优（suboptimal）**？对于给定的数值实例，我们的期望利润从 $133.0$ 下降到 $128.7$。
 
@@ -1314,13 +1333,9 @@ profitII = p'*S - c'*r; % save for graphing.
 ---
 
 ## （第 29 页）
-
 最后，考察"在购买资源之前就已知需求"时的表现也很有意思。这是**全预知（full prescience）**、即**完全信息（full information）**的情形——我们事先知道一切。此时，我们可以对每一种可能的需求向量**分别**优化 $r$ 与 $q$ 的选择。这显然给出了信息较少时所能获得利润的一个**上界（upper bound）**。在这种情形下，全预知时的期望利润为 $161.4$。
-
 > **译注**：全预知情形的期望利润 $161.4$ 是三种情形的上界：$161.4 > 133.0$（情形 II）$> 114.3$（情形 I）。这是因为全预知时连资源 $r$ 都可以按每种需求情形单独优化，而情形 II 中 $r$ 是"一个"要同时应对所有情形的量，自由度更小。
-
 求解这两个附加问题的代码如下。
-
 ```matlab
 disp('Problem II but with rI.')
 r = rI;
@@ -1334,7 +1349,6 @@ cvx_end
 disp(p'*S*pi - c'*r);
 profitIII = p'*S - c'*r; % save for graphing.
 ```
-
 ```matlab
 disp('Full prescience.')
 cvx_begin
@@ -1349,14 +1363,11 @@ cvx_end
 disp((p'*S - c'*r)*pi);
 profitIV = p'*S - c'*r; % save for graphing.
 ```
-
 **译注**：
-
 - 第一个代码块：固定 $r = r_{\text{I}}$（不再作为变量），只优化 $q$（$n\times K$），得到"用错资源"情形下的最优期望利润 $128.7$。
 - 第二个代码块（全预知）：$r$ 也扩展为 $m\times K$ 矩阵，第 $k$ 列是"若需求为 $d^{(k)}$ 时采购的资源"。约束 `r >= A*q` 逐列成立，即每种情形各自有独立的资源-产量关系。目标 `(p'*S - c'*r)*pi` 是先把每种情形的利润 $p^{\top}\min\{q^{(k)},d^{(k)}\} - c^{\top}r^{(k)}$ 算出来，再按 $\pi$ 加权求和，即全预知下的期望利润 $161.4$。
-
+- 两段代码末尾的 `profitIII = p'*S - c'*r` 与 `profitIV = p'*S - c'*r` **刻意不含 `pi`**：它们保存的是每种需求情形**各自**的利润，即一个 $1\times K$ 行向量（第 $k$ 个分量是"若需求恰为 $d^{(k)}$"时的利润），专供下面画直方图展示不同结果下的利润分布；而 `maximize(...)` 里的目标才是按 `pi` 加权求和后的**期望利润**（一个标量）。两者本就是两个不同的量，并非笔误。
 下面给出不同可能结果对应的利润直方图（histogram）。
-
 ---
 
 ## （第 30 页 —— 利润直方图）
@@ -1371,7 +1382,7 @@ profitIV = p'*S - c'*r; % save for graphing.
 
 ## （第 31 页）
 
-## Problem 7 — Dual of exponential cone（指数锥的对偶）
+# Problem 7 — Dual of exponential cone（指数锥的对偶）
 
 **指数锥的对偶。** 指数锥（exponential cone）$K_{\exp}\subseteq\mathbb{R}^{3}$ 定义为
 
@@ -1416,7 +1427,9 @@ K_{\exp}^{*} = \operatorname{cl}\left\{ (u, v, w) \;\middle|\; u < 0,\ -u\,e^{v/
 K_{\exp}^{*} = \left\{ (u, v, w) \;\middle|\; u < 0,\ -u\,e^{v/u} \le e\,w \right\} \cup \left\{ (0, v, w) \;\middle|\; v \ge 0,\ w \ge 0 \right\},
 ```
 
-其中 $\operatorname{cl}$ 表示闭包（closure）。我们不指望大家把边界上的点（即第二行里的第二个集合）也算出来。
+其中 $\operatorname{cl}$ 表示闭包（closure）。
+
+> **译注**：记号 $\operatorname{cl}$（读作 closure，闭包）在前面已经定义过：把集合补上它所有的极限点后得到的闭集。所以第一个集合外面套一层 $\operatorname{cl}$，意思就是"先取 `u<0` 且满足不等式的那一坨点，再把它的极限点补进来"。这一点很关键，下面两段并集正是这层闭包补出来的——第二段 $\{u=0,\ v\ge0,\ w\ge0\}$ 就是第一段在 $u\to0^{-}$ 时逼近得到的边界点（详见下文推导）。我们不指望大家把边界上的点（即第二行里的第二个集合）也算出来。
 
 > **译注**：注意原文里指数项写的是 $-u\,e^{v/u} \le e\,w$（左端 $-u\,e^{v/u}$，右端 $e$ 乘 $w$）。这里的 $e$ 是自然对数的底（Euler 数），系数 $e$ 来源于后面推导中"指数函数 $y\,e^{x/y}$ 在极小化时出现的自然常数"，详见下文推导。
 
@@ -1438,23 +1451,31 @@ u\log(-u/w) + v - u \ge 0,
 \log(-u/w) \le 1 - (v/u).
 ```
 
-> **译注**：这三种形式是等价的。验证一下：从 $u\log(-u/w) + v - u \ge 0$ 出发，两边除以 $u$（注意 $u<0$，除以负数要反向）……但更稳妥的是从指数形式反推。由 $-u\,e^{v/u}\le e\,w$ 且 $u<0$，两边除以 $-u>0$ 得 $e^{v/u}\le \dfrac{e\,w}{-u}$，即 $e^{v/u}\le e\cdot \dfrac{w}{-u} = e\cdot \dfrac{-u}{-u}$？这里要小心整理。实际上，把 $-u\,e^{v/u}\le e\,w$ 两边取对数（两边都为正，因为 $-u>0$、$e^{v/u}>0$、$w\ge0$，当 $w>0$ 时）：
+> **译注**：这三种形式是等价的。验证从指数形式出发最稳妥。由 $-u\,e^{v/u}\le e\,w$ 且 $u<0$，两边除以 $-u>0$（不动不等号方向）得
 
 ```math
-\log(-u) + \frac{v}{u} \le 1 + \log w.
+e^{v/u} \le \frac{e\,w}{-u} = e \cdot \frac{w}{-u}.
 ```
 
-移项得
+两边取自然对数（两端都严格为正：$e^{v/u}>0$，而 $\dfrac{w}{-u}\ge0$；当 $w>0$ 时右端严格为正，直接可取对数）：
 
 ```math
-\frac{v}{u} \le 1 + \log w - \log(-u) = 1 + \log\left(\frac{w}{-u}\right) = 1 - \log\left(\frac{-u}{w}\right).
+\frac{v}{u} \le \log\!\left(e \cdot \frac{w}{-u}\right) = 1 + \log\!\left(\frac{w}{-u}\right).
 ```
 
-即 $\log(-u/w) \le 1 - (v/u)$，正是第三种形式（因为 $\log\left(\frac{w}{-u}\right) = -\log\left(\frac{-u}{w}\right)$）。再两边乘 $u$（$u<0$）得 $u\log(-u/w) \ge u - v$，即 $u\log(-u/w) + v - u \ge 0$，正是第二种形式。第一种形式是第二种除以 $w$（$w>0$）得到的。三种表示完全等价。
+利用 $\log\!\left(\dfrac{w}{-u}\right) = -\log\!\left(\dfrac{-u}{w}\right)$，移项整理得
+
+```math
+\frac{v}{u} \le 1 - \log\!\left(\frac{-u}{w}\right)
+\quad\Longleftrightarrow\quad
+\log\!\left(\frac{-u}{w}\right) \le 1 - \frac{v}{u},
+```
+
+这正是第三种形式。再两边乘 $u$（注意 $u<0$，乘负数要反向）得 $u\log(-u/w) \ge u - v$，即 $u\log(-u/w) + v - u \ge 0$，正是第二种形式。第一种形式是第二种除以 $w$（$w>0$）得到的。三种表示完全等价。
 
 现在来推导这个结果。要判定 $(u,v,w)\in K_{\exp}^{*}$，需要满足：对任意 $y>0$ 且 $y\,e^{x/y}\le z$ 的 $(x,y,z)$，都有 $ux + vy + wz \ge 0$。因此首先必须有 $w\ge0$；否则我们可以取足够大的 $z$，使 $ux + vy + wz$ 变为负。
 
-> **译注**：为什么 $w\ge0$ 是必要条件？对偶锥要求对所有 $(x,y,z)\in K_{\exp}$ 都有 $ux+vy+wz\ge0$。而 $K_{\exp}$ 中的点可以取任意大的 $z$（只要 $z\ge y\,e^{x/y}$，$z$ 向上无界）。若 $w<0$，则固定 $x,y$ 后，把 $z$ 取得足够大，$wz$ 这一项会以 $|w|z$ 的速率趋向 $-\infty$，从而 $ux+vy+wz<0$，违反对偶锥定义。故必须 $w\ge0$。
+> **译注**：注意这里的"首先必须有 $w\ge0$"是针对**任意** $(u,v,w)$ 而言的第一步结论，而不是从前面并集第一段（那个 $u<0$ 的分支）里读出来的——前面那段并集只是最终答案的呈现形式，这里才开始真正做推导。为什么 $w\ge0$ 是必要条件？对偶锥要求对所有 $(x,y,z)\in K_{\exp}$ 都有 $ux+vy+wz\ge0$。而 $K_{\exp}$ 中的点可以取任意大的 $z$（只要 $z\ge y\,e^{x/y}$，$z$ 向上无界）。若 $w<0$，则固定 $x,y$ 后，把 $z$ 取得足够大，$wz$ 这一项会以 $|w|z$ 的速率趋向 $-\infty$，从而 $ux+vy+wz<0$，违反对偶锥定义。故必须 $w\ge0$。这个结论最终会体现在答案里：并集第二段显式写了 $w\ge0$，而第一段（$u<0$）里不等式本身已经隐含了 $w\ge0$（因为左端 $-u\,e^{v/u}>0$，若 $w<0$ 则 $e\,w<0$，不等式不可能成立），所以第一段不必再把 $w\ge0$ 单列出来。
 
 现在看 $w=0$ 时会怎样。此时需要 $ux + vy \ge 0$ 对所有 $y>0$ 成立。这只有当 $u=0$ 且 $v\ge0$ 时才可能。于是，满足
 
@@ -1466,11 +1487,15 @@ u = 0, \quad v \ge 0, \quad w = 0
 
 > **译注**：当 $w=0$ 时，$wz$ 项消失，只剩 $ux + vy$。由于 $x$ 可以取任意实数（在 $y>0$ 固定时，$x$ 满足 $y\,e^{x/y}\le z$，即 $x\le y\log(z/y)$，故 $x$ 可任意负、也可取到某个上界），若 $u\ne0$，取 $x$ 使得 $ux$ 足够负即可破坏 $ux+vy\ge0$（例如 $u>0$ 时取 $x\to-\infty$，$u<0$ 时取 $x$ 尽可能大）。故必须 $u=0$。此时剩 $vy\ge0$ 对 $y>0$ 成立，故 $v\ge0$。
 
----
+> **译注（关于 $w=0$ 的边界如何补进答案）**：上面得到的是 $w=0$ 这一特殊情形，要求 $u=0,\ v\ge0$。但答案的第一段是 $u<0$（严格），它本身不含 $u=0$ 的点，也不含 $w=0$ 的点——当 $u<0$ 时，不等式 $-u\,e^{v/u}\le e\,w$ 左端严格为正，若 $w=0$ 则右端 $e\,w=0$，不等式 $-u\,e^{v/u}\le 0$ 无法成立，故 $u<0$ 分支里其实 $w$ 只能 $>0$。那么 $u=0,\ v\ge0,\ w\ge0$ 这批点是从哪来的？答案是靠取**闭包**：在第一段里取一列 $u_k\to 0^{-}$（比如 $u_k=-1/k$），配合 $v_k\ge0,\ w_k\ge0$ 且满足 $-u_k\,e^{v_k/u_k}\le e\,w_k$ 的点列，其极限点就是 $\{u=0,\ v\ge0,\ w\ge0\}$。例如固定 $v\ge0$、$w\ge0$，令 $u\to0^{-}$，因 $-u\,e^{v/u}\to0$（当 $v<0$ 时指数 $v/u\to+\infty$ 会发散，需 $v\ge0$ 才能让左端保持有界趋于 $0$），左端趋近 $0\le e\,w$，故这些点在闭包中。这正是解里"$\operatorname{cl}$ + 并集第二段"的来源：先对第一段取闭包，把 $u\to0^{-}$ 逼近出的边界点（$u=0,\ v\ge0,\ w\ge0$）补进来，再显式写成两段并集。所以最终答案里的 $\operatorname{cl}$ 之所以写成两段并集，正是把"闭包补进来的那部分边界点"单独列出来而已，$w=0$ 时表达式 $-u\,e^{v/u}\le e\,w$ 本身对 $u<0$ 无意义（不成立），但 $w=0$ 的边界点 $u=0$ 是通过闭包极限引入的，不会出现在第一段那个不等式里，因此不产生歧义。
 
 ## （第 32 页）
 
-现在考虑 $w>0$ 的情形。我们要在满足 $y>0$ 且 $y\,e^{x/y}\le z$ 的所有 $x,y,z$ 上最小化 $ux+vy+wz$。由于 $w>0$，我们对 $z$ 取最小值时应取 $z = y\,e^{x/y}$（即取到约束的边界），这得到
+现在考虑 $w>0$ 的情形。
+
+> **译注**：本文的目标是对指数锥 $K_{\exp}$（exponential cone，指数锥）求出其对偶锥 $K_{\exp}^{*}$（dual cone，对偶锥），即所有满足「对一切 $(x,y,z)\in K_{\exp}$ 都有 $ux+vy+wz\ge0$」的 $(u,v,w)$ 的集合。前文已处理过 $w\le0$ 的情形（其中 $w<0$ 时无可行贡献、被排除，$w=0$ 时给出 $u=0,\,v\ge0$ 的边界部分，对应最终结果第二项中 $w=0$ 的那一块），因此这里只需处理剩下的 $w>0$。
+
+我们要在满足 $y>0$ 且 $y\,e^{x/y}\le z$ 的所有 $x,y,z$ 上最小化 $ux+vy+wz$。这里「满足 $y>0$ 且 $y\,e^{x/y}\le z$ 的所有 $x,y,z$」正是 $K_{\exp}$（exponential cone，指数锥）的主支（即 $y>0$ 的那一支；完整的指数锥还包含 $y=0$ 的闭包部分 $\{(x,0,z)\mid x\le0,\ z\ge0\}$，此处暂不涉及）。由于 $w>0$，我们对 $z$ 取最小值时应取 $z = y\,e^{x/y}$（即取到约束的边界），这得到
 
 ```math
 ux + vy + w\,y\,e^{x/y}.
@@ -1478,7 +1503,7 @@ ux + vy + w\,y\,e^{x/y}.
 
 > **译注**：这是"极小化"这一步的关键。$wz$ 关于 $z$ 是递增的（因为 $w>0$），而约束要求 $z\ge y\,e^{x/y}$，所以要最小化 $wz$ 就必须把 $z$ 压到最小允许值 $z = y\,e^{x/y}$。代回后得到只关于 $x,y$ 的表达式 $ux + vy + w\,y\,e^{x/y}$。
 
-现在对 $x$ 取最小值。若 $u>0$，则当 $x\to-\infty$ 时该式**下无界（unbounded below）**。若 $u=0$，最小值不可达（not achieved），而是在 $x\to-\infty$ 时趋近；此时最小值是 $vy$。它要对所有 $y>0$ 有非负的最小值，仅当 $v\ge0$。于是我们发现，满足
+现在对 $x$ 取最小值。若 $u>0$，则当 $x\to-\infty$ 时该式**下无界（unbounded below）**。若 $u=0$，其下确界（infimum）不可达（not achieved），而是在 $x\to-\infty$ 时趋近；此时下确界是 $vy$。它要对所有 $y>0$ 有非负的下确界，仅当 $v\ge0$。于是我们发现，满足
 
 ```math
 u = 0, \quad v \ge 0, \quad w > 0
@@ -1489,7 +1514,7 @@ u = 0, \quad v \ge 0, \quad w > 0
 > **译注**：分两种子情形讨论对 $x$ 的极小化：
 >
 > - 若 $u>0$，项 $ux$ 在 $x\to-\infty$ 时趋于 $-\infty$，而 $w\,y\,e^{x/y}$ 在 $x\to-\infty$ 时趋于 $0$（因为 $y>0$，指数 $x/y\to-\infty$），$vy$ 与 $x$ 无关，故整体 $\to-\infty$，下无界，说明这些点不能进对偶锥（否则会找到 $ux+vy+wz<0$ 的实例）。
-> - 若 $u=0$，表达式变为 $vy + w\,y\,e^{x/y}$。由于 $w\,y\,e^{x/y}\to0$ 当 $x\to-\infty$，其下确界是 $vy$（不可达，因为需要 $x=-\infty$，但可通过 $x$ 任意负逼近）。要保证对所有 $y>0$ 这个下确界 $\ge0$，需 $v\ge0$。
+> - 若 $u=0$，表达式变为 $vy + w\,y\,e^{x/y}$。由于 $w\,y\,e^{x/y}\to0$ 当 $x\to-\infty$，其下确界（infimum，所有函数值的最大下界）是 $vy$；但这个下确界不可达（not achieved），因为要真正取到 $vy$ 需要 $x=-\infty$，而 $x$ 只能取有限实数值、只能让 $e^{x/y}$ 任意小却永远不等于 $0$，所以它只是可被任意逼近的下确界、而非被某一点取到的最小值（minimum）。要保证对所有 $y>0$ 这个下确界 $\ge0$，需 $v\ge0$。
 
 若 $u<0$，则 $ux + vy + w\,y\,e^{x/y}$ 的最小值出现在它关于 $x$ 的导数（derivative）为零处。这导致 $u + w\,e^{x/y} = 0$，即 $x = y\log(-u/w)$。对这个 $x$ 值，上式变为
 
