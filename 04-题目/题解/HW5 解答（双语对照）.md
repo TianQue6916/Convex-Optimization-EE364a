@@ -253,7 +253,33 @@ for the ℓ1-, ℓ2-, and ℓ∞-norms?
 >
 > (b) ℓ1 范数（ℓ1-norm）：$b$ 的各分量的（某一个）中位数（median）。
 >
-> (c) ℓ∞ 范数（ℓ∞-norm）：中程点（midrange point）$(\max_i b_i - \min_i b_i)/2$。
+> (c) ℓ∞ 范数（ℓ∞-norm）：最优解（minimizer，即 midrange point）$x^\star = (\max_i b_i + \min_i b_i)/2$；最优值（optimal value）为 $(\max_i b_i - \min_i b_i)/2$。两者不同：前者是 $[\min_i b_i, \max_i b_i]$ 的中点，后者是该中点到任一端点的距离。
+>
+> **[note] Note（译者注 · 本译注补写）:** 原书此处疑似漏写加号；$\ell_\infty$ 逼近的最优解是 midrange point $(\max+\min)/2$，最优值是 $(\max-\min)/2$，两者不同。
+>
+> **[note] Note（译者注 · 本译注补写）:** 以下补回 (a)(b)(c) 的推导骨架（derivation skeleton）—— 现代版只保留答案，推导原本只在旧版解答里，此处按现代术语格式补写，不复述题面。
+>
+> **(a)** ℓ2 范数（ℓ2-norm）：目标 $\sum_{i}(x-b_i)^2$ 处处可微（differentiable），一阶条件（first-order condition）是导数（derivative）为零
+> ```math
+> \frac{d}{dx}\sum_{i}(x-b_i)^2 = 2\sum_{i}(x-b_i) = 0 \quad\Longrightarrow\quad x = \frac{1}{m}\mathbf{1}^T b ,
+> ```
+> 而二阶导（Hessian）为 $2m>0$，故该点是一阶充分条件给出的唯一极小点（unique minimizer）。
+>
+> **(b)** ℓ1 范数（ℓ1-norm）：目标 $\sum_i|x-b_i|$ 在 $x=b_i$ 处非光滑（nonsmooth），须用次梯度（subgradient）
+> ```math
+> \partial f(x) = \sum_{i=1}^{m}\partial |x-b_i|, \qquad \partial|x-b_i| = \begin{cases}\{+1\}, & b_i < x,\\ \{-1\}, & b_i > x,\\ [-1,1], & b_i = x.\end{cases}
+> ```
+> 于是 $0\in\partial f(x)$ 等价于计数条件（counting condition）：小于 $x$ 的分量个数 $\le m/2$，且大于 $x$ 的分量个数 $\le m/2$ —— 这正是中位数（median）的定义。$m$ 为偶数时，两个中间值之间的整个区间都满足该条件，最优解集（optimal set）不是单点。
+>
+> **(c)** ℓ∞ 范数（ℓ∞-norm）：先把范数写成极小极大（minimax）形式
+> ```math
+> \|x\mathbf{1}-b\|_\infty = \max\Big\{\max_i b_i - x,\; x - \min_i b_i\Big\},
+> ```
+> 它是两个 affine 函数（affine function）取最大，即关于 $x$ 的凸折线（convex piecewise-linear）：上界支随 $x$ 递减、下界支随 $x$ 递增，所以最大值在这两支相交处最小
+> ```math
+> \max_i b_i - x = x - \min_i b_i \quad\Longrightarrow\quad x^\star = \frac{\max_i b_i + \min_i b_i}{2},
+> ```
+> 即 midrange point，对应最优值（optimal value）$\dfrac{\max_i b_i - \min_i b_i}{2}$。
 
 <!-- p.5 -->
 
