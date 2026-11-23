@@ -617,3 +617,17 @@ Check your LP solver against cvx on several numerical examples, including both f
 > fprintf('Duality gap from barrier method:\n');
 > gap
 > ```
+
+---
+
+## 附：关键概念速查（Key concepts）
+
+> 本节由旧版译注 `_superseded/03-作业与解答/HW8.bilingual.md` 迁入（2026-11-24），因正式版缺该节。
+
+- **最速下降（steepest descent）**：在给定范数下最小化一阶 Taylor 近似的方向；$\ell_\infty$-范数下退化为逐分量取符号。
+- **KKT 矩阵（KKT matrix）**：$\begin{bmatrix} P & A^T \\ A & 0 \end{bmatrix}$ 的惯性指数由 $P$ 在 $\mathcal{N}(A)$ 上的限制决定。
+- **惯性指数（inertia）**：对称矩阵正、负、零特征值的个数三元组，合同变换下不变。
+- **自和谐函数（self-concordant function）**：一元情形判据为 $|f'''(x)| \le 2 f''(x)^{3/2}$。
+- **障碍法（barrier method）**：对数障碍 $-\sum_i \log x_i$ 逐步加权，配合中心化 Newton 步与对偶间隙 $n/t$ 终止。
+- **Newton 减量（Newton decrement）**：$\lambda(x) = (-\nabla f^T \Delta x_{\mathrm{nt}})^{1/2}$，其平方用于停止准则与二次收敛验证。
+- **阶段 I / 阶段 II（phase I / phase II）**：先构造辅助问题找严格可行点，再正式求解。
